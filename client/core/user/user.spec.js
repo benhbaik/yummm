@@ -36,19 +36,25 @@ describe('user', function() {
             $httpBackend.expectGET('/api/users').respond(userList);
 
             var users = User.getAll();
+
             $httpBackend.flush();
             expect(users.$$state.value).toEqual(userList);
         });
 
         it('creates a new user', function() {
-            $httpBackend.expectPOST('/api/users').respond('User created!');
+            var expected = {
+                message: 'User created!',
+                token: '421GFD2415w24$#@^1'
+            };
+            $httpBackend.expectPOST('/api/users').respond(expected);
 
             var newUser = User.create({
                 username: 'Ben',
                 password: 'password'
             });
+
             $httpBackend.flush();
-            expect(newUser.$$state.value).toEqual('User created!');
+            expect(newUser.$$state.value).toEqual(expected);
         });
 
         it('fetches one user', function() {
@@ -59,6 +65,7 @@ describe('user', function() {
             $httpBackend.expectGET('/api/users/12345').respond(expectedUserData);
 
             var user = User.get('12345');
+
             $httpBackend.flush();
             expect(user.$$state.value).toEqual(expectedUserData);
         });
@@ -71,6 +78,7 @@ describe('user', function() {
             $httpBackend.expectPUT('/api/users/12345').respond(expectedUserData);
 
             var updatedUser = User.update({username: 'username'}, '12345');
+
             $httpBackend.flush();
             expect(updatedUser.$$state.value).toEqual(expectedUserData);
         });
@@ -83,11 +91,12 @@ describe('user', function() {
             $httpBackend.expectDELETE('/api/users/12345').respond(expectedResponse);
 
             var deletedUser = User.remove('12345');
+
             $httpBackend.flush();
             expect(deletedUser.$$state.value).toEqual(expectedResponse);
         });
 
-        it('logs in a user', function() {
+        it('logs in a user and set token on local storage', function() {
             var expected = {
                 success: true,
                 username: 'username',
@@ -100,30 +109,16 @@ describe('user', function() {
             $httpBackend.expectPOST('/api/login').respond(expected);
 
             var response = User.login(userInfo);
+
             $httpBackend.flush();
             expect(response.$$state.value).toEqual(expected);
         });
 
-        it('sets token in local storage on login', function() {
-            var response = {
-                success: true,
-                username: 'username',
-                token: '@346dhg234fxv&$bg3#hAJdav23'
-            };
-            $httpBackend.expectPOST('/api/login').respond(response);
+        it('logs a user out', function() {
+            spyOn(User, 'logout');
+            User.logout();
 
-            $httpBackend.flush();
-            var token = window.localStorgage.getItem('token');
-            expect(token).toEqual(response.token);
+            expect(User.logout).toHaveBeenCalled();
         });
-        // TODO add more describe blocks tidy up tests
-        // finish test for logout
-
-        // it('removes token on logout', function() {
-        //     var $injector = angular.injector('core');
-        //     var userService = $injector.get('core.user');
-        //
-        //
-        // });
     });
 });

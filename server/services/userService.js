@@ -12,7 +12,10 @@ exports.save = function(req, res) {
             res.json(err);
         }
         if (user) {
-            res.json('User created!');
+            res.json({
+                message: 'User created!',
+                token: tokenService.createToken()
+            });
         }
     });
 }

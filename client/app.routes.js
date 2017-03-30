@@ -12,5 +12,9 @@ angular.module('myApp').
           template: '<signup></signup>'
       });
 
+      $routeProvider.when('/login', {
+          template: '<login></login>'
+      });
+
       $routeProvider.otherwise({redirectTo: '/'});
     }]);

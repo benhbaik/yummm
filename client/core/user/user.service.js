@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('core.user', []).
-    factory('User', ['$http',
-        function($http) {
-            var restApi = {
+angular.module('core.user', ['core.token']).
+    factory('User', ['$http', 'Token',
+        function($http, Token) {
+            var userService = {
                 getAll: function() {
                     return $http.get('/api/users').then(function(res) {
                         return res.data;
@@ -41,14 +41,17 @@ angular.module('core.user', []).
                 },
                 login: function(userInfo) {
                     return $http.post('/api/login', userInfo).then(function(res) {
+                        Token.set(res.data.token);
                         return res.data;
                     }, function(err) {
                         return err;
                     });
+                },
+                logout: function() {
+                    Token.remove();
                 }
+
             }
-            return restApi;
+            return userService;
         }
     ]);
-
-    // TODO finish restClient write tests first use $httpbackend

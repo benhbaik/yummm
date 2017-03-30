@@ -2,5 +2,6 @@
 
 angular.module('core', [
     'core.navbar',
-    'core.user'
+    'core.user',
+    'core.token'
 ]);

@@ -5,5 +5,6 @@ angular.module('myApp', [
   'ngRoute',
   'core',
   'home',
-  'signup'
+  'signup',
+  'login'
 ]);
