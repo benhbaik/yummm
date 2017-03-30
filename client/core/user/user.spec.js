@@ -88,20 +88,42 @@ describe('user', function() {
         });
 
         it('logs in a user', function() {
-            var token = '@346dhg234fxv&$bg3#hAJdav23';
+            var expected = {
+                success: true,
+                username: 'username',
+                token: '@346dhg234fxv&$bg3#hAJdav23'
+            };
             var userInfo = {
                 username: 'username',
                 password: 'password'
             }
-            $httpBackend.expectPOST('/api/login').respond(token);
+            $httpBackend.expectPOST('/api/login').respond(expected);
 
-            var sessionToken = User.login(userInfo);
+            var response = User.login(userInfo);
             $httpBackend.flush();
-            expect(sessionToken.$$state.value).toEqual(token);
+            expect(response.$$state.value).toEqual(expected);
         });
 
-        it('logs user out', function() {
+        it('sets token in local storage on login', function() {
+            var response = {
+                success: true,
+                username: 'username',
+                token: '@346dhg234fxv&$bg3#hAJdav23'
+            };
+            $httpBackend.expectPOST('/api/login').respond(response);
 
+            $httpBackend.flush();
+            var token = window.localStorgage.getItem('token');
+            expect(token).toEqual(response.token);
         });
+        // TODO add more describe blocks tidy up tests
+        // finish test for logout
+
+        // it('removes token on logout', function() {
+        //     var $injector = angular.injector('core');
+        //     var userService = $injector.get('core.user');
+        //
+        //
+        // });
     });
 });

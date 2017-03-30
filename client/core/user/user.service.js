@@ -47,7 +47,6 @@ angular.module('core.user', []).
                     });
                 }
             }
-
             return restApi;
         }
     ]);
