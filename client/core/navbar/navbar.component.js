@@ -9,7 +9,7 @@ angular.module('core.navbar', ['core.token']).
                 var vm = this;
                 vm.isLoggedIn = Token.isLoggedIn();
                 vm.currentUser = Token.getUserData();
-                // TODO use ng-show/hide for navbar
+                vm.logoLink = vm.isLoggedIn ? 'dashboard' : '';
             }
         ]
     });

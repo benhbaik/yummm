@@ -6,7 +6,7 @@ describe('yummm', function() {
 
   it('should automatically redirect to / when location hash/fragment is empty', function() {
     browser.get('/');
-    expect(browser.getLocationAbsUrl()).toMatch("/");
+    expect(browser.getLocationAbsUrl()).toMatch('/');
   });
 
   beforeEach(function() {
@@ -14,17 +14,35 @@ describe('yummm', function() {
   });
 
   describe('login', function() {
-     it('should set token after login', function() {
-         var username = element(by.model('loginCtrl.username'));
-         var password = element(by.model('loginCtrl.password'));
-         var login = element(by.css('.login'));
+
+      beforeEach(function () {
+          var username = element(by.model('loginCtrl.credentials.username'));
+          var password = element(by.model('loginCtrl.credentials.password'));
+          var login = element(by.css('.login'));
+
+          username.sendKeys('username');
+          password.sendKeys('password');
+          login.click();
+      });
+
+     it('sets token after login', function() {
          var token = browser.executeScript('window.localStorage.getItem("token")');
-
-         username.sendKeys('username');
-         password.sendKeys('password');
-         login.click();
-
          expect(token).toBeDefined();
+     });
+
+     it('displays different nav links when logged in', function() {
+         var loggedInMenu = element(by.css('.logged-in'));
+         var loggedOutMenu = element(by.css('.logged-out'));
+
+         expect(loggedOutMenu.isDisplayed()).toBe(false);
+         expect(loggedInMenu.isDisplayed()).toBe(true);
+     });
+
+     it('changes href of logo after login', function() {
+         var logo = element(by.css('.logo a'));
+         logo.click();
+
+         expect(browser.getLocationAbsUrl()).toMatch('/dashboard')
      });
   });
 
