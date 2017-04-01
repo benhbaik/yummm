@@ -1,15 +1,15 @@
 'use-strict';
 
-angular.module('core.navbar', ['core.auth', 'core.token']).
+angular.module('core.navbar', ['core.token']).
     component('navbar', {
         templateUrl: 'core/navbar/navbar.html',
         controllerAs: 'navbarCtrl',
-        controller: ['Auth', 'Token',
-            function(Auth, Token) {
-                var status = Token.isLoggedIn();
-                console.log(status);
-                var userData = Token.getUserData();
-                console.log(userData);
+        controller: ['Token',
+            function(Token) {
+                var vm = this;
+                vm.isLoggedIn = Token.isLoggedIn();
+                vm.currentUser = Token.getUserData();
+                // TODO use ng-show/hide for navbar
             }
         ]
     });
