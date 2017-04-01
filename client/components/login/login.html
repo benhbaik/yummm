@@ -3,11 +3,11 @@
 <form role="form">
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">@</span>
-        <input ng-model="username" class="form-control" placeholder="Username" aria-describedby="basic-addon1" type="text">
+        <input ng-model="loginCtrl.credentials.username" class="form-control" placeholder="Username" aria-describedby="basic-addon1" type="text">
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">@</span>
-        <input ng-model="password" class="form-control" placeholder="Username" aria-describedby="basic-addon1" type="text">
+        <input ng-model="loginCtrl.credentials.password" class="form-control" placeholder="Username" aria-describedby="basic-addon1" type="text">
     </div>
-    <button ng-click="$ctrl.login(username, password)" class="btn btn-default" type="submit">Login</button>
+    <button ng-click="loginCtrl.login(loginCtrl.credentials)" class="login btn btn-default" type="submit">Login</button>
 </form>

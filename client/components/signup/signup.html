@@ -1,13 +1,13 @@
 <h1>Sign Up!</h1>
 
-<form>
+<form role="form">
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">@</span>
-        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+        <input ng-model="signupCtrl.credentials.username" class="form-control" placeholder="Username" aria-describedby="basic-addon1" type="text">
     </div>
     <div class="input-group">
         <span class="input-group-addon" id="basic-addon1">@</span>
-        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+        <input ng-model="signupCtrl.credentials.password" class="form-control" placeholder="Username" aria-describedby="basic-addon1" type="text">
     </div>
-    <button type="button" class="btn btn-default">Sign Up</button>
+    <button ng-click="signupCtrl.signup(signupCtrl.credentials)" class="login btn btn-default" type="submit">Sign Up</button>
 </form>

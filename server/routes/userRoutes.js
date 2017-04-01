@@ -32,9 +32,9 @@ router.
         });
 
 router.
-    route('/logout').
+    route('/verify').
         post(function(req, res) {
-            UserService.logout(req, res);
+            UserService.verify(req, res);
         });
 
 module.exports = router;

@@ -7,8 +7,18 @@ var secret = app.get('secret');
 
 exports.createToken = function(user) {
     try {
-        return jwt.sign(user, secret, { expiresIn: '1h' });
+        return jwt.sign({
+            username: user.username,
+            _id: user._id
+        }, secret, { expiresIn: '12h' });
     } catch(e) {
         return e;
     }
 }
+exports.verifyToken = function(token) {
+    try {
+        return jwt.verify(token, secret);
+    } catch(e) {
+        return e;
+    }
+};

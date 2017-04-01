@@ -2,16 +2,55 @@
 
 angular.module('core.token', []).
     factory('Token', function() {
-        var tokenService = {
-            set: function(token) {
-                window.localStorage.setItem('token', token);
-            },
-            get: function() {
-                return window.localStorage.getItem('token');
-            },
-            remove: function() {
-                window.localStorage.removeItem('token');
+
+         return ({
+            set: set,
+            get: get,
+            remove: remove,
+            isLoggedIn: isLoggedIn,
+            getUserData: getUserData
+        });
+
+        function set(token) {
+            window.localStorage.setItem('token', token);
+        }
+
+        function get() {
+            return window.localStorage.getItem('token');
+        }
+
+        function remove() {
+            window.localStorage.removeItem('token');
+        }
+
+        function isLoggedIn() {
+            var token = get();
+            var payload;
+
+            if (token) {
+                payload = token.split('.')[1];
+                payload = window.atob(payload);
+                payload = JSON.parse(payload);
+
+                return payload.exp > Date.now() / 1000;
+            }
+            if (!token) {
+                return false;
             }
         }
-        return tokenService;
+
+        function getUserData() {
+            if (isLoggedIn()) {
+                var token = get();
+                var payload = token.split('.')[1];
+
+                payload = window.atob(payload);
+                payload = JSON.parse(payload);
+
+                return {
+                    username: payload.username,
+                    _id: payload._id
+                };
+            }
+        }
     });

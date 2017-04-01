@@ -6,5 +6,6 @@ angular.module('myApp', [
   'core',
   'home',
   'signup',
-  'login'
+  'login',
+  'dashboard'
 ]);

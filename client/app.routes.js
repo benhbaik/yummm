@@ -16,5 +16,9 @@ angular.module('myApp').
           template: '<login></login>'
       });
 
+      $routeProvider.when('/dashboard', {
+          template: '<dashboard></dashboard>'
+      });
+
       $routeProvider.otherwise({redirectTo: '/'});
     }]);

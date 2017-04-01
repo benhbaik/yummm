@@ -41,22 +41,6 @@ describe('user', function() {
             expect(users.$$state.value).toEqual(userList);
         });
 
-        it('creates a new user', function() {
-            var expected = {
-                message: 'User created!',
-                token: '421GFD2415w24$#@^1'
-            };
-            $httpBackend.expectPOST('/api/users').respond(expected);
-
-            var newUser = User.create({
-                username: 'Ben',
-                password: 'password'
-            });
-
-            $httpBackend.flush();
-            expect(newUser.$$state.value).toEqual(expected);
-        });
-
         it('fetches one user', function() {
             var expectedUserData = {
                 username: 'Ben',
@@ -94,31 +78,6 @@ describe('user', function() {
 
             $httpBackend.flush();
             expect(deletedUser.$$state.value).toEqual(expectedResponse);
-        });
-
-        it('logs in a user and set token on local storage', function() {
-            var expected = {
-                success: true,
-                username: 'username',
-                token: '@346dhg234fxv&$bg3#hAJdav23'
-            };
-            var userInfo = {
-                username: 'username',
-                password: 'password'
-            }
-            $httpBackend.expectPOST('/api/login').respond(expected);
-
-            var response = User.login(userInfo);
-
-            $httpBackend.flush();
-            expect(response.$$state.value).toEqual(expected);
-        });
-
-        it('logs a user out', function() {
-            spyOn(User, 'logout');
-            User.logout();
-
-            expect(User.logout).toHaveBeenCalled();
         });
     });
 });

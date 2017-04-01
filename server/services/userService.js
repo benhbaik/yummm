@@ -14,7 +14,7 @@ exports.save = function(req, res) {
         if (user) {
             res.json({
                 message: 'User created!',
-                token: tokenService.createToken()
+                token: tokenService.createToken(user)
             });
         }
     });
@@ -75,7 +75,6 @@ exports.login = function(req, res) {
             res.json(err);
         }
         if (user) {
-
             if (user.comparePassword(password)) {
                 res.json({
                     success: true,
@@ -94,8 +93,4 @@ exports.login = function(req, res) {
 
         }
     });
-}
-
-exports.logout = function(req, res) {
-
 }
