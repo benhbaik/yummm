@@ -9,7 +9,9 @@ angular.module('core.navbar', ['core.token']).
                 var vm = this;
                 vm.isLoggedIn = Token.isLoggedIn();
                 vm.currentUser = Token.getUserData();
-                vm.logoLink = vm.isLoggedIn ? 'dashboard' : '';
+                vm.logoLink = function() {
+                    return vm.isLoggedIn ? 'dashboard' : '';
+                }
                 vm.logout = function() {
                     Token.remove();
                 }

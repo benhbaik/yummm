@@ -1,8 +1,33 @@
 'use strict';
 
 describe('core.navbar', function() {
+    var mockToken = {
+       set: function(token) {
+           window.localStorage.setItem('token', token);
+       },
+       get: function() {
+           return window.localStorage.getItem('token');
+       },
+       remove: function() {
+           window.localStorage.removeItem('token');
+       },
+       isLoggedIn: function() {
+           return true;
+       },
+       getUserData: function() {
+           return {
+               username: 'user',
+               password: 'pass'
+           };
+       }
+   };
 
     beforeEach(module('core.navbar'));
+    beforeEach(module('core.token', function($provide) {
+        $provide.factory('Token', function() {
+            return mockToken;
+        });
+    }));
 
     it('should be defined', function() {
         var navbarModule = angular.module('core.navbar');
@@ -22,13 +47,11 @@ describe('core.navbar', function() {
             expect(ctrl).toBeDefined();
         });
 
-        // TODO mock Token service
         it ('logoLink should change based on isLoggedIn', function() {
-            console.log(ctrl);
-            // ctrl.isLoggedIn = true;
-            // expect(ctrl.logoLink).toBe('dashboard');
-            // ctrl.isLoggedIn = false;
-            // expect(ctrl.logoLink).toBe('');
+            ctrl.isLoggedIn = false;
+            expect(ctrl.logoLink()).toBe('');
+            ctrl.isLoggedIn = true;
+            expect(ctrl.logoLink()).toBe('dashboard');
         });
     });
 });
