@@ -26,7 +26,12 @@ describe('core.auth', function() {
         it('creates a new user', function() {
             var expected = {
                 message: 'User created!',
-                token: '421GFD2415w24$#@^1'
+                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+                       'eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiX2lkI' +
+                       'joiNThkYWQ4ZDBhNmE5NDJlMjMxOWNlZGFiIi' +
+                       'wiaWF0IjoxNDkxMDg2OTQxLCJleHAiOjE0OTE' +
+                       'xMzAxNDF9.KfSP82jEgbpkpb4SPFyPaY3iiEH' +
+                       '6bwMmisgVjLgRkTU'
             };
             $httpBackend.expectPOST('/api/users').respond(expected);
 
@@ -43,7 +48,12 @@ describe('core.auth', function() {
             var expected = {
                 success: true,
                 username: 'username',
-                token: '@346dhg234fxv&$bg3#hAJdav23'
+                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+                       'eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiX2lkI' +
+                       'joiNThkYWQ4ZDBhNmE5NDJlMjMxOWNlZGFiIi' +
+                       'wiaWF0IjoxNDkxMDg2OTQxLCJleHAiOjE0OTE' +
+                       'xMzAxNDF9.KfSP82jEgbpkpb4SPFyPaY3iiEH' +
+                       '6bwMmisgVjLgRkTU'
             };
             var userInfo = {
                 username: 'username',

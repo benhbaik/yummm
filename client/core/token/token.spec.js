@@ -11,14 +11,20 @@ describe('token', function() {
     });
 
     describe('token.service', function() {
+        var token;
 
         beforeEach(inject(function(_Token_) {
             var args = arguments;
+            token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.' +
+                    'eyJ1c2VybmFtZSI6InVzZXJuYW1lIiwiX2lkI' +
+                    'joiNThkYWQ4ZDBhNmE5NDJlMjMxOWNlZGFiIi' +
+                    'wiaWF0IjoxNDkxMDg2OTQxLCJleHAiOjE0OTE' +
+                    'xMzAxNDF9.KfSP82jEgbpkpb4SPFyPaY3iiEH' +
+                    '6bwMmisgVjLgRkTU';
             Token = _Token_;
         }));
 
         it('sets a token in local storage', function() {
-            var token = '24#@fsdh32DSA1G3yfsd14432';
             var storage = window.localStorage;
 
             Token.set(token);
@@ -27,7 +33,6 @@ describe('token', function() {
         });
 
         it('fetches token from local storage', function() {
-            var token = '24#@fsdh32DSA1G3yfsd14432';
             var setToken = Token.get();
 
             Token.set(token);
@@ -36,7 +41,6 @@ describe('token', function() {
         });
 
         it('removes token from localStorage', function() {
-            var token = '24#@fsdh32DSA1G3yfsd14432';
             var storage = window.localStorage;
 
             Token.set(token);
