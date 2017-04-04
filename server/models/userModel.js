@@ -6,11 +6,17 @@ var UserSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        minLength: 4,
+        maxLength: 16,
+        trim: true
     },
     password: {
         type: String,
         required: true,
+        trim: true,
+        minLength: 8,
+        maxLength: 16,
         select: false
     }
 });

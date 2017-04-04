@@ -30,16 +30,43 @@ angular.module('core.auth', ['core.token']).
                 Token.remove();
             }
 
-            function signup(userInfo) {
-                return $http.post('/api/users', userInfo).
-                    success(function(data) {
-                        if (data.success) {
-                            Token.set(data.token);
-                        }
-                        return data;
-                    }).
-                    error(function(data) {
-                        return data;
-                    });
+            function signup(userInfo, vm, location) {
+                var usernameLength = userInfo.username.length;
+                var passwordLength = userInfo.password.length;
+
+                if ((usernameLength <= 16 && usernameLength >= 4) &&
+                    (passwordLength <= 16 && passwordLength >= 8)) {
+                        return $http.post('/api/users', userInfo).
+                            success(function(data) {
+                                vm.success = data.success;
+                                if (vm.success) {
+                                    Token.set(data.token);
+                                    location.path('dashboard');
+                                }
+                                vm.errorMessage = data.message;
+                            }).
+                            error(function(data) {
+                                vm.success = false;
+                                vm.errorMessage = data;
+                            });
+                }
+
+                vm.success = false;
+
+                if (usernameLength > 16) {
+                    vm.errorMessage = 'The username you entered is too long.';
+                }
+
+                if (usernameLength < 4) {
+                    vm.errorMessage = 'The username you entered is too short.';
+                }
+
+                if (passwordLength > 16) {
+                    vm.errorMessage = 'The password you entered is too long.';
+                }
+
+                if (passwordLength < 8) {
+                    vm.errorMessage = 'The password you entered is too short.';
+                }
             }
         }]);

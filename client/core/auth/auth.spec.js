@@ -40,9 +40,9 @@ describe('core.auth', function() {
 
             $httpBackend.expectPOST('/api/users').respond(expected);
             newUser = Auth.signup({
-                username: 'Ben',
+                username: 'username',
                 password: 'password'
-            });
+            }, vm, $location);
             $httpBackend.flush();
 
             expect(newUser.$$state.value.data).toEqual(expected);

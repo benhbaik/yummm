@@ -36,9 +36,6 @@ describe('login', function() {
             location = $location;
             ctrl = $componentController('login');
         }));
-        beforeEach(function() {
-
-        });
 
         it('display error when username is incorrect', function() {
             var user = {

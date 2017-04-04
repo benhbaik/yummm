@@ -7,12 +7,13 @@ angular.module('signup', ['core.auth']).
         controller: ['$location', 'Auth',
             function($location, Auth) {
                 var vm = this;
+                vm.errorMessage;
+                vm.success = true;
                 vm.signup = function(credentials) {
                     credentials.username.trim();
                     credentials.password.trim();
-                    Auth.signup(credentials).then(function() {
-                        $location.path('/dashboard')
-                    });
+
+                    Auth.signup(credentials, vm, $location);
                 }
             }
         ]

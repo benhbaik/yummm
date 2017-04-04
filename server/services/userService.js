@@ -17,6 +17,7 @@ exports.save = function(req, res) {
                 _id: user._id
             };
             res.json({
+                success: true,
                 message: 'User created!',
                 token: tokenService.createToken(payload)
             });
