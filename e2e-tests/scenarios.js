@@ -46,5 +46,35 @@ describe('yummm', function() {
      });
   });
 
+  describe('incorrect login', function() {
+      var username;
+      var password;
+      var login;
+      var alert;
+
+      beforeEach(function () {
+          username = element(by.model('loginCtrl.credentials.username'));
+          password = element(by.model('loginCtrl.credentials.password'));
+          login = element(by.css('.login'));
+          alert = element(by.css('.alert-danger'));
+      });
+
+      it('diplays error message if username is wrong', function() {
+          username.sendKeys('incorrectUsername');
+          password.sendKeys('password');
+          login.click();
+
+          expect(alert.getText()).toBe('Username is incorrect.');
+      });
+
+      it('displays error message if password is wrong', function() {
+          username.sendKeys('username');
+          password.sendKeys('incorrectPassword');
+          login.click();
+
+          expect(alert.getText()).toBe('Sorry, the password does not match.');
+      });
+  });
+
 
 });

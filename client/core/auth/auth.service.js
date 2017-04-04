@@ -10,13 +10,20 @@ angular.module('core.auth', ['core.token']).
                 signup: signup
             });
 
-            function login(userInfo) {
-                return $http.post('/api/login', userInfo).then(function(res) {
-                    Token.set(res.data.token);
-                    return res.data;
-                }, function(err) {
-                    return err;
-                });
+            function login(userInfo, vm, location) {
+                return $http.post('/api/login', userInfo).
+                    success(function(data) {
+                        vm.success = data.success;
+                        if (vm.success) {
+                            Token.set(data.token);
+                            location.path('dashboard');
+                        }
+                        vm.errorMessage = data.message;
+                    }).
+                    error(function(data) {
+                        vm.success = false;
+                        vm.errorMessage = data;
+                    });
             }
 
             function logout() {
@@ -24,11 +31,15 @@ angular.module('core.auth', ['core.token']).
             }
 
             function signup(userInfo) {
-                return $http.post('/api/users', userInfo).then(function(res) {
-                    Token.set(res.data.token);
-                    return res.data;
-                }, function(err) {
-                    return err;
-                });
+                return $http.post('/api/users', userInfo).
+                    success(function(data) {
+                        if (data.success) {
+                            Token.set(data.token);
+                        }
+                        return data;
+                    }).
+                    error(function(data) {
+                        return data;
+                    });
             }
         }]);

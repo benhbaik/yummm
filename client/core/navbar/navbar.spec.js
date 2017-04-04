@@ -2,15 +2,6 @@
 
 describe('core.navbar', function() {
     var mockToken = {
-       set: function(token) {
-           window.localStorage.setItem('token', token);
-       },
-       get: function() {
-           return window.localStorage.getItem('token');
-       },
-       remove: function() {
-           window.localStorage.removeItem('token');
-       },
        isLoggedIn: function() {
            return true;
        },
@@ -38,9 +29,8 @@ describe('core.navbar', function() {
         var $componentController;
         var ctrl;
 
-        beforeEach(inject(function(_$componentController_) {
-            $componentController = _$componentController_;
-            ctrl = ($componentController('navbar'));
+        beforeEach(inject(function($componentController) {
+            ctrl = $componentController('navbar');
         }));
 
         it('should be defined', function() {

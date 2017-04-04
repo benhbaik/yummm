@@ -12,9 +12,13 @@ exports.save = function(req, res) {
             res.json(err);
         }
         if (user) {
+            var payload = {
+                username: user.username,
+                _id: user._id
+            };
             res.json({
                 message: 'User created!',
-                token: tokenService.createToken(user)
+                token: tokenService.createToken(payload)
             });
         }
     });
@@ -76,11 +80,14 @@ exports.login = function(req, res) {
         }
         if (user) {
             if (user.comparePassword(password)) {
+                var payload = {
+                    username: user.username,
+                    _id: user._id
+                };
                 res.json({
                     success: true,
-                    username: user.username,
                     message: 'You are logged in.',
-                    token: tokenService.createToken(user)
+                    token: tokenService.createToken(payload)
                 });
             }
 
@@ -90,7 +97,12 @@ exports.login = function(req, res) {
                     message: 'Sorry, the password does not match.'
                 });
             }
-
+        }
+        if (!user) {
+            res.json({
+                success: false,
+                message: 'Username is incorrect.'
+            });
         }
     });
 }
