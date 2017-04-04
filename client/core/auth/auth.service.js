@@ -31,6 +31,7 @@ angular.module('core.auth', ['core.token']).
             }
 
             function signup(userInfo, vm, location) {
+                // TODO problem with this play with inputs it will bring up some bugs
                 var usernameLength = userInfo.username.length;
                 var passwordLength = userInfo.password.length;
 

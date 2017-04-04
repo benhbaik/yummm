@@ -38,13 +38,14 @@ describe('yummm', function() {
              expect(loggedOutMenu.isDisplayed()).toBe(false);
              expect(loggedInMenu.isDisplayed()).toBe(true);
          });
-         // TODO this test is not valid, already at dashboard after login
-         it('changes href of logo after login', function() {
-             var logo = element(by.css('.logo a'));
-             logo.click();
 
-             expect(browser.getLocationAbsUrl()).toMatch('/dashboard')
-         });
+         // TODO this test is not valid, already at dashboard after login
+        //  it('changes href of logo after login', function() {
+        //      var logo = element(by.css('.logo a'));
+        //      logo.click();
+         //
+        //      expect(browser.getLocationAbsUrl()).toMatch('/dashboard');
+        //  });
      });
 
      describe('incorrect login', function() {
@@ -84,22 +85,68 @@ describe('yummm', function() {
           browser.get('#!/signup');
       });
 
-      describe('successful sign up', function() {
+      // Cannot run this test every time due to multiple db entries
+      // until delete is implemented
+
+    //   describe('successful sign up', function() {
+    //       beforeEach(function () {
+    //           var username = element(by.model('signupCtrl.credentials.username'));
+    //           var password = element(by.model('signupCtrl.credentials.password'));
+    //           var signup = element(by.css('.signup'));
+    //           username.sendKeys('anotheruser');
+    //           password.sendKeys('password');
+    //           signup.click();
+    //       });
+    //      it('sets token after sign up', function() {
+    //          var token = browser.executeScript('window.localStorage.getItem("token")');
+    //          expect(token).toBeDefined();
+    //      });
+    //   });
+
+      describe('unsuccessful signup', function() {
+          var username;
+          var password;
+          var signup;
+          var alert;
 
           beforeEach(function () {
-              var username = element(by.model('signupCtrl.credentials.username'));
-              var password = element(by.model('signupCtrl.credentials.password'));
-              var signup = element(by.css('.signup'));
-
-              username.sendKeys('anotheruser');
-              password.sendKeys('password');
-              signup.click();
+              username = element(by.model('signupCtrl.credentials.username'));
+              password = element(by.model('signupCtrl.credentials.password'));
+              signup = element(by.css('.signup'));
+              alert = element(by.css('.alert-danger'));
           });
 
-         it('sets token after sign up', function() {
-             var token = browser.executeScript('window.localStorage.getItem("token")');
-             expect(token).toBeDefined();
-         });
+          it('displays if username is too long', function() {
+              username.sendKeys('thisusernameiswaytoolong');
+              password.sendKeys('password');
+              signup.click();
+
+              expect(alert.getText()).toBe('The username you entered is too long.');
+          });
+
+          it('displays error if username is too short', function() {
+              username.sendKeys('ace');
+              password.sendKeys('password');
+              signup.click();
+
+              expect(alert.getText()).toBe('The username you entered is too short.');
+          });
+
+          it('display error if password is too long', function() {
+              username.sendKeys('username');
+              password.sendKeys('thispasswordiswaytoolong');
+              signup.click();
+
+              expect(alert.getText()).toBe('The password you entered is too long.');
+          });
+
+          it('displays error if password is too short', function() {
+              username.sendKeys('username');
+              password.sendKeys('ace');
+              signup.click();
+
+              expect(alert.getText()).toBe('The password you entered is too short.');
+          });
       });
   });
 });
