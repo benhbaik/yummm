@@ -1,4 +1,5 @@
 var User = require('../models/userModel.js');
+var Table = require('../models/tableModel.js');
 var tokenService = require('./tokenService.js');
 
 exports.save = function(req, res) {
@@ -16,6 +17,12 @@ exports.save = function(req, res) {
                 username: user.username,
                 _id: user._id
             };
+
+            Table.create({ userId: user._id }, function(err, userId) {
+                if (err) {
+                    res.json(err);
+                }
+            });
             res.json({
                 success: true,
                 message: 'User created!',

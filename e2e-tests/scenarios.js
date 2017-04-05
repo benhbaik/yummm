@@ -116,12 +116,12 @@ describe('yummm', function() {
               alert = element(by.css('.alert-danger'));
           });
 
-          it('displays if username is too long', function() {
+          it('displays error if username is too long', function() {
               username.sendKeys('thisusernameiswaytoolong');
               password.sendKeys('password');
               signup.click();
 
-              expect(alert.getText()).toBe('The username you entered is too long.');
+              expect(alert.getText()).toBe('Please enter a valid username.');
           });
 
           it('displays error if username is too short', function() {
@@ -129,7 +129,7 @@ describe('yummm', function() {
               password.sendKeys('password');
               signup.click();
 
-              expect(alert.getText()).toBe('The username you entered is too short.');
+              expect(alert.getText()).toBe('Please enter a valid username.');
           });
 
           it('display error if password is too long', function() {
@@ -137,7 +137,7 @@ describe('yummm', function() {
               password.sendKeys('thispasswordiswaytoolong');
               signup.click();
 
-              expect(alert.getText()).toBe('The password you entered is too long.');
+              expect(alert.getText()).toBe('Please enter a valid password.');
           });
 
           it('displays error if password is too short', function() {
@@ -145,7 +145,7 @@ describe('yummm', function() {
               password.sendKeys('ace');
               signup.click();
 
-              expect(alert.getText()).toBe('The password you entered is too short.');
+              expect(alert.getText()).toBe('Please enter a valid password.');
           });
       });
   });

@@ -4,12 +4,12 @@ describe('user', function() {
     var User;
     var $httpBackend;
 
-    beforeEach(module('core.user'));
-
     it('should be defined', function() {
         var userModule = angular.module('core.user');
         expect(userModule).toBeDefined();
     });
+
+    beforeEach(module('core.user'));
 
     describe('user.service', function() {
 

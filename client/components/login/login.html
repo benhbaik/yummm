@@ -4,13 +4,13 @@
 
 <form role="form">
     <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">@</span>
-        <input ng-model="loginCtrl.credentials.username" class="form-control" placeholder="Username" aria-describedby="basic-addon1" type="text">
+        <input ng-model="loginCtrl.credentials.username" class="form-control" placeholder="username" aria-describedby="basic-addon1" type="text">
     </div>
     <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">@</span>
-        <input ng-model="loginCtrl.credentials.password" class="form-control" placeholder="Username" aria-describedby="basic-addon1" type="text">
+        <input ng-model="loginCtrl.credentials.password" class="form-control" placeholder="password" aria-describedby="basic-addon1" type="text">
     </div>
     <button ng-click="loginCtrl.login(loginCtrl.credentials)" class="login btn btn-default" type="submit">Login</button>
     <div ng-hide="loginCtrl.success" class="alert alert-danger" role="alert">{{ loginCtrl.errorMessage }}</div>
 </form>
+
+<p>Don't have an account? Sign up <a href="#!/signup">here.</a></p>

@@ -3,3 +3,15 @@
     height: 50px;
     margin: 0 auto;
 }
+
+.loader {
+    padding-top: 50px;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+}
+
+.loader>img {
+    width: 60px;
+    height: 60px;
+}

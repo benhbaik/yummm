@@ -1,16 +1,16 @@
 'use strict';
 
 describe('token', function() {
-    var Token;
-
-    beforeEach(module('core.token'));
 
     it('should be defined', function() {
         var tokenModule = angular.module('core.token');
         expect(tokenModule).toBeDefined();
     });
 
+    beforeEach(module('core.token'));
+
     describe('token.service', function() {
+        var Token;
         var token;
 
         beforeEach(inject(function(_Token_) {

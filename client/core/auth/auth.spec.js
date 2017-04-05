@@ -48,6 +48,7 @@ describe('core.auth', function() {
             expect(newUser.$$state.value.data).toEqual(expected);
         });
 
+
         it('logs in a user and sets token on local storage', function() {
             var userInfo = {
                 username: 'username',

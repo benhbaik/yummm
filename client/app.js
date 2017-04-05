@@ -7,5 +7,8 @@ angular.module('myApp', [
   'home',
   'signup',
   'login',
-  'dashboard'
-]);
+  'search'
+]).
+config(function($httpProvider) {
+    $httpProvider.interceptors.push('AuthInterceptor');
+});

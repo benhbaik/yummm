@@ -11,12 +11,12 @@ angular.module('core.auth', ['core.token']).
             });
 
             function login(userInfo, vm, location) {
-                return $http.post('/api/login', userInfo).
+                return $http.post('/open/login', userInfo).
                     success(function(data) {
                         vm.success = data.success;
                         if (vm.success) {
                             Token.set(data.token);
-                            location.path('dashboard');
+                            location.path('search');
                         }
                         vm.errorMessage = data.message;
                     }).
@@ -31,18 +31,17 @@ angular.module('core.auth', ['core.token']).
             }
 
             function signup(userInfo, vm, location) {
-                // TODO problem with this play with inputs it will bring up some bugs
                 var usernameLength = userInfo.username.length;
                 var passwordLength = userInfo.password.length;
 
                 if ((usernameLength <= 16 && usernameLength >= 4) &&
                     (passwordLength <= 16 && passwordLength >= 8)) {
-                        return $http.post('/api/users', userInfo).
+                        return $http.post('/open/users', userInfo).
                             success(function(data) {
                                 vm.success = data.success;
                                 if (vm.success) {
                                     Token.set(data.token);
-                                    location.path('dashboard');
+                                    location.path('search');
                                 }
                                 vm.errorMessage = data.message;
                             }).
@@ -54,20 +53,32 @@ angular.module('core.auth', ['core.token']).
 
                 vm.success = false;
 
-                if (usernameLength > 16) {
-                    vm.errorMessage = 'The username you entered is too long.';
+                if (usernameLength > 16 || usernameLength < 4) {
+                    vm.errorMessage = 'Please enter a valid username.';
                 }
 
-                if (usernameLength < 4) {
-                    vm.errorMessage = 'The username you entered is too short.';
-                }
-
-                if (passwordLength > 16) {
-                    vm.errorMessage = 'The password you entered is too long.';
-                }
-
-                if (passwordLength < 8) {
-                    vm.errorMessage = 'The password you entered is too short.';
+                if (passwordLength > 16 || passwordLength < 8) {
+                    vm.errorMessage = 'Please enter a valid password.';
                 }
             }
-        }]);
+        }]).
+        factory('AuthInterceptor', function($q, $location, Token) {
+            return {
+                request: request,
+                responseError: responseError
+            };
+
+            function request(config) {
+                var token = Token.get();
+                config.headers['x-access-token'] = token;
+                return config;
+            }
+
+            function responseError(res) {
+                if (res.status === 403) {
+                    Token.remove();
+                    $location.path('login');
+                }
+                return $q.reject(res);
+            }
+        })

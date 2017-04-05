@@ -4,7 +4,6 @@ var db = mongoose.connection;
 var bodyParser = require('body-parser');
 var express = require('express');
 var app = express();
-var apiRoutes = require('./server/routes/userRoutes.js')
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -12,8 +11,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Method', 'GET, POST');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type, Authorization');
+    res.setHeader('Access-Control-Allow-Method', 'GET, POST', 'PUT', 'DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, content-type, x-access-token');
     next();
 });
 
@@ -26,6 +25,7 @@ db.once('open', function() {
 
 app.use(express.static('client'));
 
-app.use('/api', apiRoutes);
+app.use('/open', require('./server/routes/openRoutes.js'));
+app.use('/secure', require('./server/routes/secureRoutes.js'));
 
 app.listen(port);

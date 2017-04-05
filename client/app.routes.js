@@ -14,8 +14,8 @@ angular.module('myApp').
                 when('/login', {
                     template: '<login></login>'
                 }).
-                when('/dashboard', {
-                    template: '<dashboard></dashboard>'
+                when('/search', {
+                    template: '<search></search>'
                 });
 
                 $locationProvider.hashPrefix('!');
@@ -24,7 +24,6 @@ angular.module('myApp').
     ]).
     run(['$rootScope', '$location', 'Token',
         function($rootScope, $location, Token) {
-
             var AuthNotReqRoutes = ['/', '/signup', '/login'];
 
             function checkIfAuthReq(route) {

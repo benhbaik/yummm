@@ -1,0 +1,25 @@
+<navbar></navbar>
+
+<h1>Search</h1>
+<form role="form">
+    <div class="input-group">
+        <input ng-model="searchCtrl.query" class="form-control" placeholder="What do you want to eat?" aria-describedby="basic-addon1" type="text">
+        <span class="input-group-btn">
+            <button ng-click="searchCtrl.search(searchCtrl.query)" class="btn btn-default" type="submit">Search</button>
+        </span>
+    </div>
+</form>
+
+<div ng-show="searchCtrl.loading" class="loader">
+    <img src="./images/ring.gif">
+</div>
+
+<ul class="list-group">
+    <li ng-repeat="result in searchCtrl.results" class="list-group-item">
+        <img ng-src="{{ result.recipe.image }}" class="recipe-image">
+        <h5>{{ result.recipe.label }}</h5>
+        <p>{{ result.recipe.calories | number:0 }} calories</p>
+        <p>{{ result.recipe.yield }} servings</p>
+        <button ng-click="searchCtrl.favorite(result.recipe)" class="btn btn-default" type="button">Favorite</button>
+    </li>
+</ul>

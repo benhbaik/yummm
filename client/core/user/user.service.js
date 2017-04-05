@@ -3,8 +3,6 @@
 angular.module('core.user', []).
     factory('User', ['$http',
         function($http) {
-            var loggedIn = false;
-
             return ({
                 getAll: getAll,
                 get: get,
@@ -13,7 +11,8 @@ angular.module('core.user', []).
             });
 
             function getAll() {
-                return $http.get('/api/users').then(function(res) {
+                return $http.get('/secure/users').then(function(res) {
+                    console.log(res.data);
                     return res.data;
                 }, function(err) {
                     return err;
@@ -21,7 +20,7 @@ angular.module('core.user', []).
             }
 
             function get(id) {
-                return $http.get('/api/users/' + id).then(function(res) {
+                return $http.get('/secure/users/' + id).then(function(res) {
                     return res.data;
                 }, function(err) {
                     return err;
@@ -29,7 +28,7 @@ angular.module('core.user', []).
             }
 
             function update(update, id) {
-                return $http.put('/api/users/' + id, update).then(function(res) {
+                return $http.put('/secure/users/' + id, update).then(function(res) {
                     return res.data;
                 }, function(err) {
                     return err;
@@ -37,7 +36,7 @@ angular.module('core.user', []).
             }
 
             function remove(id) {
-                return $http.delete('/api/users/' + id).then(function(res) {
+                return $http.delete('/secure/users/' + id).then(function(res) {
                     return res.data;
                 }, function(err) {
                     return err;
