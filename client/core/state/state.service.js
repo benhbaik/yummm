@@ -6,3 +6,4 @@ angular.module('core.state', []).
             currentRecipe: {}
         };
     });
+// TODO integrate more into state service
