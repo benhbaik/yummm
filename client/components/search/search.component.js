@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('search', ['core.token']).
+angular.module('search', ['core.token', 'core.state']).
     component('search', {
         templateUrl: 'components/search/search.html',
         controllerAs: 'searchCtrl',
-        controller: ['Recipe', 'Token',
-            function searchController(Recipe, Token) {
+        controller: ['Recipe', 'Token', 'State',
+            function searchController(Recipe, Token, State) {
                 var vm = this;
                 vm.query;
                 vm.results;
@@ -16,6 +16,7 @@ angular.module('search', ['core.token']).
                 vm.search = search;
                 vm.checkFavorites = checkFavorites;
                 vm.addToFavorites = addToFavorites;
+                vm.goToRecipe = goToRecipe;
 
                 Recipe.getFavorites(vm.user._id, vm);
 
@@ -41,7 +42,10 @@ angular.module('search', ['core.token']).
                         vm.favorites.push(recipe);
                         Recipe.addToFavorites(vm.user._id, { recipe: recipe }, vm);
                     }
+                }
 
+                function goToRecipe(recipe) {
+                    State.currentRecipe = recipe;
                 }
             }
         ]

@@ -1,3 +1,38 @@
 <navbar></navbar>
 
 <h1>detail</h1>
+
+<img ng-src="{{ detailCtrl.recipe.image }}" class="recipe-image">
+<h5>{{ detailCtrl.recipe.label }}</h5>
+<p>{{ detailCtrl.recipe.calories | number:0 }} calories</p>
+<p>{{ detailCtrl.recipe.yield }} servings</p>
+<a ng-href="{{ detailCtrl.recipe.url }}">Cooking Instructions</a>
+
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#ingredients" aria-expanded="false" aria-controls="ingredients">
+  Ingredients
+</button>
+
+<div class="collapse" id="ingredients">
+    <div class="well">
+        <ul class="list-group">
+            <li ng-repeat="ingredient in detailCtrl.recipe.ingredientLines" class="list-group-item">
+                {{ ingredient }}
+                <button class="btn btn-default" type="button">Add</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#health-labels" aria-expanded="false" aria-controls="health-labels">
+  Health Labels
+</button>
+
+<div class="collapse" id="health-labels">
+    <div class="well">
+        <ul class="list-group">
+            <li ng-repeat="healthLabel in detailCtrl.recipe.healthLabels" class="list-group-item">
+                {{ healthLabel }}
+            </li>
+        </ul>
+    </div>
+</div>

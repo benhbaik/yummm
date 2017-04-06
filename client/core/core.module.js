@@ -5,5 +5,6 @@ angular.module('core', [
     'core.user',
     'core.token',
     'core.auth',
-    'core.recipe'
+    'core.recipe',
+    'core.state'
 ]);
