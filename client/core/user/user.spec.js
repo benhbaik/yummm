@@ -33,7 +33,7 @@ describe('user', function() {
                     username: 'Baik'
                 }
             ];
-            $httpBackend.expectGET('/api/users').respond(userList);
+            $httpBackend.expectGET('/secure/users').respond(userList);
 
             var users = User.getAll();
 
@@ -46,7 +46,7 @@ describe('user', function() {
                 username: 'Ben',
                 id: '12345'
             };
-            $httpBackend.expectGET('/api/users/12345').respond(expectedUserData);
+            $httpBackend.expectGET('/secure/users/12345').respond(expectedUserData);
 
             var user = User.get('12345');
 
@@ -59,7 +59,7 @@ describe('user', function() {
                 username: 'username',
                 id: '12345'
             };
-            $httpBackend.expectPUT('/api/users/12345').respond(expectedUserData);
+            $httpBackend.expectPUT('/secure/users/12345').respond(expectedUserData);
 
             var updatedUser = User.update({username: 'username'}, '12345');
 
@@ -72,7 +72,7 @@ describe('user', function() {
                 username: 'username',
                 id: '12345'
             };
-            $httpBackend.expectDELETE('/api/users/12345').respond(expectedResponse);
+            $httpBackend.expectDELETE('/secure/users/12345').respond(expectedResponse);
 
             var deletedUser = User.remove('12345');
 

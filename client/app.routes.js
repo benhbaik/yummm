@@ -16,6 +16,12 @@ angular.module('myApp').
                 }).
                 when('/search', {
                     template: '<search></search>'
+                }).
+                when('/favorites', {
+                    template: '<favorites></favorites>'
+                }).
+                when('/detail', {
+                    template: '<detail></detail>'
                 });
 
                 $locationProvider.hashPrefix('!');
@@ -26,6 +32,12 @@ angular.module('myApp').
         function($rootScope, $location, Token) {
             var AuthNotReqRoutes = ['/', '/signup', '/login'];
 
+            $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
+                if (checkIfAuthReq($location.path()) && !Token.isLoggedIn()) {
+                    $location.path('/login');
+                }
+            });
+
             function checkIfAuthReq(route) {
                 for (var i = 0; i < AuthNotReqRoutes.length; i++) {
                     if (AuthNotReqRoutes[i] === route) {
@@ -34,11 +46,5 @@ angular.module('myApp').
                 }
                 return true;
             }
-
-            $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
-                if (checkIfAuthReq($location.path()) && !Token.isLoggedIn()) {
-                    $location.path('/login');
-                }
-            });
         }
     ]);

@@ -1,0 +1,28 @@
+<navbar></navbar>
+
+<ul ng-hide="favoritesCtrl.empty" class="list-group">
+    <li ng-repeat="favorite in favoritesCtrl.favorites" class="list-group-item">
+        <img ng-src="{{ favorite.image }}" class="recipe-image">
+        <h5>{{ favorite.label }}</h5>
+        <p>{{ favorite.calories | number:0 }} calories</p>
+        <p>{{ favorite.yield }} servings</p>
+        <button ng-click="favoritesCtrl.fetchRecipeToRemove(favorite)" class="btn btn-default" data-toggle="modal" data-target="#remove-alert" type="button">Remove</button>
+    </li>
+</ul>
+
+<div ng-show="favoritesCtrl.empty" class="empty">
+    <h3>{{ favoritesCtrl.message }}</h3>
+    <p>Find recipes <a href="#!/search">here!</a></p>
+</div>
+
+<div id="remove-alert" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure you want to remove this recipe from your favorites?</p>
+                <button ng-click="favoritesCtrl.removeFromFavorites(favoritesCtrl.recipeToRemove)" type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>

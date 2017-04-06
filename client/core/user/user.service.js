@@ -12,7 +12,6 @@ angular.module('core.user', []).
 
             function getAll() {
                 return $http.get('/secure/users').then(function(res) {
-                    console.log(res.data);
                     return res.data;
                 }, function(err) {
                     return err;

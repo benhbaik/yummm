@@ -38,7 +38,7 @@ describe('core.auth', function() {
         it('creates a new user', function() {
             var newUser;
 
-            $httpBackend.expectPOST('/api/users').respond(expected);
+            $httpBackend.expectPOST('/open/users').respond(expected);
             newUser = Auth.signup({
                 username: 'username',
                 password: 'password'
@@ -56,7 +56,7 @@ describe('core.auth', function() {
             }
             var promise;
 
-            $httpBackend.expectPOST('/api/login').respond(expected);
+            $httpBackend.expectPOST('/open/login').respond(expected);
 
             promise = Auth.login(userInfo, vm, $location);
             $httpBackend.flush();

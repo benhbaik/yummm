@@ -1,14 +1,16 @@
 var User = require('../models/userModel.js');
 var Table = require('../models/tableModel.js');
-var tokenService = require('./tokenService.js');
+var TokenService = require('./tokenService.js');
 
 exports.save = function(req, res) {
     var user = new User();
 
     user.username = req.body.username;
     user.password = req.body.password;
+    console.log(req.body);
 
     user.save(function(err, user) {
+
         if (err) {
             res.json(err);
         }
@@ -17,7 +19,6 @@ exports.save = function(req, res) {
                 username: user.username,
                 _id: user._id
             };
-
             Table.create({ userId: user._id }, function(err, userId) {
                 if (err) {
                     res.json(err);
@@ -26,7 +27,7 @@ exports.save = function(req, res) {
             res.json({
                 success: true,
                 message: 'User created!',
-                token: tokenService.createToken(payload)
+                token: TokenService.createToken(payload)
             });
         }
     });
@@ -42,8 +43,7 @@ exports.list = function(req, res) {
     });
 }
 exports.listOne = function(req, res) {
-    var userId = { _id: req.params.id };
-    User.findOne(userId, function(err, user) {
+    User.findOne({ _id: req.params.id }, function(err, user) {
         if (err) {
             res.json(err);
         }
@@ -53,23 +53,25 @@ exports.listOne = function(req, res) {
     });
 }
 exports.update = function(req, res) {
-    var userId = { _id: req.params.id };
-    var userUpdate = {
-        username: req.body.username,
-        password: req.body.password
-    };
-    User.findOneAndUpdate(userId, userUpdate, {new: true}, function(err, updatedUser) {
-        if (err) {
-            res.json(err);
+    User.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+            username: req.body.username,
+            password: req.body.password
+        },
+        {new: true},
+        function(err, updatedUser) {
+            if (err) {
+                res.json(err);
+            }
+            if (updatedUser) {
+                res.json('Successfully updated.');
+            }
         }
-        if (updatedUser) {
-            res.json(updatedUser);
-        }
-    });
+    );
 }
 exports.remove = function(req, res) {
-    var userId = req.params.id;
-    User.findOneAndRemove(userId, function(err, success) {
+    User.findOneAndRemove(req.params.id, function(err, success) {
         if (err) {
             res.json(err);
         }
@@ -79,38 +81,38 @@ exports.remove = function(req, res) {
     });
 }
 exports.login = function(req, res) {
-    var username = { username: req.body.username };
     var password = req.body.password;
 
-    User.findOne(username, 'username password', function(err, user) {
-        if (err) {
-            res.json(err);
-        }
-        if (user) {
-            if (user.comparePassword(password)) {
-                var payload = {
-                    username: user.username,
-                    _id: user._id
-                };
-                res.json({
-                    success: true,
-                    message: 'You are logged in.',
-                    token: tokenService.createToken(payload)
-                });
+    User.findOne({ username: req.body.username },
+        'username password',
+        function(err, user) {
+            if (err) {
+                res.json(err);
             }
-
-            if (!user.comparePassword(password)) {
+            if (user) {
+                if (user.comparePassword(req.body.password)) {
+                    var payload = {
+                        username: user.username,
+                        _id: user._id
+                    };
+                    res.json({
+                        success: true,
+                        message: 'You are logged in.',
+                        token: TokenService.createToken(payload)
+                    });
+                } else {
+                    res.json({
+                        success: false,
+                        message: 'Sorry, the password does not match.'
+                    });
+                }
+            }
+            if (!user) {
                 res.json({
                     success: false,
-                    message: 'Sorry, the password does not match.'
+                    message: 'Username is incorrect.'
                 });
             }
         }
-        if (!user) {
-            res.json({
-                success: false,
-                message: 'Username is incorrect.'
-            });
-        }
-    });
+    );
 }

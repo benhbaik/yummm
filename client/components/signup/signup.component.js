@@ -5,7 +5,7 @@ angular.module('signup', ['core.auth']).
         templateUrl: 'components/signup/signup.html',
         controllerAs: 'signupCtrl',
         controller: ['$location', 'Auth',
-            function($location, Auth) {
+            function signupController($location, Auth) {
                 var vm = this;
                 vm.errorMessage;
                 vm.success = true;
