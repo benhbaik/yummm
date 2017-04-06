@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('core.recipe', []).
-    factory('Recipe', ['$http',
+angular.module('core.recipe', ['core.token']).
+    factory('Recipe', ['$http', 'Token',
         function($http, Token) {
+            var user = Token.getUserData();
+
             return {
                 search: search,
                 addToFavorites: addToFavorites,
@@ -23,15 +25,14 @@ angular.module('core.recipe', []).
                         vm.results = data.hits;
                         vm.query = '';
                         vm.loading = false;
-
                     }).
                     error(function(data) {
                         return data;
                     });
             }
 
-            function addToFavorites(id, recipe, vm) {
-                $http.put('/secure/favorites/' + id, recipe).
+            function addToFavorites(recipe, vm) {
+                $http.post('/secure/favorites/' + user._id, recipe).
                     success(function(data) {
                         vm.message = data;
                     }).
@@ -40,22 +41,25 @@ angular.module('core.recipe', []).
                     });
             }
 
-            function removeFromFavorites(id, recipe) {
-                $http.put('/secure/favorites/delete/' + id, recipe).
+            function removeFromFavorites(recipe, vm) {
+                $http.put('/secure/favorites/delete/' + user._id, recipe).
                     success(function(data) {
-                        return data;
+                        vm.favorites = data;
+                        vm.recipeToRemove = null;
+                        if (vm.favorites.length === 0) {
+                            vm.empty = true;
+                        }
                     }).
                     error(function(data) {
                         return data;
                     });
             }
 
-            function getFavorites(id, vm) {
-                $http.get('/secure/favorites/' + id).
+            function getFavorites(vm) {
+                $http.get('/secure/favorites/' + user._id).
                     success(function(data) {
                         vm.favorites = data;
                         if (vm.favorites.length === 0) {
-                            vm.message = 'Favorites is empty.';
                             vm.empty = true;
                         }
                     }).

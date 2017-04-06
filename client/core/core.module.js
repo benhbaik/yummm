@@ -6,5 +6,5 @@ angular.module('core', [
     'core.token',
     'core.auth',
     'core.recipe',
-    'core.state'
+    'core.shoppingList'
 ]);

@@ -1,9 +1,9 @@
 <navbar></navbar>
 
 <ul ng-hide="favoritesCtrl.empty" class="list-group">
-    <li ng-repeat="favorite in favoritesCtrl.favorites" class="list-group-item">
+    <li ng-repeat="favorite in favoritesCtrl.favorites track by $index" class="list-group-item">
         <img ng-src="{{ favorite.image }}" class="recipe-image">
-        <h5>{{ favorite.label }}</h5>
+        <a ng-click="favoriteCtrl.goToRecipe(favorite)" href="#!/detail"><h5>{{ favorite.label }}</h5></a>
         <p>{{ favorite.calories | number:0 }} calories</p>
         <p>{{ favorite.yield }} servings</p>
         <button ng-click="favoritesCtrl.fetchRecipeToRemove(favorite)" class="btn btn-default" data-toggle="modal" data-target="#remove-alert" type="button">Remove</button>
@@ -11,7 +11,7 @@
 </ul>
 
 <div ng-show="favoritesCtrl.empty" class="empty">
-    <h3>{{ favoritesCtrl.message }}</h3>
+    <h3>Favorites is empty.</h3>
     <p>Find recipes <a href="#!/search">here!</a></p>
 </div>
 

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('core.auth', ['core.token']).
-    factory('Auth', [ '$http', 'Token',
-        function($http, Token) {
+    factory('Auth', [ '$http', '$window', 'Token',
+        function($http, $window, Token) {
             var isLoggedIn = false;
             return ({
                 login: login,
@@ -27,7 +27,8 @@ angular.module('core.auth', ['core.token']).
             }
 
             function logout() {
-                Token.remove();
+                Token.remove()
+                $window.removeItem('recipe');
             }
 
             function signup(userInfo, vm, location) {

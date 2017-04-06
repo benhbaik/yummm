@@ -1,30 +1,31 @@
 'use strict';
 
-angular.module('favorites', ['core.recipe', 'core.token']).
+angular.module('favorites', ['core.recipe']).
     component('favorites', {
         templateUrl: 'components/favorites/favorites.html',
         controllerAs: 'favoritesCtrl',
-        controller: ['Recipe', 'Token',
-            function favoritesController(Recipe, Token) {
+        controller: ['Recipe', '$window',
+            function favoritesController(Recipe, $window) {
                 var vm = this;
                 vm.favorites = [];
-                vm.message = '';
+                vm.empty = false;
                 vm.recipeToRemove = {};
-                vm.user = Token.getUserData();
                 vm.fetchRecipeToRemove = fetchRecipeToRemove;
                 vm.removeFromFavorites = removeFromFavorites;
+                vm.gotoRecipe = goToRecipe;
 
-                Recipe.getFavorites(vm.user._id, vm);
+                Recipe.getFavorites(vm);
 
                 function fetchRecipeToRemove(recipe) {
                     vm.recipeToRemove = recipe;
                 }
 
                 function removeFromFavorites(recipe) {
-                    var index = vm.favorites.indexOf(recipe);
-                    vm.favorites.splice(index, 1);
-                    Recipe.removeFromFavorites(vm.user._id, { recipe: recipe });
-                    vm.recipeToRemove = null;
+                    Recipe.removeFromFavorites({ recipe: recipe }, vm);
+                }
+
+                function goToRecipe(recipe) {
+                    $window.localStorage.setItem('recipe', JSON.stringify(recipe));
                 }
             }
         ]

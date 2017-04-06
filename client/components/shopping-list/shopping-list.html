@@ -1,0 +1,14 @@
+<navbar></navbar>
+
+<h1>Shopping List</h1>
+<ul class="list-group">
+    <li ng-repeat="item in shoppingListCtrl.items" class="list-group-item">
+        {{ item.item }}
+        <button ng-click="shoppingListCtrl.removeItem(item)" type="button" class="btn btn-default" data-dismiss="modal">Remove</button>
+    </li>
+</ul>
+
+<div ng-show="shoppingListCtrl.empty" class="empty">
+    <h3>Shopping list is empty.</h3>
+    <p>Find recipes <a href="#!/search">here!</a></p>
+</div>

@@ -26,7 +26,7 @@ exports.remove = function(req, res) {
                 res.json(err);
             }
             if (update) {
-                res.json('Removed from favorites.');
+                res.json(update.favorites);
             }
         }
     )

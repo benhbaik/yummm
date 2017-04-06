@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('search', ['core.token', 'core.state']).
+angular.module('search', ['core.token']).
     component('search', {
         templateUrl: 'components/search/search.html',
         controllerAs: 'searchCtrl',
-        controller: ['Recipe', 'Token', 'State',
-            function searchController(Recipe, Token, State) {
+        controller: ['Recipe', 'Token', '$window',
+            function searchController(Recipe, Token, $window) {
                 var vm = this;
                 vm.query;
                 vm.results;
@@ -18,7 +18,7 @@ angular.module('search', ['core.token', 'core.state']).
                 vm.addToFavorites = addToFavorites;
                 vm.goToRecipe = goToRecipe;
 
-                Recipe.getFavorites(vm.user._id, vm);
+                Recipe.getFavorites(vm);
 
                 function search(query) {
                     vm.loading = true;
@@ -40,12 +40,12 @@ angular.module('search', ['core.token', 'core.state']).
                         vm.message = 'Already a favorite!';
                     } else {
                         vm.favorites.push(recipe);
-                        Recipe.addToFavorites(vm.user._id, { recipe: recipe }, vm);
+                        Recipe.addToFavorites({ recipe: recipe }, vm);
                     }
                 }
 
                 function goToRecipe(recipe) {
-                    State.currentRecipe = recipe;
+                    $window.localStorage.setItem('recipe', JSON.stringify(recipe));
                 }
             }
         ]
