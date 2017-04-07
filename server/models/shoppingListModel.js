@@ -7,8 +7,7 @@ var TableSchema = new Schema({
         required: true,
         unique: true
     },
-    favorites: [],
-    shoppingList: []
+    favorites: []
 });
 
 module.exports = mongoose.model('Table', TableSchema);

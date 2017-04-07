@@ -15,5 +15,3 @@ angular.module('myApp', [
 config(function($httpProvider) {
     $httpProvider.interceptors.push('AuthInterceptor');
 });
-
-// TODO add edit shopping list feature, logout should display "thanks for visiting"

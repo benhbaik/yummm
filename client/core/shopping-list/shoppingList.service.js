@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('core.shoppingList', ['core.token']).
-    factory('ShoppingList', ['$http', '$window', 'Token',
-        function($http, $window, Token) {
-            var user = Token.getUserData();
+angular.module('core.shoppingList', ['core.auth']).
+    factory('ShoppingList', ['$http', '$window', 'Auth',
+        function($http, $window, Auth) {
+            var user = Auth.getUserData();
 
             return {
                 getItems: getItems,
@@ -16,6 +16,7 @@ angular.module('core.shoppingList', ['core.token']).
                 $http.get('/secure/shopping-list/' + user._id).
                     success(function(data) {
                         vm.items = data;
+                        console.log(vm.items);
                         if (vm.items.length === 0) {
                             vm.empty = true;
                         }
@@ -33,6 +34,7 @@ angular.module('core.shoppingList', ['core.token']).
                         item: items[i]
                     }
                 }
+
                 $http.post('/secure/shopping-list/' + user._id, { items: items }).
                     success(function(data) {
                         vm.arrayToAdd = [];
@@ -43,6 +45,8 @@ angular.module('core.shoppingList', ['core.token']).
             }
 
             function editItem(item) {
+                // strip angular $$hashkey
+                item = angular.toJson(item);
                 $http.put('/secure/shopping-list/' + user._id, { item: item }).
                     success(function(data) {
                         console.log(data);

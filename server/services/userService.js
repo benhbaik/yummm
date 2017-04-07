@@ -1,5 +1,6 @@
 var User = require('../models/userModel.js');
-var Table = require('../models/tableModel.js');
+var Favorites = require('../models/favoritesModel.js');
+var ShoppingList = require('../models/shoppingListModel.js');
 var TokenService = require('./tokenService.js');
 
 exports.save = function(req, res) {
@@ -7,7 +8,6 @@ exports.save = function(req, res) {
 
     user.username = req.body.username;
     user.password = req.body.password;
-    console.log(req.body);
 
     user.save(function(err, user) {
 
@@ -19,7 +19,12 @@ exports.save = function(req, res) {
                 username: user.username,
                 _id: user._id
             };
-            Table.create({ userId: user._id }, function(err, userId) {
+            Favorites.create({ userId: user._id }, function(err, favorites) {
+                if (err) {
+                    res.json(err);
+                }
+            });
+            ShoppingList.create({ userId: user._id }, function(err, shoppingList) {
                 if (err) {
                     res.json(err);
                 }
@@ -59,7 +64,7 @@ exports.update = function(req, res) {
             username: req.body.username,
             password: req.body.password
         },
-        {new: true},
+        { new: true },
         function(err, updatedUser) {
             if (err) {
                 res.json(err);

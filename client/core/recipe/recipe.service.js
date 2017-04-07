@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('core.recipe', ['core.token']).
-    factory('Recipe', ['$http', 'Token',
-        function($http, Token) {
-            var user = Token.getUserData();
+angular.module('core.recipe', ['core.auth']).
+    factory('Recipe', ['$http', 'Auth',
+        function($http, Auth) {
+            var user = Auth.getUserData();
 
             return {
                 search: search,

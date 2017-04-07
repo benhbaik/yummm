@@ -25,20 +25,23 @@ angular.module('myApp').
                 }).
                 when('/shopping-list', {
                     template: '<shopping-list></shopping-list>'
+                }).
+                when('/logged-out', {
+                    templateUrl: 'components/logged-out/loggedOut.html'
                 });
 
                 $locationProvider.hashPrefix('!');
                 $routeProvider.otherwise({redirectTo: '/'});
         }
     ]).
-    run(['$rootScope', '$location', 'Token',
-        function($rootScope, $location, Token) {
-            var AuthNotReqRoutes = ['/', '/signup', '/login'];
+    run(['$rootScope', '$location', 'Auth',
+        function($rootScope, $location, Auth) {
+            var AuthNotReqRoutes = ['/', '/signup', '/login', '/logged-out'];
             $rootScope.routeHistory = [];
 
             $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
                 trackRouteHistory();
-                if (checkIfAuthReq($location.path()) && !Token.isLoggedIn()) {
+                if (checkIfAuthReq($location.path()) && !Auth.isLoggedIn()) {
                     $location.path('/login');
                 }
             });

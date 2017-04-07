@@ -1,7 +1,7 @@
 'use strict';
 
 describe('core.navbar', function() {
-    var mockToken = {
+    var mockAuth = {
        isLoggedIn: function() {
            return true;
        },
@@ -14,9 +14,9 @@ describe('core.navbar', function() {
    };
 
     beforeEach(module('core.navbar'));
-    beforeEach(module('core.token', function($provide) {
-        $provide.factory('Token', function() {
-            return mockToken;
+    beforeEach(module('core.auth', function($provide) {
+        $provide.factory('Auth', function() {
+            return mockAuth;
         });
     }));
 

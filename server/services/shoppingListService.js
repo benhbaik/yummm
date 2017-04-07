@@ -1,4 +1,5 @@
 var Table = require('../models/tableModel');
+// TODO refactor shoppingListService
 
 exports.list = function(req, res) {
     Table.findOne({ userId: req.params.id }, function(err, table) {
@@ -27,12 +28,13 @@ exports.add = function(req, res) {
     )
 }
 
-// exports.update = function(req, res) {
-//     Table.findOneAndUpdate(
-//         { userId: req.params.id },
-//         {  }
-//     );
-// }
+exports.update = function(req, res) {
+
+    // Table.findOneAndUpdate(
+    //     { userId: req.params.id },
+    //     {  }
+    // );
+}
 
 exports.remove = function(req, res) {
     Table.findOneAndUpdate(

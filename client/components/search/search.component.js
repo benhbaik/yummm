@@ -1,17 +1,17 @@
 'use strict';
 
-angular.module('search', ['core.token']).
+angular.module('search', ['core.auth']).
     component('search', {
         templateUrl: 'components/search/search.html',
         controllerAs: 'searchCtrl',
-        controller: ['Recipe', 'Token', '$window',
-            function searchController(Recipe, Token, $window) {
+        controller: ['Recipe', 'Auth', '$window',
+            function searchController(Recipe, Auth, $window) {
                 var vm = this;
                 vm.query;
                 vm.results;
                 vm.loading = false;
                 vm.message;
-                vm.user = Token.getUserData();
+                vm.user = Auth.getUserData();
                 vm.favorites;
                 vm.search = search;
                 vm.checkFavorites = checkFavorites;
@@ -45,7 +45,7 @@ angular.module('search', ['core.token']).
                 }
 
                 function goToRecipe(recipe) {
-                    $window.localStorage.setItem('recipe', JSON.stringify(recipe));
+                    $window.localStorage.setItem('recipe', angular.toJson(recipe));
                 }
             }
         ]

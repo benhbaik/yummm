@@ -1,19 +1,19 @@
 'use-strict';
 
-angular.module('core.navbar', ['core.token']).
+angular.module('core.navbar', ['core.auth']).
     component('navbar', {
         templateUrl: 'core/navbar/navbar.html',
         controllerAs: 'navbarCtrl',
-        controller: ['$location', 'Token',
-            function($location, Token) {
+        controller: ['$location', 'Auth',
+            function($location, Auth) {
                 var vm = this;
-                vm.isLoggedIn = Token.isLoggedIn();
-                vm.currentUser = Token.getUserData();
+                vm.isLoggedIn = Auth.isLoggedIn();
+                vm.currentUser = Auth.getUserData();
                 vm.logoLink = function() {
                     return vm.isLoggedIn ? 'dashboard' : '';
                 }
                 vm.logout = function() {
-                    Token.remove();
+                    Auth.logout();
                 }
             }
         ]
