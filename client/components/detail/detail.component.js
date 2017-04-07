@@ -13,11 +13,7 @@ angular.module('detail', ['core.shoppingList']).
                 vm.toggleSelection = toggleSelection;
                 vm.addItems = addItems;
                 vm.lastRoute = $rootScope.routeHistory[routeIndex];
-                vm.lastRouteLink = function() {
-                    var link = vm.lastRoute;
-                    link = link.slice(1, link.length);
-                    return link;
-                };
+                vm.lastRouteLink = lastRouteLink;
 
                 function toggleSelection(item) {
                     var index = vm.arrayToAdd.indexOf(item);
@@ -35,6 +31,15 @@ angular.module('detail', ['core.shoppingList']).
                     });
                     ShoppingList.saveItems(array, vm);
                 }
+
+                function lastRouteLink() {
+                    if (vm.lastRoute) {
+                        var link = vm.lastRoute;
+                        link = link.slice(1, link.length);
+                        return link;
+                    }
+                    return false;
+                };
             }
         ]
     });

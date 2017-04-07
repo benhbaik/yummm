@@ -9,8 +9,14 @@ angular.module('shoppingList', ['core.shoppingList']).
                 var vm = this;
                 vm.items;
                 vm.empty = false;
-                vm.removeItem = removeItem;
+                vm.currentInput = '';
+                vm.activateEdit = activateEdit;
+                vm.toggleView = toggleView;
                 vm.editItem = editItem;
+
+                vm.testFunc = function() {
+                    console.log('touched');
+                }
 
                 ShoppingList.getItems(vm);
 
@@ -18,8 +24,19 @@ angular.module('shoppingList', ['core.shoppingList']).
                     ShoppingList.removeItem(item, vm);
                 }
 
+                function activateEdit(id) {
+                    vm.currentInput = id;
+                }
+
+                function toggleView(id) {
+                    if (vm.currentInput === id) {
+                        return true;
+                    }
+                    return false;
+                }
+
                 function editItem(item) {
-                    ShoppingList.editItem(item);
+                    ShoppingList.editItem({ item: item, id: vm.currentInput }, vm);
                 }
             }
         ]

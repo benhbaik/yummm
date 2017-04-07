@@ -1,6 +1,5 @@
 var User = require('../models/userModel.js');
-var Favorites = require('../models/favoritesModel.js');
-var ShoppingList = require('../models/shoppingListModel.js');
+var Table = require('../models/tableModel');
 var TokenService = require('./tokenService.js');
 
 exports.save = function(req, res) {
@@ -19,12 +18,7 @@ exports.save = function(req, res) {
                 username: user.username,
                 _id: user._id
             };
-            Favorites.create({ userId: user._id }, function(err, favorites) {
-                if (err) {
-                    res.json(err);
-                }
-            });
-            ShoppingList.create({ userId: user._id }, function(err, shoppingList) {
+            Table.create({ userId: user._id }, function(err, table) {
                 if (err) {
                     res.json(err);
                 }

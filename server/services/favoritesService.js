@@ -1,5 +1,4 @@
 var Table = require('../models/tableModel.js');
-// TODO refactor favoritesService
 
 exports.add = function(req, res) {
     Table.findOneAndUpdate(

@@ -1,7 +1,7 @@
 <navbar></navbar>
 
 <h1>detail</h1>
-<p>Back to <a ng-href="#!{{ detailCtrl.lastRoute }}">{{ detailCtrl.lastRouteLink() }}</a></p>
+<p ng-show="detailCtrl.lastRouteLink()">Back to <a ng-href="#!{{ detailCtrl.lastRoute }}">{{ detailCtrl.lastRouteLink() }}</a></p>
 
 <img ng-src="{{ detailCtrl.recipe.image }}" class="recipe-image">
 <h5>{{ detailCtrl.recipe.label }}</h5>

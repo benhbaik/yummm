@@ -38,14 +38,6 @@ describe('yummm', function() {
              expect(loggedOutMenu.isDisplayed()).toBe(false);
              expect(loggedInMenu.isDisplayed()).toBe(true);
          });
-
-         // TODO this test is not valid, already at dashboard after login
-        //  it('changes href of logo after login', function() {
-        //      var logo = element(by.css('.logo a'));
-        //      logo.click();
-         //
-        //      expect(browser.getLocationAbsUrl()).toMatch('/dashboard');
-        //  });
      });
 
      describe('incorrect login', function() {

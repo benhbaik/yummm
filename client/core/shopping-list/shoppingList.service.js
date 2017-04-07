@@ -44,15 +44,17 @@ angular.module('core.shoppingList', ['core.auth']).
                     });
             }
 
-            function editItem(item) {
+            function editItem(item, vm) {
                 // strip angular $$hashkey
                 item = angular.toJson(item);
+                item = JSON.parse(item);
                 $http.put('/secure/shopping-list/' + user._id, { item: item }).
                     success(function(data) {
-                        console.log(data);
+                        vm.items = data;
+                        vm.currentInput = '';
                     }).
                     error(function(data) {
-                        console.log(data);
+                        return data;
                     });
             }
 

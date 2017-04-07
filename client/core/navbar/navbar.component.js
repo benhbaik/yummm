@@ -10,7 +10,7 @@ angular.module('core.navbar', ['core.auth']).
                 vm.isLoggedIn = Auth.isLoggedIn();
                 vm.currentUser = Auth.getUserData();
                 vm.logoLink = function() {
-                    return vm.isLoggedIn ? 'dashboard' : '';
+                    return vm.isLoggedIn ? 'search' : '';
                 }
                 vm.logout = function() {
                     Auth.logout();

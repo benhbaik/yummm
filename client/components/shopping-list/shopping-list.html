@@ -1,9 +1,12 @@
 <navbar></navbar>
 
-<h1>Shopping List</h1>
+<h1 dbltap="shoppingListCtrl.testFunc()">Shopping List</h1>
 <ul class="list-group">
     <li ng-repeat="item in shoppingListCtrl.items" class="list-group-item">
-        <p ng-dblclick="shoppingListCtrl.editItem(item)">{{ item.item }}</p>
+        <p ng-dblclick="shoppingListCtrl.activateEdit(item.id)">{{ item.item }}</p>
+        <form ng-submit="shoppingListCtrl.editItem(newItem)">
+            <input ng-show="shoppingListCtrl.toggleView(item.id)" ng-model="newItem" id="{{ item.id }}" autofocus type="text">
+        </form>
         <button ng-click="shoppingListCtrl.removeItem(item)" type="button" class="btn btn-default" data-dismiss="modal">Remove</button>
     </li>
 </ul>
