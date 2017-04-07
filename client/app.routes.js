@@ -3,6 +3,8 @@
 angular.module('myApp').
     config(['$locationProvider', '$routeProvider',
         function($locationProvider, $routeProvider) {
+            $locationProvider.hashPrefix('!');
+            $routeProvider.otherwise({redirectTo: '/'});
 
             $routeProvider.
                 when('/', {
@@ -29,14 +31,11 @@ angular.module('myApp').
                 when('/logged-out', {
                     templateUrl: 'components/logged-out/loggedOut.html'
                 });
-
-                $locationProvider.hashPrefix('!');
-                $routeProvider.otherwise({redirectTo: '/'});
         }
     ]).
     run(['$rootScope', '$location', 'Auth',
         function($rootScope, $location, Auth) {
-            var AuthNotReqRoutes = ['/', '/signup', '/login', '/logged-out'];
+            var noAuthRoutes = ['/', '/signup', '/login', '/logged-out'];
             $rootScope.routeHistory = [];
 
             $rootScope.$on('$routeChangeStart', function(event, nextRoute, currentRoute) {
@@ -46,6 +45,7 @@ angular.module('myApp').
                 }
             });
 
+            // for 'back to' link in detail component
             function trackRouteHistory() {
                 if ($rootScope.routeHistory.length === 5) {
                     $rootScope.routeHistory.shift();
@@ -54,8 +54,8 @@ angular.module('myApp').
             }
 
             function checkIfAuthReq(route) {
-                for (var i = 0; i < AuthNotReqRoutes.length; i++) {
-                    if (AuthNotReqRoutes[i] === route) {
+                for (var i = 0; i < noAuthRoutes.length; i++) {
+                    if (noAuthRoutes[i] === route) {
                         return false;
                     }
                 }

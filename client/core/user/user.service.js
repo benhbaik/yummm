@@ -3,6 +3,7 @@
 angular.module('core.user', []).
     factory('User', ['$http',
         function($http) {
+            // for future features
             return ({
                 getAll: getAll,
                 get: get,

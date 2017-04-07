@@ -23,11 +23,6 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
     var user = this;
-
-    if (!user.isModified('password')) {
-        return next();
-    }
-
     var salt = bcrypt.genSalt(12, function(err, result) {
         if (err) {
             return next(err);
@@ -36,6 +31,10 @@ UserSchema.pre('save', function(next) {
             return result;
         }
     });
+
+    if (!user.isModified('password')) {
+        return next();
+    }
 
     bcrypt.hash(user.password, salt, null, function(err, hash) {
 

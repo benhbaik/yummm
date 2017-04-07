@@ -8,8 +8,7 @@ exports.add = function(req, res) {
         function(err, update) {
             if (err) {
                 res.json(err);
-            }
-            if (update) {
+            } else if (update) {
                 res.json('Added to favorites.');
             }
         }
@@ -24,8 +23,7 @@ exports.remove = function(req, res) {
         function(err, update) {
             if (err) {
                 res.json(err);
-            }
-            if (update) {
+            } else if (update) {
                 res.json(update.favorites);
             }
         }
@@ -36,8 +34,7 @@ exports.list = function(req, res) {
     Table.findOne({ userId: req.params.id }, function(err, table) {
         if (err) {
             res.json(err);
-        }
-        if (table) {
+        } else if (table) {
             res.json(table.favorites);
         }
     });

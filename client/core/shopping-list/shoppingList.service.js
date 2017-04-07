@@ -16,7 +16,6 @@ angular.module('core.shoppingList', ['core.auth']).
                 $http.get('/secure/shopping-list/' + user._id).
                     success(function(data) {
                         vm.items = data;
-                        console.log(vm.items);
                         if (vm.items.length === 0) {
                             vm.empty = true;
                         }
@@ -48,6 +47,7 @@ angular.module('core.shoppingList', ['core.auth']).
                 // strip angular $$hashkey
                 item = angular.toJson(item);
                 item = JSON.parse(item);
+
                 $http.put('/secure/shopping-list/' + user._id, { item: item }).
                     success(function(data) {
                         vm.items = data;

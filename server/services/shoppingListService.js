@@ -19,8 +19,7 @@ exports.add = function(req, res) {
         function(err, update) {
             if (err) {
                 res.json(err);
-            }
-            if (update) {
+            } else if (update) {
                 res.json(update.shoppingList);
             }
         }
@@ -35,8 +34,7 @@ exports.update = function(req, res) {
         function(err, update) {
             if (err) {
                 res.json(err);
-            }
-            if (update) {
+            } else if (update) {
                 res.json(update.shoppingList);
             }
         }
@@ -51,8 +49,7 @@ exports.remove = function(req, res) {
         function(err, update) {
             if (err) {
                 res.json(err);
-            }
-            if (update) {
+            } else if (update) {
                 res.json(update.shoppingList);
             }
         }

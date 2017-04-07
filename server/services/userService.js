@@ -12,8 +12,7 @@ exports.save = function(req, res) {
 
         if (err) {
             res.json(err);
-        }
-        if (user) {
+        } else if (user) {
             var payload = {
                 username: user.username,
                 _id: user._id
@@ -35,8 +34,7 @@ exports.list = function(req, res) {
     User.find(function(err, users) {
         if (err) {
             res.json(err);
-        }
-        if (users) {
+        } else if (users) {
             res.json(users);
         }
     });
@@ -45,8 +43,7 @@ exports.listOne = function(req, res) {
     User.findOne({ _id: req.params.id }, function(err, user) {
         if (err) {
             res.json(err);
-        }
-        if (user) {
+        } else if (user) {
             res.json(user);
         }
     });
@@ -62,8 +59,7 @@ exports.update = function(req, res) {
         function(err, updatedUser) {
             if (err) {
                 res.json(err);
-            }
-            if (updatedUser) {
+            } else if (updatedUser) {
                 res.json('Successfully updated.');
             }
         }
@@ -73,8 +69,7 @@ exports.remove = function(req, res) {
     User.findOneAndRemove(req.params.id, function(err, success) {
         if (err) {
             res.json(err);
-        }
-        if (success) {
+        } else if (success) {
             res.json(success);
         }
     });
@@ -87,8 +82,7 @@ exports.login = function(req, res) {
         function(err, user) {
             if (err) {
                 res.json(err);
-            }
-            if (user) {
+            } else if (user) {
                 if (user.comparePassword(req.body.password)) {
                     var payload = {
                         username: user.username,
@@ -99,14 +93,12 @@ exports.login = function(req, res) {
                         message: 'You are logged in.',
                         token: TokenService.createToken(payload)
                     });
-                } else {
-                    res.json({
-                        success: false,
-                        message: 'Sorry, the password does not match.'
-                    });
                 }
-            }
-            if (!user) {
+                res.json({
+                    success: false,
+                    message: 'Sorry, the password does not match.'
+                });
+            } else if (!user) {
                 res.json({
                     success: false,
                     message: 'Username is incorrect.'

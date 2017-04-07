@@ -1,26 +1,26 @@
 'use strict';
 
 angular.module('myApp').
-directive('dbltap', function() {
+directive('dbltap', function($timeout) {
     var dbltapInteval = 300; // milliseconds
     var tapTime;
-    var standingby = false;
+    var standby = false;
 
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
             element.bind('touchend', function(e) {
-                if (!standingby) {
+                if (!standby) {
                     tapTime = new Date().getTime();
-                    standingby = true;
+                    standby = true;
 
-                    setTimeout(function() {
-                        standingby = false;
+                    $timeout(function() {
+                        standby = false;
                     }, dbltapInteval);
                 }
-                else if (standingby) {
+                else if (standby) {
                 var secondTapTime = new Date().getTime();
-                    standingby = false;
+                    standby = false;
                         if ((secondTapTime - tapTime) < dbltapInteval) {
                         scope.$apply(attrs.dbltap);
                     }
