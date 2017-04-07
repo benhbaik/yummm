@@ -10,10 +10,12 @@ angular.module('shoppingList', ['core.shoppingList']).
                 vm.items;
                 vm.empty = false;
                 vm.currentInput = '';
+                vm.itemToRemove = {};
                 vm.activateEdit = activateEdit;
                 vm.deactivateEdit = deactivateEdit;
                 vm.toggleView = toggleView;
                 vm.editItem = editItem;
+                vm.fetchItemToRemove = fetchItemToRemove;
                 vm.removeItem = removeItem;
 
                 ShoppingList.getItems(vm);
@@ -36,6 +38,10 @@ angular.module('shoppingList', ['core.shoppingList']).
 
                 function editItem(item) {
                     ShoppingList.editItem({ item: item, id: vm.currentInput }, vm);
+                }
+
+                function fetchItemToRemove(item) {
+                    vm.itemToRemove = item;
                 }
 
                 function removeItem(item) {

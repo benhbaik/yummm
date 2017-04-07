@@ -5,11 +5,23 @@
     <li ng-repeat="item in shoppingListCtrl.items" class="list-group-item">
         <p ng-dblclick="shoppingListCtrl.activateEdit(item.id)" dbltap="shoppingListCtrl.activateEdit(item.id)">{{ item.item }}</p>
         <input ng-show="shoppingListCtrl.toggleView(item.id)" ng-blur="shoppingListCtrl.deactivateEdit()" change="shoppingListCtrl.editItem(newItem)" focus="shoppingListCtrl.toggleView(item.id)" ng-model="newItem" id="{{ item.id }}" type="text">
-        <button ng-click="shoppingListCtrl.removeItem(item)" type="button" class="btn btn-default" data-dismiss="modal">Remove</button>
+        <button ng-click="shoppingListCtrl.fetchItemToRemove(item)" type="button" data-toggle="modal" data-target="#remove-alert" class="btn btn-default">Remove</button>
     </li>
 </ul>
 
 <div ng-show="shoppingListCtrl.empty" class="empty">
     <h3>Shopping list is empty.</h3>
     <p>Find recipes <a href="#!/search">here!</a></p>
+</div>
+
+<div id="remove-alert" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <p>Are you sure you want to remove this item?</p>
+                <button ng-click="shoppingListCtrl.removeItem(shoppingListCtrl.itemToRemove)" type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
 </div>

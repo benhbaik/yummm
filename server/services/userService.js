@@ -75,8 +75,6 @@ exports.remove = function(req, res) {
     });
 }
 exports.login = function(req, res) {
-    var password = req.body.password;
-
     User.findOne({ username: req.body.username },
         'username password',
         function(err, user) {
@@ -93,11 +91,12 @@ exports.login = function(req, res) {
                         message: 'You are logged in.',
                         token: TokenService.createToken(payload)
                     });
+                } else {
+                    res.json({
+                        success: false,
+                        message: 'Sorry, the password does not match.'
+                    });
                 }
-                res.json({
-                    success: false,
-                    message: 'Sorry, the password does not match.'
-                });
             } else if (!user) {
                 res.json({
                     success: false,

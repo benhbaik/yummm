@@ -64,6 +64,7 @@ angular.module('core.shoppingList', ['core.auth']).
                         vm.items = data;
                         if (vm.items.length === 0) {
                             vm.empty = true;
+                            vm.itemToRemove = '';
                         }
                     }).
                     error(function(data) {
