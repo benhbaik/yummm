@@ -11,24 +11,23 @@ angular.module('shoppingList', ['core.shoppingList']).
                 vm.empty = false;
                 vm.currentInput = '';
                 vm.activateEdit = activateEdit;
+                vm.deactivateEdit = deactivateEdit;
                 vm.toggleView = toggleView;
                 vm.editItem = editItem;
-
-                vm.testFunc = function() {
-                    console.log('touched');
-                }
+                vm.removeItem = removeItem;
 
                 ShoppingList.getItems(vm);
-
-                function removeItem(item) {
-                    ShoppingList.removeItem(item, vm);
-                }
 
                 function activateEdit(id) {
                     vm.currentInput = id;
                 }
 
+                function deactivateEdit() {
+                    vm.currentInput = '';
+                }
+
                 function toggleView(id) {
+                    // prevent other li's from showing
                     if (vm.currentInput === id) {
                         return true;
                     }
@@ -37,6 +36,10 @@ angular.module('shoppingList', ['core.shoppingList']).
 
                 function editItem(item) {
                     ShoppingList.editItem({ item: item, id: vm.currentInput }, vm);
+                }
+
+                function removeItem(item) {
+                    ShoppingList.removeItem(item, vm);
                 }
             }
         ]

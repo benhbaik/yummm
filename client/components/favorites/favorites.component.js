@@ -17,6 +17,7 @@ angular.module('favorites', ['core.recipe']).
                 Recipe.getFavorites(vm);
 
                 function fetchRecipeToRemove(recipe) {
+                    // carry recipe from li to modal
                     vm.recipeToRemove = recipe;
                 }
 

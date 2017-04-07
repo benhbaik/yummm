@@ -9,10 +9,11 @@ angular.module('signup', ['core.auth']).
                 var vm = this;
                 vm.errorMessage;
                 vm.success = true;
-                vm.signup = function(credentials) {
+                vm.signup = signup;
+
+                function signup(credentials) {
                     credentials.username.trim();
                     credentials.password.trim();
-
                     Auth.signup(credentials, vm, $location);
                 }
             }
