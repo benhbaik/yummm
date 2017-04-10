@@ -53,10 +53,10 @@ angular.module('core.auth', []).
 
             function getUserData() {
                 var token = $window.localStorage.getItem('token');
-                var payload = token.split('.')[1];
+                var payload;
 
                 if (token) {
-
+                    payload = token.split('.')[1];
                     payload = $window.atob(payload);
                     payload = JSON.parse(payload);
 

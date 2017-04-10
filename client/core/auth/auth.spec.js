@@ -20,17 +20,17 @@ describe('core.auth', function() {
             Auth = _Auth_;
         }));
 
-        // afterEach(function() {
-        //     http.verifyNoOutstandingExpectation();
-        //     http.verifyNoOutstandingRequest();
-        // });
+        afterEach(function() {
+            http.verifyNoOutstandingExpectation();
+            http.verifyNoOutstandingRequest();
+        });
 
         describe('login method', function() {
             var user;
             var result;
             var expected;
 
-            beforeEach(function(done) {
+            beforeEach(function() {
                 user = {
                     username: 'username',
                     password: 'password'
@@ -46,21 +46,19 @@ describe('core.auth', function() {
 
                 http.expectPOST('/open/login').respond(expected);
 
-                Auth.login(user).
-                    success(function(data) {
-                        result = data;
-                        done();
-                    }).
-                    error(function(data) {
-                        result = data;
-                        done();
-                    });
-
-                http.flush();
             });
-
             it('returns a token on login', function() {
-                expect(result).toEqual(expected);
+                Auth.login(user).
+                success(function(data) {
+                    result = data;
+                    expect(result).toEqual(expected);
+                }).
+                error(function(data) {
+                    result = data;
+                    expect(result).toEqual(expected);
+                });
+                
+                http.flush();
             });
         
         });
@@ -85,7 +83,7 @@ describe('core.auth', function() {
             var result;
             var expected;
 
-            beforeEach(function(done) {
+            beforeEach(function() {
                 user = {
                     username: 'username',
                     password: 'password'
@@ -101,22 +99,19 @@ describe('core.auth', function() {
                 };
 
                 http.expectPOST('/open/users').respond(expected);
-
+            });
+            it('returns a token on signup', function() {
                 Auth.signup(user).
-                    success(function(data) {
-                        result = data;
-                        done();
-                    }).
-                    error(function(data) {
-                        result = data;
-                        done();
-                    });
+                success(function(data) {
+                    result = data;
+                    expect(result).toEqual(expected);
+                }).
+                error(function(data) {
+                    result = data;
+                    expect(result).toEqual(expected);
+                });
 
                 http.flush();
-            });
-
-            it('returns a token on signup', function() {
-                expect(result).toEqual(expected);
             });
         });
 

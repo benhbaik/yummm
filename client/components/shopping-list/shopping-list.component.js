@@ -19,15 +19,15 @@ angular.module('shoppingList', ['core.shoppingList']).
                 vm.removeItem = removeItem;
 
                 ShoppingList.getItems().
-                    success(function(data) {
-                        vm.items = data;
-                        if (vm.items.length === 0) {
-                            vm.empty = true;
-                        }
-                    }).
-                    error(function(data) {
-                        return data;
-                    });
+                success(function(data) {
+                    vm.items = data;
+                    if (vm.items.length === 0) {
+                        vm.empty = true;
+                    }
+                }).
+                error(function(data) {
+                    return data;
+                });
 
                 function activateEdit(id) {
                     vm.currentInput = id;

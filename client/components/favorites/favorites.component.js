@@ -14,7 +14,16 @@ angular.module('favorites', ['core.recipe']).
                 vm.removeFromFavorites = removeFromFavorites;
                 vm.goToRecipe = goToRecipe;
 
-                Recipe.getFavorites(vm);
+                Recipe.getFavorites().
+                success(function(data) {
+                    vm.favorites = data;
+                    if (vm.favorites.length === 0) {
+                        vm.empty = true;
+                    }
+                }).
+                error(function(data) {
+                    return data;
+                });
 
                 function fetchRecipeToRemove(recipe) {
                     // carry recipe from li to modal
@@ -22,7 +31,17 @@ angular.module('favorites', ['core.recipe']).
                 }
 
                 function removeFromFavorites(recipe) {
-                    Recipe.removeFromFavorites({ recipe: recipe }, vm);
+                    Recipe.removeFromFavorites({ recipe: recipe }).
+                    success(function(data) {
+                        vm.favorites = data;
+                        vm.recipeToRemove = null;
+                        if (vm.favorites.length === 0) {
+                            vm.empty = true;
+                        }
+                    }).
+                    error(function(data) {
+                        return data;
+                    });
                 }
 
                 function goToRecipe(recipe) {

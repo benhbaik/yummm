@@ -7,12 +7,11 @@ angular.module('search', ['core.auth']).
         controller: ['Recipe', 'Auth', '$window',
             function searchController(Recipe, Auth, $window) {
                 var vm = this;
-                vm.query;
-                vm.results;
+                vm.query = '';
+                vm.results = [];
                 vm.loading = false;
-                vm.message;
-                vm.user = Auth.getUserData();
-                vm.favorites;
+                vm.message = '';
+                vm.favorites = [];
                 vm.search = search;
                 vm.checkFavorites = checkFavorites;
                 vm.addToFavorites = addToFavorites;
@@ -22,8 +21,18 @@ angular.module('search', ['core.auth']).
 
                 function search(query) {
                     vm.loading = true;
+
                     query.trim();
-                    Recipe.search(query, vm);
+
+                    Recipe.search(query).
+                    success(function(data) {
+                        vm.results = data.hits;
+                        vm.query = '';
+                        vm.loading = false;
+                    }).
+                    error(function(data) {
+                        return data;
+                    });
                 }
 
                 function checkFavorites(recipe) {
@@ -40,7 +49,14 @@ angular.module('search', ['core.auth']).
                         vm.message = 'Already a favorite!';
                     } else {
                         vm.favorites.push(recipe);
-                        Recipe.addToFavorites({ recipe: recipe }, vm);
+
+                        Recipe.addToFavorites({ recipe: recipe }).
+                        success(function(data) {
+                            vm.message = data;
+                        }).
+                        error(function(data) {
+                            return data;
+                        });
                     }
                 }
 

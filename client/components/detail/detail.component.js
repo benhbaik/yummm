@@ -18,6 +18,7 @@ angular.module('detail', ['core.shoppingList']).
 
                 function toggleSelection(item) {
                     var index = vm.arrayToAdd.indexOf(item);
+
                     if (index === -1) {
                         vm.arrayToAdd.push(item);
                     } else if (index >= 0) {
@@ -27,16 +28,18 @@ angular.module('detail', ['core.shoppingList']).
 
                 function addItems(array) {
                     var checkboxes = angular.element('.ingredient-checkbox');
+
                     checkboxes.each(function(index) {
                         checkboxes[index].checked = false;
                     });
+
                     ShoppingList.saveItems(array).
-                        success(function(data) {
-                            vm.arrayToAdd = [];
-                        }).
-                        error(function(data) {
-                            console.error(data);
-                        });
+                    success(function(data) {
+                        vm.arrayToAdd = [];
+                    }).
+                    error(function(data) {
+                        console.error(data);
+                    });
                 }
 
                 // word for back to link
@@ -46,6 +49,7 @@ angular.module('detail', ['core.shoppingList']).
                         link = link.slice(1, link.length);
                         return link;
                     }
+                    
                     return false;
                 }
             }

@@ -9,7 +9,7 @@ describe('core.navbar', function() {
             getUserData: function() {
                 return {
                     username: 'user',
-                    password: 'pass'
+                    _id: '58dad8d0a6a942e2319cedab'
                 };
             },
             logout: function() {}
@@ -50,7 +50,7 @@ describe('core.navbar', function() {
         describe('vm.current user', function() {
             var user = {
                     username: 'user',
-                    password: 'pass'
+                    _id: '58dad8d0a6a942e2319cedab'
                 };
             it('equals logged in user data', function() {
                 expect(ctrl.currentUser).toEqual(user);
@@ -80,11 +80,5 @@ describe('core.navbar', function() {
                 expect(ctrl.logout).toHaveBeenCalled();
             });
         });
-        // it ('logoLink should change based on isLoggedIn', function() {
-        //     ctrl.isLoggedIn = false;
-        //     expect(ctrl.logoLink()).toBe('');
-        //     ctrl.isLoggedIn = true;
-        //     expect(ctrl.logoLink()).toBe('dashboard');
-        // });
     });
 });
