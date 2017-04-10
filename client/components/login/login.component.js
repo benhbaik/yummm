@@ -17,7 +17,7 @@ angular.module('login', ['core.auth']).
                     success(function(data) {
                         vm.success = data.success;
                         if (vm.success) {
-                            window.localStorage.setItem('token', data.token);
+                            $window.localStorage.setItem('token', data.token);
                             $location.path('search');
                         } else if (!vm.success) {
                             vm.errorMessage = data.message;

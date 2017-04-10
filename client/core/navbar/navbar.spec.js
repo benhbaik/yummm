@@ -1,24 +1,27 @@
 'use strict';
 
 describe('core.navbar', function() {
-    var mockAuth = {
-       isLoggedIn: function() {
-           return true;
-       },
-       getUserData: function() {
-           return {
-               username: 'user',
-               password: 'pass'
-           };
-       }
-   };
+    beforeEach(function() {
+        var mockAuth = {
+            isLoggedIn: function() {
+                return true;
+            },
+            getUserData: function() {
+                return {
+                    username: 'user',
+                    password: 'pass'
+                };
+            },
+            logout: function() {}
+        };
 
-    beforeEach(module('core.navbar'));
-    beforeEach(module('core.auth', function($provide) {
-        $provide.factory('Auth', function() {
-            return mockAuth;
+        module('core.navbar');
+        module('core.auth', function($provide) {
+            $provide.factory('Auth', function() {
+                return mockAuth;
+            });
         });
-    }));
+    });
 
     it('should be defined', function() {
         var navbarModule = angular.module('core.navbar');
@@ -30,6 +33,7 @@ describe('core.navbar', function() {
         var ctrl;
 
         beforeEach(inject(function($componentController) {
+            jasmine.addCustomEqualityTester(angular.equals);
             ctrl = $componentController('navbar');
         }));
 
@@ -37,11 +41,50 @@ describe('core.navbar', function() {
             expect(ctrl).toBeDefined();
         });
 
-        it ('logoLink should change based on isLoggedIn', function() {
-            ctrl.isLoggedIn = false;
-            expect(ctrl.logoLink()).toBe('');
-            ctrl.isLoggedIn = true;
-            expect(ctrl.logoLink()).toBe('dashboard');
+        describe('vm.isLoggedIn', function() {
+            it('equals boolean of login status', function() {
+                expect(ctrl.isLoggedIn).toBe(true);
+            });
         });
+
+        describe('vm.current user', function() {
+            var user = {
+                    username: 'user',
+                    password: 'pass'
+                };
+            it('equals logged in user data', function() {
+                expect(ctrl.currentUser).toEqual(user);
+            });
+        });
+
+        describe('logoLink method', function() {
+            it('returns "search" if logged in', function() {
+                expect(ctrl.logoLink()).toBe('search');
+            });
+        });
+
+        describe('logoLink method', function() {
+            it('returns empty string if logged out', function() {
+                ctrl.isLoggedIn = false;
+                expect(ctrl.logoLink()).toBe('');
+            });
+        });
+
+        describe('logout method', function() {
+            beforeEach(function() {
+                spyOn(ctrl, 'logout');
+                ctrl.logout();
+            });
+
+            it('calls logout()', function() {
+                expect(ctrl.logout).toHaveBeenCalled();
+            });
+        });
+        // it ('logoLink should change based on isLoggedIn', function() {
+        //     ctrl.isLoggedIn = false;
+        //     expect(ctrl.logoLink()).toBe('');
+        //     ctrl.isLoggedIn = true;
+        //     expect(ctrl.logoLink()).toBe('dashboard');
+        // });
     });
 });
