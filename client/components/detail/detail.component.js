@@ -5,15 +5,14 @@ angular.module('detail', ['core.shoppingList']).
         templateUrl: 'components/detail/detail.html',
         controllerAs: 'detailCtrl',
         controller: ['ShoppingList', '$window', '$rootScope',
-            function(ShoppingList, $window, $rootScope) {
+            function(ShoppingList, $window, $scope) {
                 var vm = this;
-                var routeIndex = $rootScope.routeHistory.length - 2;
 
                 vm.recipe = JSON.parse($window.localStorage.getItem('recipe'));
                 vm.arrayToAdd = [];
                 vm.toggleSelection = toggleSelection;
                 vm.addItems = addItems;
-                vm.lastRoute = $rootScope.routeHistory[routeIndex];
+                vm.lastRoute = lastRoute;
                 vm.lastRouteLink = lastRouteLink;
 
                 function toggleSelection(item) {
@@ -29,23 +28,32 @@ angular.module('detail', ['core.shoppingList']).
                 function addItems(array) {
                     var checkboxes = angular.element('.ingredient-checkbox');
 
-                    checkboxes.each(function(index) {
-                        checkboxes[index].checked = false;
-                    });
-
                     ShoppingList.saveItems(array).
                     success(function(data) {
                         vm.arrayToAdd = [];
+
+                        checkboxes.each(function(index) {
+                            checkboxes[index].checked = false;
+                        });
                     }).
                     error(function(data) {
                         console.error(data);
                     });
                 }
 
+                function lastRoute() {
+                    if ($scope.routeHistory === 0) {
+                        return 0;
+                    } else {
+                        var index = $scope.routeHistory.length - 2;
+                        return $scope.routeHistory[index];
+                    }
+                }
+
                 // word for back to link
                 function lastRouteLink() {
-                    if (vm.lastRoute) {
-                        var link = vm.lastRoute;
+                    if (vm.lastRoute()) {
+                        var link = vm.lastRoute();
                         link = link.slice(1, link.length);
                         return link;
                     }

@@ -56,4 +56,12 @@ directive('focus', function($timeout) {
             });
         }
     };
+}).
+directive('clearCheck', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, elements, attrs) {
+            
+        }
+    };
 });
