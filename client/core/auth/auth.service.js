@@ -3,8 +3,6 @@
 angular.module('core.auth', []).
     factory('Auth', [ '$http', '$window',
         function($http, $window) {
-            var storage = $window.localStorage;
-
             return ({
                 login: login,
                 logout: logout,
@@ -13,26 +11,13 @@ angular.module('core.auth', []).
                 getUserData: getUserData
             });
 
-            function login(userInfo, vm, location) {
-                $http.post('/open/login', userInfo).
-                    success(function(data) {
-                        vm.success = data.success;
-                        if (vm.success) {
-                            storage.setItem('token', data.token);
-                            location.path('search');
-                        } else if (!vm.success) {
-                            vm.errorMessage = data.message;
-                        }
-                    }).
-                    error(function(data) {
-                        vm.success = false;
-                        vm.errorMessage = data.message;
-                    });
+            function login(userInfo) {
+                return $http.post('/open/login', userInfo);
             }
 
             function logout() {
-                storage.removeItem('token');
-                storage.removeItem('recipe');
+                $window.localStorage.removeItem('token');
+                $window.localStorage.removeItem('recipe');
             }
 
             function signup(userInfo, vm, location) {
@@ -49,24 +34,11 @@ angular.module('core.auth', []).
                     return;
                 }
 
-                $http.post('/open/users', userInfo).
-                    success(function(data) {
-                        vm.success = data.success;
-                        if (vm.success) {
-                            storage.setItem('token', data.token);
-                            location.path('search');
-                        } else if (!vm.success) {
-                            vm.errorMessage = data.message;
-                        }
-                    }).
-                    error(function(data) {
-                        vm.success = false;
-                        vm.errorMessage = data;
-                    });
+                return $http.post('/open/users', userInfo);
             }
 
             function isLoggedIn() {
-                var token = storage.getItem('token');
+                var token = $window.localStorage.getItem('token');
                 var payload;
 
                 if (token) {
@@ -80,9 +52,10 @@ angular.module('core.auth', []).
             }
 
             function getUserData() {
-                if (isLoggedIn()) {
-                    var token = storage.getItem('token');
-                    var payload = token.split('.')[1];
+                var token = $window.localStorage.getItem('token');
+                var payload = token.split('.')[1];
+
+                if (token) {
 
                     payload = $window.atob(payload);
                     payload = JSON.parse(payload);
@@ -95,21 +68,19 @@ angular.module('core.auth', []).
             }
         }]).
         factory('AuthInterceptor', function($q, $location, $window) {
-            var storage = $window.localStorage;
-
             return {
                 request: request,
                 responseError: responseError
             };
 
             function request(config) {
-                config.headers['x-access-token'] = storage.getItem('token');
+                config.headers['x-access-token'] = $window.localStorage.getItem('token');
                 return config;
             }
 
             function responseError(res) {
                 if (res.status === 403) {
-                    storage.removeItem('token');
+                    $window.localStorage.removeItem('token');
                     $location.path('login');
                 }
                 return $q.reject(res);

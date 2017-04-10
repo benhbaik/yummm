@@ -7,7 +7,7 @@ angular.module('shoppingList', ['core.shoppingList']).
         controller: ['ShoppingList', '$window',
             function shoppingListController(ShoppingList, $window) {
                 var vm = this;
-                vm.items;
+                vm.items = [];
                 vm.empty = false;
                 vm.currentInput = '';
                 vm.itemToRemove = {};
@@ -18,7 +18,16 @@ angular.module('shoppingList', ['core.shoppingList']).
                 vm.fetchItemToRemove = fetchItemToRemove;
                 vm.removeItem = removeItem;
 
-                ShoppingList.getItems(vm);
+                ShoppingList.getItems().
+                    success(function(data) {
+                        vm.items = data;
+                        if (vm.items.length === 0) {
+                            vm.empty = true;
+                        }
+                    }).
+                    error(function(data) {
+                        return data;
+                    });
 
                 function activateEdit(id) {
                     vm.currentInput = id;
@@ -37,7 +46,14 @@ angular.module('shoppingList', ['core.shoppingList']).
                 }
 
                 function editItem(item) {
-                    ShoppingList.editItem({ item: item, id: vm.currentInput }, vm);
+                    ShoppingList.editItem({ item: item, id: vm.currentInput }).
+                    success(function(data) {
+                        vm.items = data;
+                        vm.currentInput = '';
+                    }).
+                    error(function(data) {
+                        return data;
+                    });
                 }
 
                 function fetchItemToRemove(item) {
@@ -45,7 +61,17 @@ angular.module('shoppingList', ['core.shoppingList']).
                 }
 
                 function removeItem(item) {
-                    ShoppingList.removeItem(item, vm);
+                    ShoppingList.removeItem(item, vm).
+                    success(function(data) {
+                        vm.items = data;
+                        if (vm.items.length === 0) {
+                            vm.empty = true;
+                            vm.itemToRemove = '';
+                        }
+                    }).
+                    error(function(data) {
+                        return data;
+                    });
                 }
             }
         ]

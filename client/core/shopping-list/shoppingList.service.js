@@ -10,68 +10,37 @@ angular.module('core.shoppingList', ['core.auth']).
                 saveItems: saveItems,
                 editItem: editItem,
                 removeItem: removeItem
-            }
+            };
 
             function getItems(vm) {
-                $http.get('/secure/shopping-list/' + user._id).
-                    success(function(data) {
-                        vm.items = data;
-                        if (vm.items.length === 0) {
-                            vm.empty = true;
-                        }
-                    }).
-                    error(function(data) {
-                        return data;
-                    });
+                return $http.get('/secure/shopping-list/' + user._id);
             }
 
-            function saveItems(items, vm) {
+            function saveItems(items) {
                 // add unique id's to items for edit feature
                 for (var i = 0; i < items.length; i++) {
                     items[i] = {
                         id: uuid(),
                         item: items[i]
-                    }
+                    };
                 }
 
-                $http.post('/secure/shopping-list/' + user._id, { items: items }).
-                    success(function(data) {
-                        vm.arrayToAdd = [];
-                    }).
-                    error(function(data) {
-                        return data;
-                    });
+                return $http.post('/secure/shopping-list/' + user._id, { items: items });
             }
 
-            function editItem(item, vm) {
+            function editItem(item) {
                 // strip angular $$hashkey
                 item = angular.toJson(item);
                 item = JSON.parse(item);
 
-                $http.put('/secure/shopping-list/' + user._id, { item: item }).
-                    success(function(data) {
-                        vm.items = data;
-                        vm.currentInput = '';
-                    }).
-                    error(function(data) {
-                        return data;
-                    });
+                return $http.put('/secure/shopping-list/' + user._id, { item: item });
             }
 
             function removeItem(item, vm) {
-                $http.put('/secure/shopping-list/delete/' + user._id, { item: item }).
-                    success(function(data) {
-                        vm.items = data;
-                        if (vm.items.length === 0) {
-                            vm.empty = true;
-                            vm.itemToRemove = '';
-                        }
-                    }).
-                    error(function(data) {
-                        return data;
-                    });
+                return $http.put('/secure/shopping-list/delete/' + user._id, { item: item });
             }
 
+            // created id's for items
             function uuid() {
                 // jshint bitwise:false
                 var i, random;

@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose');
 var port = process.env.PORT || 3000;
 var db = mongoose.connection;

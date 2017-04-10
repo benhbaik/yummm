@@ -1,3 +1,5 @@
+'use strict';
+
 var Table = require('../models/tableModel.js');
 
 exports.add = function(req, res) {

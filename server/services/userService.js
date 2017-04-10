@@ -1,3 +1,5 @@
+'use strict';
+
 var User = require('../models/userModel.js');
 var Table = require('../models/tableModel');
 var TokenService = require('./tokenService.js');

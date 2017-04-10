@@ -1,0 +1,11 @@
+Tasks:
+    New Tasks:
+        ☐ @high Add load more feature to search component.
+        ☐ @high Add back to top feature to search component.
+        ☐ @high Add checkboxes to shopping list.
+        ☐ @high Add clear checked feature to shopping list.
+        ☐ @high Add filters to shopping list.
+        ☐ @high Add remove all feature to shopping list.
+        ☐ @low Create landing page links and content.
+        ☐ @low Style application.
+        ☐ @low caches shopping list when you logout and sign back in

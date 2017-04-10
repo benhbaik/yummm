@@ -8,6 +8,7 @@ angular.module('detail', ['core.shoppingList']).
             function(ShoppingList, $window, $rootScope) {
                 var vm = this;
                 var routeIndex = $rootScope.routeHistory.length - 2;
+
                 vm.recipe = JSON.parse($window.localStorage.getItem('recipe'));
                 vm.arrayToAdd = [];
                 vm.toggleSelection = toggleSelection;
@@ -29,9 +30,16 @@ angular.module('detail', ['core.shoppingList']).
                     checkboxes.each(function(index) {
                         checkboxes[index].checked = false;
                     });
-                    ShoppingList.saveItems(array, vm);
+                    ShoppingList.saveItems(array).
+                        success(function(data) {
+                            vm.arrayToAdd = [];
+                        }).
+                        error(function(data) {
+                            console.error(data);
+                        });
                 }
 
+                // word for back to link
                 function lastRouteLink() {
                     if (vm.lastRoute) {
                         var link = vm.lastRoute;
@@ -39,7 +47,7 @@ angular.module('detail', ['core.shoppingList']).
                         return link;
                     }
                     return false;
-                };
+                }
             }
         ]
     });

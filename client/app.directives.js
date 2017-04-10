@@ -27,7 +27,7 @@ directive('dbltap', function($timeout) {
                 }
             });
         }
-    }
+    };
 }).
 directive('change', function() {
     return {
@@ -37,7 +37,7 @@ directive('change', function() {
                 scope.$apply(attrs.change);
             });
         }
-    }
+    };
 }).
 directive('focus', function($timeout) {
     return {
@@ -55,5 +55,5 @@ directive('focus', function($timeout) {
                 }
             });
         }
-    }
+    };
 });

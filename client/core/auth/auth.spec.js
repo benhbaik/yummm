@@ -8,67 +8,157 @@ describe('core.auth', function() {
         expect(authModule).toBeDefined();
     });
 
-    describe('auth service', function() {
-        var $httpBackend;
-        var $location;
+    describe('Auth', function() {
+        var http;
+        var $window;
         var Auth;
-        var expected;
-        var vm;
 
-        beforeEach(inject(function(_$httpBackend_, _$rootScope_, _$location_, _Auth_) {
+        beforeEach(inject(function(_$httpBackend_, _$rootScope_, _$window_, _Auth_) {
             jasmine.addCustomEqualityTester(angular.equals);
-            $httpBackend = _$httpBackend_;
-            $location = _$location_;
+            http = _$httpBackend_;
+            $window = _$window_;
             Auth = _Auth_;
-            vm = _$rootScope_.$new();
-            expected = {
-                success: true,
-                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6In' +
-                       'VzZXJuYW1lIiwiX2lkIjoiNThkYWQ4ZDBhNmE5NDJlMjMxOWNlZGFiI' +
-                       'iwiaWF0IjoxNDkxMjQ1NzQ0LCJleHAiOjE0OTEyODg5NDR9.63PAT9L' +
-                       'bJFoSYFrj_aB2BW3W8vVzkcQsINw2ogFu3go'
-            };
         }));
 
-        afterEach(function() {
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
+        // afterEach(function() {
+        //     http.verifyNoOutstandingExpectation();
+        //     http.verifyNoOutstandingRequest();
+        // });
+
+        describe('login method', function() {
+            var user;
+            var result;
+            var expected;
+
+            beforeEach(function(done) {
+                user = {
+                    username: 'username',
+                    password: 'password'
+                };
+                result = {};
+                expected = {
+                    success: true,
+                    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6In' +
+                        'VzZXJuYW1lIiwiX2lkIjoiNThkYWQ4ZDBhNmE5NDJlMjMxOWNlZGFiI' +
+                        'iwiaWF0IjoxNDkxMjQ1NzQ0LCJleHAiOjE0OTEyODg5NDR9.63PAT9L' +
+                        'bJFoSYFrj_aB2BW3W8vVzkcQsINw2ogFu3go'
+                };
+
+                http.expectPOST('/open/login').respond(expected);
+
+                Auth.login(user).
+                    success(function(data) {
+                        result = data;
+                        done();
+                    }).
+                    error(function(data) {
+                        result = data;
+                        done();
+                    });
+
+                http.flush();
+            });
+
+            it('returns a token on login', function() {
+                expect(result).toEqual(expected);
+            });
+        
         });
 
-        it('creates a new user', function() {
-            var newUser;
+        describe('logout method', function() {
+            var result;
+            var expected;
 
-            $httpBackend.expectPOST('/open/users').respond(expected);
-            newUser = Auth.signup({
-                username: 'username',
-                password: 'password'
-            }, vm, $location);
-            $httpBackend.flush();
+            beforeEach(function() {
+                expected = null;
+            });
 
-            expect(newUser.$$state.value.data).toEqual(expected);
+            it('removes token on logout', function() {
+                Auth.logout();
+                result = $window.localStorage.getItem('token');
+                expect(result).toEqual(expected);
+            });
         });
 
+        describe('signup method', function() {
+            var user;
+            var result;
+            var expected;
 
-        it('logs in a user and sets token on local storage', function() {
-            var userInfo = {
-                username: 'username',
-                password: 'password'
-            }
-            var promise;
+            beforeEach(function(done) {
+                user = {
+                    username: 'username',
+                    password: 'password'
+                };
+                result = {};
+                expected = {
+                    success: true,
+                    message: 'User created!',
+                    token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6In' +
+                           'VzZXJuYW1lIiwiX2lkIjoiNThkYWQ4ZDBhNmE5NDJlMjMxOWNlZGFiI' +
+                           'iwiaWF0IjoxNDkxMjQ1NzQ0LCJleHAiOjE0OTEyODg5NDR9.63PAT9L' +
+                           'bJFoSYFrj_aB2BW3W8vVzkcQsINw2ogFu3go'
+                };
 
-            $httpBackend.expectPOST('/open/login').respond(expected);
+                http.expectPOST('/open/users').respond(expected);
 
-            promise = Auth.login(userInfo, vm, $location);
-            $httpBackend.flush();
+                Auth.signup(user).
+                    success(function(data) {
+                        result = data;
+                        done();
+                    }).
+                    error(function(data) {
+                        result = data;
+                        done();
+                    });
 
-            expect(promise.$$state.value.data).toEqual(expected);
+                http.flush();
+            });
+
+            it('returns a token on signup', function() {
+                expect(result).toEqual(expected);
+            });
         });
 
-        it('logs a user out', function() {
-            spyOn(Auth, 'logout');
-            Auth.logout();
+        describe('isLoggedIn method', function() {
+            var token;
+            var status;
 
-            expect(Auth.logout).toHaveBeenCalled();
+            beforeEach(function() {
+                token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6In' +
+                        'VzZXJuYW1lIiwiX2lkIjoiNThkYWQ4ZDBhNmE5NDJlMjMxOWNlZGFiI' +
+                        'iwiaWF0IjoxNDkxMjQ1NzQ0LCJleHAiOjE0OTEyODg5NDR9.63PAT9L' +
+                        'bJFoSYFrj_aB2BW3W8vVzkcQsINw2ogFu3go';
+
+                $window.localStorage.setItem('token', token);
+            });
+
+            it('decodes token and returns boolean', function() {
+                status = Auth.isLoggedIn();
+                expect(status).toBe(false);
+            });
+        });
+
+        describe('getUserData method', function() {
+            var token;
+            var data;
+            var expected;
+
+            beforeEach(function() {
+                token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6In' +
+                        'VzZXJuYW1lIiwiX2lkIjoiNThkYWQ4ZDBhNmE5NDJlMjMxOWNlZGFiI' +
+                        'iwiaWF0IjoxNDkxMjQ1NzQ0LCJleHAiOjE0OTEyODg5NDR9.63PAT9L' +
+                        'bJFoSYFrj_aB2BW3W8vVzkcQsINw2ogFu3go';
+
+                expected = { username: 'username', _id: '58dad8d0a6a942e2319cedab' };
+
+                $window.localStorage.setItem('token', token);
+            });
+
+            it('decodes token and returns user data', function() {
+                data = Auth.getUserData();
+                expect(data).toEqual(expected);
+            });
         });
     });
 });
