@@ -31,12 +31,15 @@ describe('core.shoppingList', function() {
             jasmine.addCustomEqualityTester(angular.equals);
         }));
 
+        afterEach(function() {
+            http.verifyNoOutstandingExpectation();
+            http.verifyNoOutstandingRequest();
+        });
+
         describe('get items method', function() {
-            var result;
             var expected;
 
-            beforeEach(function(done) {
-                result = [];
+            beforeEach(function() {
                 expected = [
                     { item: 'chicken', id: '123' },
                     { item: 'salt', id: '124' },
@@ -44,32 +47,26 @@ describe('core.shoppingList', function() {
                 ];
                 
                 http.expectGET('/secure/shopping-list/58e7edf4d316ad139fb5b692').respond(expected);
-
-                ShoppingList.getItems().
-                    success(function(data) {
-                        result = data;
-                        done();
-                    }).
-                    error(function(data) {
-                        result = data;
-                        done();
-                    });
-
-                http.flush();
             });
 
             it('gets shopping list items', function() {
-                expect(result).toEqual(expected);
+                ShoppingList.getItems().
+                success(function(data) {
+                    expect(data).toEqual(expected);
+                }).
+                error(function(data) {
+                    expect(data).toEqual(expected);
+                });
+
+                http.flush();
             });
         });
 
         describe('save items method', function() {
-            var result;
             var arrayToAdd;
             var expected;
 
-            beforeEach(function(done) {
-                result = [];
+            beforeEach(function() {
                 arrayToAdd = [
                     { item: 'milk', id: '123' },
                     { item: 'eggs', id: '124' }
@@ -81,30 +78,24 @@ describe('core.shoppingList', function() {
                 ];
 
                 http.expectPOST('/secure/shopping-list/58e7edf4d316ad139fb5b692').respond(expected);
-
-                ShoppingList.saveItems(arrayToAdd).
-                    success(function(data) {
-                        result = data;
-                        done();
-                    }).error(function(data) {
-                        result = data;
-                        done();
-                    });
-
-                http.flush();
             });
 
-            it('returns new array of items', function() {
-                expect(result).toEqual(expected);
+            it('returns array with new item', function() {
+                ShoppingList.saveItems(arrayToAdd).
+                success(function(data) {
+                    expect(data).toEqual(expected);
+                }).error(function(data) {
+                    expect(data).toEqual(expected);
+                });
+
+                http.flush();   
             });
         });
 
         describe('edit item method', function() {
-            var result;
             var expected;
 
-            beforeEach(function(done) {
-                result = [];
+            beforeEach(function() {
                 expected = [
                     { item: 'flour', id: '123' },
                     { item: 'milk', id: '124' },
@@ -112,22 +103,18 @@ describe('core.shoppingList', function() {
                 ];
 
                 http.expectPUT('/secure/shopping-list/58e7edf4d316ad139fb5b692').respond(expected);
-
-                ShoppingList.editItem({ item: { item: 'milk', id: '124' } }).
-                    success(function(data) {
-                        result = data;
-                        done();
-                    }).
-                    error(function(data) {
-                        result = data;
-                        done();
-                    });
-                
-                http.flush();
             });
 
-            it('edits and item', function() {
-                expect(result).toEqual(expected);
+            it('returns array with updated item', function() {
+                ShoppingList.editItem({ item: { item: 'milk', id: '124' } }).
+                success(function(data) {
+                    expect(data).toEqual(expected);
+                }).
+                error(function(data) {
+                    expect(data).toEqual(expected);
+                });
+                
+                http.flush();
             });
         });
 
@@ -135,7 +122,7 @@ describe('core.shoppingList', function() {
             var result;
             var expected;
 
-            beforeEach(function(done) {
+            beforeEach(function() {
                 result = [];
                 expected = [
                     { item: 'flour', id: '123' },
@@ -143,22 +130,18 @@ describe('core.shoppingList', function() {
                 ];
 
                 http.whenPUT('/secure/shopping-list/delete/58e7edf4d316ad139fb5b692').respond(expected);
-
-                ShoppingList.removeItem({ item: 'eggs', id: '125' }).
-                    success(function(data) {
-                        result = data;
-                        done();
-                    }).
-                    error(function(data) {
-                        result = data;
-                        done();
-                    });
-                
-                http.flush();
             });
 
             it('removes and item from list', function() {
-                expect(result).toEqual(expected);
+                ShoppingList.removeItem({ item: 'eggs', id: '125' }).
+                success(function(data) {
+                    expect(data).toEqual(expected);
+                }).
+                error(function(data) {
+                    expect(data).toEqual(expected);
+                });
+                
+                http.flush();         
             });
         });
     });

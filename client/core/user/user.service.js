@@ -12,35 +12,19 @@ angular.module('core.user', []).
             });
 
             function getAll() {
-                return $http.get('/secure/users').then(function(res) {
-                    return res.data;
-                }, function(err) {
-                    return err;
-                });
+                return $http.get('/secure/users');
             }
 
             function get(id) {
-                return $http.get('/secure/users/' + id).then(function(res) {
-                    return res.data;
-                }, function(err) {
-                    return err;
-                });
+                return $http.get('/secure/users/' + id);
             }
 
             function update(update, id) {
-                return $http.put('/secure/users/' + id, update).then(function(res) {
-                    return res.data;
-                }, function(err) {
-                    return err;
-                });
+                return $http.put('/secure/users/' + id, update);
             }
 
             function remove(id) {
-                return $http.delete('/secure/users/' + id).then(function(res) {
-                    return res.data;
-                }, function(err) {
-                    return err;
-                });
+                return $http.delete('/secure/users/' + id);
             }
         }
     ]);

@@ -2,7 +2,7 @@
 
 describe('user', function() {
     var User;
-    var $httpBackend;
+    var http;
 
     it('should be defined', function() {
         var userModule = angular.module('core.user');
@@ -15,69 +15,117 @@ describe('user', function() {
 
         beforeEach(inject(function(_$httpBackend_, _User_) {
             jasmine.addCustomEqualityTester(angular.equals);
-            $httpBackend = _$httpBackend_;
+            http = _$httpBackend_;
             User = _User_;
         }));
 
         afterEach(function() {
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
+            http.verifyNoOutstandingExpectation();
+            http.verifyNoOutstandingRequest();
         });
 
-        it('fetches list of users', function() {
-            var userList = [
-                {
-                    username: 'Ben'
-                },
-                {
-                    username: 'Baik'
-                }
-            ];
-            $httpBackend.expectGET('/secure/users').respond(userList);
+        describe('getAll method', function() {
+            var expected;
 
-            var users = User.getAll();
+            beforeEach(function() {
+                expected = [
+                    {
+                        username: 'Ben'
+                    },
+                    {
+                        username: 'Baik'
+                    }
+                ];
 
-            $httpBackend.flush();
-            expect(users.$$state.value).toEqual(userList);
+                http.expectGET('/secure/users').respond(expected);
+            });
+
+            it('returns an array of users', function() {
+                User.getAll().
+                success(function(data) {
+                    expect(data).toEqual(expected);
+                })
+                .error(function(data) {
+                    expect(data).toEqual(expected);
+                });
+
+                http.flush();
+            });
         });
 
-        it('fetches one user', function() {
-            var expectedUserData = {
-                username: 'Ben',
-                id: '12345'
-            };
-            $httpBackend.expectGET('/secure/users/12345').respond(expectedUserData);
+        describe('get method', function() {
+            var expected;
 
-            var user = User.get('12345');
+            beforeEach(function() {
+                expected = {
+                    username: 'Ben',
+                    id: '12345'
+                };
 
-            $httpBackend.flush();
-            expect(user.$$state.value).toEqual(expectedUserData);
+                http.expectGET('/secure/users/12345').respond(expected);
+            });
+
+            it('returns data of specified user', function() {
+                User.get('12345').
+                success(function(data) {
+                    expect(data).toEqual(expected);
+                }).
+                error(function(data) {
+                    expect(data).toEqual(expected);
+                });
+
+                http.flush();
+            });
         });
 
-        it('updates one user', function() {
-            var expectedUserData = {
-                username: 'username',
-                id: '12345'
-            };
-            $httpBackend.expectPUT('/secure/users/12345').respond(expectedUserData);
+        describe('update method', function() {
+            var expected;
 
-            var updatedUser = User.update({username: 'username'}, '12345');
+            beforeEach(function() {
+                expected = {
+                    username: 'username',
+                    id: '12345'
+                };
 
-            $httpBackend.flush();
-            expect(updatedUser.$$state.value).toEqual(expectedUserData);
+                http.expectPUT('/secure/users/12345').respond(expected);
+            });
+
+            it('returns updated user data', function() {
+                User.update({username: 'username'}, '12345').
+                success(function(data) {
+                    expect(data).toEqual(expected);
+                }).
+                error(function(data) {
+                    expect(data).toEqual(expected);
+                });
+
+                http.flush();
+            });
         });
 
-        it('removes one user', function() {
-            var expectedResponse = {
-                username: 'username',
-                id: '12345'
-            };
-            $httpBackend.expectDELETE('/secure/users/12345').respond(expectedResponse);
+        describe('remove', function() {
+            var expected;
 
-            var deletedUser = User.remove('12345');
+            beforeEach(function() {
+                expected = {
+                    username: 'username',
+                    id: '12345'
+                };
 
-            $httpBackend.flush();
-            expect(deletedUser.$$state.value).toEqual(expectedResponse);
+                http.expectDELETE('/secure/users/12345').respond(expected);
+            });
+
+            it('returns deleted users data', function() {
+                User.remove('12345').
+                success(function(data) {
+                    expect(data).toEqual(expected);
+                }).
+                error(function(data) {
+                    expect(data).toEqual(expected);
+                });
+
+                http.flush();
+            });
         });
     });
 });

@@ -33,6 +33,11 @@ describe('core.recipe', function() {
         Recipe = _Recipe_;
     }));
 
+    afterEach(function() {
+        http.verifyNoOutstandingExpectation();
+        http.verifyNoOutstandingRequest();
+    });
+
     describe('Recipe', function() {
         describe('search method', function() {
             var query;
