@@ -16,14 +16,12 @@ describe('detail', function() {
 
                 return {
                     success: function(fn) {
-                        fn();
                         return this;
                     },
                     error: function(fn) {
-                        fn();
                         return this;
                     }
-                }
+                };
             }
         };
 
@@ -38,15 +36,15 @@ describe('detail', function() {
     describe('detail ctrl', function() {
         var scope;
         var ctrl;
-        var $q;
         var ShoppingList;
 
-        beforeEach(inject(function($componentController, $rootScope, _ShoppingList_, _$q_) {
-            scope = $rootScope.$new();
-            ctrl = $componentController('detail', { $scope: scope });
-            $q = _$q_;
-            ShoppingList = _ShoppingList_;
-        }));
+        beforeEach(function() {
+            inject(function($componentController, $rootScope, _ShoppingList_) {
+                scope = $rootScope.$new();
+                ctrl = $componentController('detail', { $scope: scope });
+                ShoppingList = _ShoppingList_;
+            });
+        });
 
         it('should be defined', function() {
             expect(ctrl).toBeDefined();
