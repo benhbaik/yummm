@@ -43,7 +43,6 @@ describe('favorites', function() {
     });
 
     describe('favorites controller', function() {
-        var scope;
         var ctrl;
         var Recipe;
         var window;
@@ -51,8 +50,6 @@ describe('favorites', function() {
 
         beforeEach(function() {
             inject(function($componentController, _Recipe_, $rootScope, $window, _$location_) {
-                scope = $rootScope.$new();
-                // debugger;
                 ctrl = $componentController('favorites');
                 Recipe = _Recipe_;
                 window = $window;

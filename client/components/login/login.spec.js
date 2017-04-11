@@ -1,58 +1,59 @@
-// 'use strict';
+'use strict';
 
-// describe('login', function() {
-//     beforeEach(function() {
-//         module('login');
-//         module('core.auth', function($provide) {
-//             $provide.factory('Auth', function() {
-//                 return {
-//                     login: function(userInfo, vm, location) {
-//                         vm.success = false;
+describe('login', function() {
 
-//                         if (userInfo.username === 'incorrectUsername') {
-//                             vm.errorMessage = 'Username is incorrect.';
-//                         }
+    beforeEach(function() {
+        module('login');
+        module('core.auth', function($provide) {
+            $provide.factory('Auth', function() {
+                return {
+                    counter: 0,
+                    login: function(credentials) {
+                        this.counter++;
+                        return {
+                            success: function() {
+                                return this;
+                            },
+                            error: function() {
+                                return this;
+                            }
+                        };
+                    }
+                };
+            });
+        });
+    });
 
-//                         if (userInfo.password === 'incorrectPassword') {
-//                             vm.errorMessage = 'Sorry, the password does not match.';
-//                         }
-//                     }
-//                 };
-//             });
-//         });
-//     });
+    it('should be defined', function() {
+        var loginModule = angular.module('login');
 
-//     it('should be defined', function() {
-//         var loginModule = angular.module('login');
+        expect(loginModule).toBeDefined();
+    });
 
-//         expect(loginModule).toBeDefined();
-//     });
+    describe('login controller', function() {
+        var ctrl;
+        var Auth;
 
-//     describe('login controller', function() {
-//         var location;
-//         var ctrl;
+        beforeEach(function() {
+            inject(function($componentController, _Auth_) {
+                ctrl = $componentController('login');
+                Auth = _Auth_;
+            });
+        });
 
-//         beforeEach(inject(function($componentController, $location) {
-//             location = $location;
-//             ctrl = $componentController('login');
-//         }));
+        describe('vm.login', function() {
+            var credentials = {};
 
-//         it('display error when username is incorrect', function() {
-//             var user = {
-//                 username: 'incorrectUsername',
-//                 password: 'password'
-//             };
-//             ctrl.login(user, ctrl, location);
-//             expect(ctrl.errorMessage).toBe('Username is incorrect.');
-//         });
+            beforeEach(function() {
+                credentials.username = 'username';
+                credentials.password = 'password';
+            });
 
-//         it('display error when password is incorrect', function() {
-//             var user = {
-//                 username: 'username',
-//                 password: 'incorrectPassword'
-//             };
-//             ctrl.login(user, ctrl, location);
-//             expect(ctrl.errorMessage).toBe('Sorry, the password does not match.');
-//         });
-//     });
-// });
+            it('calls Auth.login', function() {
+                ctrl.login(credentials);
+
+                expect(Auth.counter).toBe(1);
+            });
+        });
+    });
+});
