@@ -1,7 +1,7 @@
 <navbar></navbar>
 
 <h1>detail</h1>
-<p ng-show="detailCtrl.lastRouteLink()">Back to <a ng-href="#!{{ detailCtrl.lastRoute }}">{{ detailCtrl.lastRouteLink() }}</a></p>
+<p ng-show="detailCtrl.lastRouteLink()">Back to <a ng-href="#!{{ detailCtrl.lastRoute() }}">{{ detailCtrl.lastRouteLink() }}</a></p>
 
 <img ng-src="{{ detailCtrl.recipe.image }}" class="recipe-image">
 <h5>{{ detailCtrl.recipe.label }}</h5>
@@ -20,12 +20,12 @@
                 <label><input ng-click="detailCtrl.toggleSelection(item)" class="ingredient-checkbox" type="checkbox">{{ item }}</label>
             </li>
         </ul>
-        <button ng-click="detailCtrl.addItems(detailCtrl.arrayToAdd)" class="btn btn-default" data-toggle="modal" data-target="#add-alert" type="button">Add</button>
+        <button ng-click="detailCtrl.addItems(detailCtrl.arrayToAdd)" added class="btn btn-default" data-toggle="modal" data-target="#add-alert" type="button">Add</button>
     </div>
 </div>
 
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#health-labels" aria-expanded="false" aria-controls="health-labels">
-  Health Labels
+    Health Labels
 </button>
 
 <div class="collapse" id="health-labels">

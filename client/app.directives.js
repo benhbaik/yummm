@@ -1,7 +1,12 @@
 'use strict';
 
 angular.module('myApp').
-directive('dbltap', function($timeout) {
+directive('dbltap', dbltap).
+directive('change', change).
+directive('focus', focus).
+directive('added', added);
+
+function dbltap($timeout) {
     var dbltapInteval = 300; // milliseconds
     var tapTime;
     var standby = false;
@@ -28,8 +33,9 @@ directive('dbltap', function($timeout) {
             });
         }
     };
-}).
-directive('change', function() {
+}
+
+function change() {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -38,8 +44,9 @@ directive('change', function() {
             });
         }
     };
-}).
-directive('focus', function($timeout) {
+}
+
+function focus($timeout) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -56,12 +63,21 @@ directive('focus', function($timeout) {
             });
         }
     };
-}).
-directive('clearCheck', function() {
+}
+
+function added() {
+    var checkboxes;
+
     return {
         restrict: 'A',
-        link: function(scope, elements, attrs) {
-            
+        link: function(scope, element, attrs) {
+            element.bind('click', function(e) {
+                checkboxes = angular.element('.ingredient-checkbox');
+
+                checkboxes.each(function(index) {
+                    checkboxes[index].checked = false;
+                });
+            });
         }
     };
-});
+}

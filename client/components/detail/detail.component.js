@@ -26,36 +26,32 @@ angular.module('detail', ['core.shoppingList']).
                 }
 
                 function addItems(array) {
-                    var checkboxes = angular.element('.ingredient-checkbox');
-
                     ShoppingList.saveItems(array).
                     success(function(data) {
                         vm.arrayToAdd = [];
-
-                        checkboxes.each(function(index) {
-                            checkboxes[index].checked = false;
-                        });
                     }).
                     error(function(data) {
-                        console.error(data);
+                        return data;
                     });
                 }
 
                 function lastRoute() {
-                    if ($scope.routeHistory === 0) {
-                        return 0;
-                    } else {
-                        var index = $scope.routeHistory.length - 2;
+                    var length = $scope.routeHistory.length;
+
+                    if (length > 1) {
+                        var index = length - 2;
                         return $scope.routeHistory[index];
                     }
+                    return false;
                 }
 
                 // word for back to link
                 function lastRouteLink() {
-                    if (vm.lastRoute()) {
-                        var link = vm.lastRoute();
-                        link = link.slice(1, link.length);
-                        return link;
+                    var lastRoute = vm.lastRoute();
+
+                    if (lastRoute) {
+                        lastRoute = lastRoute.slice(1, lastRoute.length);
+                        return lastRoute;
                     }
                     
                     return false;

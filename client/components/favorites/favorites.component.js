@@ -25,8 +25,8 @@ angular.module('favorites', ['core.recipe']).
                     return data;
                 });
 
+                // carry recipe from li to modal
                 function fetchRecipeToRemove(recipe) {
-                    // carry recipe from li to modal
                     vm.recipeToRemove = recipe;
                 }
 
