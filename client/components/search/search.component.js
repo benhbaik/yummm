@@ -1,11 +1,11 @@
 'use strict';
 
-angular.module('search', ['core.auth']).
+angular.module('search', ['core.recipe']).
     component('search', {
         templateUrl: 'components/search/search.html',
         controllerAs: 'searchCtrl',
-        controller: ['Recipe', 'Auth', '$window',
-            function searchController(Recipe, Auth, $window) {
+        controller: ['Recipe', '$window',
+            function searchController(Recipe, $window) {
                 var vm = this;
                 vm.query = '';
                 vm.results = [];
@@ -15,9 +15,15 @@ angular.module('search', ['core.auth']).
                 vm.search = search;
                 vm.checkFavorites = checkFavorites;
                 vm.addToFavorites = addToFavorites;
-                vm.goToRecipe = goToRecipe;
+                vm.saveRecipe = saveRecipe;
 
-                Recipe.getFavorites(vm);
+                Recipe.getFavorites().
+                success(function(data) {
+                    vm.favorites = data;
+                }).
+                error(function(data){
+                    return data;
+                });
 
                 function search(query) {
                     vm.loading = true;
@@ -60,7 +66,7 @@ angular.module('search', ['core.auth']).
                     }
                 }
 
-                function goToRecipe(recipe) {
+                function saveRecipe(recipe) {
                     $window.localStorage.setItem('recipe', angular.toJson(recipe));
                 }
             }

@@ -17,7 +17,7 @@
 <ul class="list-group">
     <li ng-repeat="result in searchCtrl.results" class="list-group-item">
         <img ng-src="{{ result.recipe.image }}" class="recipe-image">
-        <a ng-click="searchCtrl.goToRecipe(result.recipe)" href="#!/detail"><h5>{{ result.recipe.label }}</h5></a>
+        <a ng-click="searchCtrl.saveRecipe(result.recipe)" href="#!/detail"><h5>{{ result.recipe.label }}</h5></a>
         <p>{{ result.recipe.calories | number:0 }} calories</p>
         <p>{{ result.recipe.yield }} servings</p>
         <button ng-click="searchCtrl.addToFavorites(result.recipe)" class="btn btn-default" data-toggle="modal" data-target="#fav-alert" type="button">Favorite</button>
