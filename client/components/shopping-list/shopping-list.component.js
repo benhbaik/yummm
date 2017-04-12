@@ -61,7 +61,7 @@ angular.module('shoppingList', ['core.shoppingList']).
                 }
 
                 function removeItem(item) {
-                    ShoppingList.removeItem(item, vm).
+                    ShoppingList.removeItem(item).
                     success(function(data) {
                         vm.items = data;
                         if (vm.items.length === 0) {
