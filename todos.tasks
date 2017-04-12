@@ -10,13 +10,13 @@ Tasks:
         ☐ @low Create landing page links and content.
         ☐ @low Style application.
         ☐ @high FIXME Caches shopping list when you logout and sign back in.
-        ☐ @high FIXME Take DOM manipulation out of detail controller, create directive.
+        ✔ @high FIXME Take DOM manipulation out of detail controller, create directive. @done (4/11/2017, 12:22:35 PM)
         ✔ @low Rewrite core tests. @done (4/10/2017, 5:51:16 PM)
-        ☐ @low Rewrite detail component tests.
-        ☐ @low Rewrite favorites component tests.
+        ✔ @low Rewrite detail component tests. @done (4/11/2017, 6:58:22 PM)
+        ✔ @low Rewrite favorites component tests. @done (4/11/2017, 6:58:22 PM)
         ☐ @low Rewrite home component tests.
-        ☐ @low Rewrite logged-out component tests.
-        ☐ @low Rewrite login component tests.
-        ☐ @low Rewrite search component tests.
-        ☐ @low Rewrite shopping-list component tests.
-        ☐ @low Rewrite signup component tests.
+        ✔ @low Rewrite logged-out component tests. @done (4/11/2017, 6:58:24 PM)
+        ✔ @low Rewrite login component tests. @done (4/11/2017, 6:58:24 PM)
+        ✔ @low Rewrite search component tests. @done (4/11/2017, 6:58:42 PM)
+        ✔ @low Rewrite shopping-list component tests. @done (4/11/2017, 6:58:42 PM)
+        ✔ @low Rewrite signup component tests. @done (4/11/2017, 7:07:54 PM)

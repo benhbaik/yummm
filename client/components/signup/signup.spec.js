@@ -1,95 +1,58 @@
-// 'use strict';
+'use strict';
 
-// describe('signup', function() {
+describe('signup', function() {
 
-//     beforeEach(function() {
-//         module('signup');
-//         module('core.auth', function($provide) {
-//             $provide.factory('Auth', function() {
-//                 return {
-//                     signup: function(userInfo, vm, location) {
-//                         var usernameLength = userInfo.username.length;
-//                         var passwordLength = userInfo.password.length;
+    beforeEach(function() {
+        var mockAuth = {
+            signupCounter: 0,
+            signup: function() {
+                this.signupCounter++;
+                return {
+                    success: function() {
+                        return this;
+                    },
+                    error: function() {
+                        return this;
+                    }
+                };
+            }
+        };
 
-//                         vm.success = false;
+        module('signup');
+        module('core.auth', function($provide) {
+            $provide.factory('Auth', function() {
+                return mockAuth;
+            });
+        });
+    });
 
-//                         if (usernameLength > 16) {
-//                             vm.errorMessage = 'The username you entered is too long.';
-//                         }
+    it('should be defined', function() {
+        var signupModule = angular.module('signup');
+        expect(signupModule).toBeDefined();
+    });
 
-//                         if (usernameLength < 4) {
-//                             vm.errorMessage = 'The username you entered is too short.';
-//                         }
+    describe('signup controller', function() {
+        var ctrl;
+        var Auth;
 
-//                         if (passwordLength > 16) {
-//                             vm.errorMessage = 'The password you entered is too long.';
-//                         }
+        beforeEach(function() {
+            inject(function($componentController, _Auth_) {
+                ctrl = $componentController('signup');
+                Auth = _Auth_;
+            });
+        });
 
-//                         if (passwordLength < 8) {
-//                             vm.errorMessage = 'The password you entered is too short.';
-//                         }
-//                     }
-//                 };
-//             });
-//         });
-//     });
+        describe('vm.signup', function() {
+            it('calls Auth.signup', function() {
+                var credentials = {
+                    username: 'username',
+                    password: 'password'
+                };
 
-//     it('should be defined', function() {
-//         var signupModule = angular.module('signup');
-//         expect(signupModule).toBeDefined();
-//     });
+                ctrl.signup(credentials);
 
-//     describe('signup controller', function() {
-//         var location;
-//         var ctrl;
-
-//         beforeEach(inject(function($componentController, $location) {
-//             location = $location;
-//             ctrl = $componentController('signup');
-//         }));
-
-//         it('creates error message when username is too long', function() {
-//             var userInfo = {
-//                 username: 'thisusernameiswaytoolong',
-//                 password: 'password'
-//             };
-
-//             ctrl.signup(userInfo, ctrl, location);
-
-//             expect(ctrl.errorMessage).toBe('The username you entered is too long.');
-//         });
-
-//         it('creates error message when username is too short', function() {
-//             var userInfo = {
-//                 username: 'ace',
-//                 password: 'password'
-//             };
-
-//             ctrl.signup(userInfo, ctrl, location);
-
-//             expect(ctrl.errorMessage).toBe('The username you entered is too short.');
-//         });
-
-//         it('creates error message when password is too long', function() {
-//             var userInfo = {
-//                 username: 'username',
-//                 password: 'thispasswordiswaytoolong'
-//             };
-
-//             ctrl.signup(userInfo, ctrl, location);
-
-//             expect(ctrl.errorMessage).toBe('The password you entered is too long.');
-//         });
-
-//         it('creates error message when password is too short', function() {
-//             var userInfo = {
-//                 username: 'username',
-//                 password: 'ace'
-//             };
-
-//             ctrl.signup(userInfo, ctrl, location);
-
-//             expect(ctrl.errorMessage).toBe('The password you entered is too short.');
-//         });
-//     });
-// });
+                expect(Auth.signupCounter).toBe(1);
+            });
+        });
+    });
+});
