@@ -25,8 +25,7 @@ angular.module('signup', ['core.auth']).
                         }
                     }).
                     error(function(data) {
-                        vm.success = false;
-                        vm.errorMessage = data;
+                        return data;
                     });
                 }
             }

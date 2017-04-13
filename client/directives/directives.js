@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('myApp').
+angular.module('customDirectives', []).
 directive('dbltap', dbltap).
 directive('change', change).
 directive('focus', focus).
 directive('added', added);
 
 function dbltap($timeout) {
-    var dbltapInteval = 300; // milliseconds
+    var dbltapInterval = 300; // milliseconds
     var tapTime;
     var standby = false;
 
@@ -21,12 +21,12 @@ function dbltap($timeout) {
 
                     $timeout(function() {
                         standby = false;
-                    }, dbltapInteval);
+                    }, dbltapInterval);
                 }
                 else if (standby) {
                 var secondTapTime = new Date().getTime();
                     standby = false;
-                        if ((secondTapTime - tapTime) < dbltapInteval) {
+                        if ((secondTapTime - tapTime) < dbltapInterval) {
                         scope.$apply(attrs.dbltap);
                     }
                 }

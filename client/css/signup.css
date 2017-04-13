@@ -1,0 +1,13 @@
+#signup-form {
+    width: 28rem;
+    margin: 0 auto;
+}
+
+.entry-form > .input-group > input {
+    margin-bottom: 6px;
+}
+
+.requirement {
+    font-size: 1.2rem;
+    margin-left: 12px;
+}

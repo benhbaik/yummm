@@ -1,6 +1,7 @@
 'use strict';
 
 /* https://github.com/angular/protractor/blob/master/docs/toc.md */
+var protractor = require('protractor');
 
 describe('yummm', function() {
 
@@ -95,50 +96,68 @@ describe('yummm', function() {
     //      });
     //   });
 
-      describe('unsuccessful signup', function() {
-          var username;
-          var password;
-          var signup;
-          var alert;
+        describe('unsuccessful signup', function() {
+            var username;
+            var password;
+            var signup;
+            var alert;
 
-          beforeEach(function () {
-              username = element(by.model('signupCtrl.credentials.username'));
-              password = element(by.model('signupCtrl.credentials.password'));
-              signup = element(by.css('.signup'));
-              alert = element(by.css('.alert-danger'));
-          });
+            beforeEach(function () {
+                username = element(by.model('signupCtrl.credentials.username'));
+                password = element(by.model('signupCtrl.credentials.password'));
+                signup = element(by.css('.signup'));
+                alert = element(by.css('.alert-danger'));
+            });
 
-          it('displays error if username is too long', function() {
-              username.sendKeys('thisusernameiswaytoolong');
-              password.sendKeys('password');
-              signup.click();
+            it('displays error if username is too long', function() {
+                username.sendKeys('thisusernameiswaytoolong');
+                password.sendKeys('password');
+                signup.click();
 
-              expect(alert.getText()).toBe('Please enter a valid username.');
-          });
+                expect(alert.getText()).toBe('Please enter a valid username.');
+            });
 
-          it('displays error if username is too short', function() {
-              username.sendKeys('ace');
-              password.sendKeys('password');
-              signup.click();
+            it('displays error if username is too short', function() {
+                username.sendKeys('ace');
+                password.sendKeys('password');
+                signup.click();
 
-              expect(alert.getText()).toBe('Please enter a valid username.');
-          });
+                expect(alert.getText()).toBe('Please enter a valid username.');
+            });
 
-          it('display error if password is too long', function() {
-              username.sendKeys('username');
-              password.sendKeys('thispasswordiswaytoolong');
-              signup.click();
+            it('display error if password is too long', function() {
+                username.sendKeys('username');
+                password.sendKeys('thispasswordiswaytoolong');
+                signup.click();
 
-              expect(alert.getText()).toBe('Please enter a valid password.');
-          });
+                expect(alert.getText()).toBe('Please enter a valid password.');
+            });
 
-          it('displays error if password is too short', function() {
-              username.sendKeys('username');
-              password.sendKeys('ace');
-              signup.click();
+            it('displays error if password is too short', function() {
+                username.sendKeys('username');
+                password.sendKeys('ace');
+                signup.click();
 
-              expect(alert.getText()).toBe('Please enter a valid password.');
-          });
-      });
-  });
+                expect(alert.getText()).toBe('Please enter a valid password.');
+            });
+        });
+    });
+
+    describe('search', function() {
+        beforeEach(function() {
+            browser.get('#!/search');
+        });
+
+        it('displays search results', function() {
+            var query = element(by.model('searchCtrl.query'));
+            var submit = element(by.css('[ng-click="searchCtrl.search(searchCtrl.query)"]'));
+
+            query.sendKeys('chicken');
+            submit.click();
+
+            element.all(by.repeater('result in searchCtrl.results')).then(function(results) {
+                expect(results.length).toBe(10);
+            });
+        });
+    });
 });

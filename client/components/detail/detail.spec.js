@@ -8,11 +8,22 @@ describe('detail', function() {
 
     beforeEach(function() {
         var mockShoppingList = {
-            // use to track calls
-            // jasmine spyOn takes away success and error
-            counter: 0,
+            getItemsCounter: 0,
+            getItems: function() {
+                this.getItemsCounter++;
+
+                 return {
+                    success: function(fn) {
+                        return this;
+                    },
+                    error: function(fn) {
+                        return this;
+                    }
+                 };
+            },
+            saveItemsCounter: 0,
             saveItems: function(array) {
-                this.counter++;
+                this.saveItemsCounter++;
 
                 return {
                     success: function(fn) {
@@ -86,12 +97,18 @@ describe('detail', function() {
         });
 
         describe('vm.addItems', function() {
+            it('assigns alert message to vm.message if no items to add', function() {
+                ctrl.addItems([]);
+
+                expect(ctrl.message).toBe('Select items to add to your list.');
+            });
+
             it('calls ShoppingList.saveItems()', function() {
                 var ingredients = ['ingredient one', 'ingredient two'];
                 
                 ctrl.addItems(ingredients);
 
-                expect(ShoppingList.counter).toBe(1);
+                expect(ShoppingList.saveItemsCounter).toBe(1);
             });
         });
 

@@ -11,7 +11,7 @@ exports.list = function(req, res) {
             res.json(table.shoppingList);
         }
     });
-}
+};
 
 exports.add = function(req, res) {
     Table.findOneAndUpdate(
@@ -25,8 +25,8 @@ exports.add = function(req, res) {
                 res.json(update.shoppingList);
             }
         }
-    )
-}
+    );
+};
 
 exports.update = function(req, res) {
     Table.findOneAndUpdate(
@@ -41,7 +41,7 @@ exports.update = function(req, res) {
             }
         }
     );
-}
+};
 
 exports.remove = function(req, res) {
     Table.findOneAndUpdate(
@@ -55,5 +55,5 @@ exports.remove = function(req, res) {
                 res.json(update.shoppingList);
             }
         }
-    )
-}
+    );
+};

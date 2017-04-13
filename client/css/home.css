@@ -1,0 +1,17 @@
+#home-message {
+    width: 28rem;
+    margin: 0 auto;
+}
+
+#home-c2a {
+    width: 28rem;
+    margin: 2.5rem auto 0 auto ;
+}
+
+#home-c2a > a > button {
+    margin-left: 2rem;
+}
+
+#signup {
+    margin-right: 1em;
+}

@@ -10,28 +10,42 @@ exports.save = function(req, res) {
     user.username = req.body.username;
     user.password = req.body.password;
 
-    user.save(function(err, user) {
+    var usernameLength = user.username.length;
+    var passwordLength = user.password.length;
 
-        if (err) {
-            res.json(err);
-        } else if (user) {
-            var payload = {
-                username: user.username,
-                _id: user._id
-            };
-            Table.create({ userId: user._id }, function(err, table) {
-                if (err) {
-                    res.json(err);
-                }
-            });
-            res.json({
-                success: true,
-                message: 'User created!',
-                token: TokenService.createToken(payload)
-            });
-        }
-    });
-}
+    if (usernameLength > 16 || usernameLength < 4) {
+        res.json({
+            success: false,
+            message: 'Please enter a valid username.'
+        });
+    } else if (passwordLength > 16 || passwordLength < 8) {
+        res.json({
+            success: false,
+            message: 'Please enter a valid password.'
+        });
+    } else {
+        user.save(function(err, user) {
+            if (err) {
+                res.json(err);
+            } else if (user) {
+                var payload = {
+                    username: user.username,
+                    _id: user._id
+                };
+                Table.create({ userId: user._id }, function(err, table) {
+                    if (err) {
+                        res.json(err);
+                    }
+                });
+                res.json({
+                    success: true,
+                    message: 'User created!',
+                    token: TokenService.createToken(payload)
+                });
+            }
+        });
+    }
+};
 exports.list = function(req, res) {
     User.find(function(err, users) {
         if (err) {
@@ -40,7 +54,7 @@ exports.list = function(req, res) {
             res.json(users);
         }
     });
-}
+};
 exports.listOne = function(req, res) {
     User.findOne({ _id: req.params.id }, function(err, user) {
         if (err) {
@@ -49,7 +63,7 @@ exports.listOne = function(req, res) {
             res.json(user);
         }
     });
-}
+};
 exports.update = function(req, res) {
     User.findOneAndUpdate(
         { _id: req.params.id },
@@ -66,7 +80,7 @@ exports.update = function(req, res) {
             }
         }
     );
-}
+};
 exports.remove = function(req, res) {
     User.findOneAndRemove(req.params.id, function(err, success) {
         if (err) {
@@ -75,7 +89,7 @@ exports.remove = function(req, res) {
             res.json(success);
         }
     });
-}
+};
 exports.login = function(req, res) {
     User.findOne({ username: req.body.username },
         'username password',
@@ -107,4 +121,4 @@ exports.login = function(req, res) {
             }
         }
     );
-}
+};

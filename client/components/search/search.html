@@ -1,33 +1,37 @@
 <navbar></navbar>
 
-<h1>Search</h1>
-<form role="form">
-    <div class="input-group">
-        <input ng-model="searchCtrl.query" class="form-control" placeholder="What do you want to eat?" aria-describedby="basic-addon1" type="text">
-        <span class="input-group-btn">
+<div class="wrapper">
+    <div class="header"><h1>Search</h1></div>
+    <form role="form">
+        <div class="input-group">
+            <input ng-model="searchCtrl.query" class="form-control" placeholder="What do you want to eat?" aria-describedby="basic-addon1" type="text">
+        </div>
+        <div class="c2a">
             <button ng-click="searchCtrl.search(searchCtrl.query)" class="btn btn-default" type="submit">Search</button>
-        </span>
+        </div>
+    </form>
+
+    <div ng-show="searchCtrl.loading" class="loader">
+        <img src="./css/images/ring.gif">
     </div>
-</form>
 
-<div ng-show="searchCtrl.loading" class="loader">
-    <img src="./images/ring.gif">
-</div>
+    <ul class="list-group">
+        <li ng-repeat="result in searchCtrl.results" class="list-group-item">
+            <img ng-src="{{ result.recipe.image }}" class="recipe-image">
+            <a ng-click="searchCtrl.saveRecipe(result.recipe)" href="#!/detail"><h5>{{ result.recipe.label }}</h5></a>
+            <p>{{ result.recipe.calories | number:0 }} calories</p>
+            <p>{{ result.recipe.yield }} servings</p>
+            <button ng-click="searchCtrl.addToFavorites(result.recipe)" class="btn btn-default" data-toggle="modal" data-target="#fav-alert" type="button">
+                <span class="glyphicon glyphicon-heart"></span>
+            </button>
+    </ul>
 
-<ul class="list-group">
-    <li ng-repeat="result in searchCtrl.results" class="list-group-item">
-        <img ng-src="{{ result.recipe.image }}" class="recipe-image">
-        <a ng-click="searchCtrl.saveRecipe(result.recipe)" href="#!/detail"><h5>{{ result.recipe.label }}</h5></a>
-        <p>{{ result.recipe.calories | number:0 }} calories</p>
-        <p>{{ result.recipe.yield }} servings</p>
-        <button ng-click="searchCtrl.addToFavorites(result.recipe)" class="btn btn-default" data-toggle="modal" data-target="#fav-alert" type="button">Favorite</button>
-</ul>
-
-<div id="fav-alert" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>{{ searchCtrl.message }}</p>
+    <div id="fav-alert" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>{{ searchCtrl.message }}</p>
+                </div>
             </div>
         </div>
     </div>

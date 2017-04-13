@@ -1,17 +1,21 @@
 <navbar></navbar>
 
-<h1>Sign Up!</h1>
+<div class="wrapper">
+    <div class="header"><h1>Sign Up</h1></div>
 
-<form role="form">
-    <div class="input-group">
-        <input ng-model="signupCtrl.credentials.username" class="form-control" placeholder="username" aria-describedby="basic-addon1" type="text">
-        <p>Must be 4 - 16 characters</p>
-    </div>
-    <div class="input-group">
-        <input ng-model="signupCtrl.credentials.password" class="form-control" placeholder="password" aria-describedby="basic-addon1" type="text">
-        <p>Must be 8 - 16 characters</p>
-    </div>
-    <button ng-click="signupCtrl.signup(signupCtrl.credentials)" class="signup btn btn-default" type="submit">Sign Up</button>
+    <form class="entry-form" role="form">
+        <div class="input-group">
+            <input ng-model="signupCtrl.credentials.username" class="form-control" placeholder="username" aria-describedby="basic-addon1" type="username">
+            <p class="requirement">Must be 4 - 16 characters</p>
+        </div>
+        <div class="input-group">
+            <input ng-model="signupCtrl.credentials.password" class="form-control" placeholder="password" aria-describedby="basic-addon1" type="password">
+            <p class="requirement">Must be 8 - 16 characters</p>
+        </div>
+        <p>Already have an account? Log in <a href="#!/login">here.</a></p>
+        <div class="c2a" >
+            <button ng-click="signupCtrl.signup(signupCtrl.credentials)" class="btn btn-default" type="submit">Sign Up</button>
+        </div>
+    </form>
     <div ng-hide="signupCtrl.success" class="alert alert-danger" role="alert">{{ signupCtrl.errorMessage }}</div>
-</form>
-<p>Already have an account? Log in <a href="#!/login">here.</a></p>
+</div>

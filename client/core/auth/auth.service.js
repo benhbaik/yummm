@@ -20,19 +20,19 @@ angular.module('core.auth', []).
                 $window.localStorage.removeItem('recipe');
             }
 
-            function signup(userInfo, vm, location) {
-                var usernameLength = userInfo.username.length;
-                var passwordLength = userInfo.password.length;
+            function signup(userInfo) {
+                // var usernameLength = userInfo.username.length;
+                // var passwordLength = userInfo.password.length;
 
-                if (usernameLength > 16 || usernameLength < 4) {
-                    vm.success = false;
-                    vm.errorMessage = 'Please enter a valid username.';
-                    return;
-                } else if (passwordLength > 16 || passwordLength < 8) {
-                    vm.success = false;
-                    vm.errorMessage = 'Please enter a valid password.';
-                    return;
-                }
+                // if (usernameLength > 16 || usernameLength < 4) {
+                //     vm.success = false;
+                //     vm.errorMessage = 'Please enter a valid username.';
+                //     return;
+                // } else if (passwordLength > 16 || passwordLength < 8) {
+                //     vm.success = false;
+                //     vm.errorMessage = 'Please enter a valid password.';
+                //     return;
+                // }
 
                 return $http.post('/open/users', userInfo);
             }

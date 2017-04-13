@@ -10,6 +10,7 @@ angular.module('detail', ['core.shoppingList']).
 
                 vm.recipe = JSON.parse($window.localStorage.getItem('recipe'));
                 vm.arrayToAdd = [];
+                vm.message = '';
                 vm.toggleSelection = toggleSelection;
                 vm.addItems = addItems;
                 vm.lastRoute = lastRoute;
@@ -26,13 +27,19 @@ angular.module('detail', ['core.shoppingList']).
                 }
 
                 function addItems(array) {
-                    ShoppingList.saveItems(array).
-                    success(function(data) {
-                        vm.arrayToAdd = [];
-                    }).
-                    error(function(data) {
-                        return data;
-                    });
+                    if (array.length > 0) {
+                        ShoppingList.saveItems(array).
+                        success(function(data) {
+                            vm.message = 'Items added to list!.';
+                            vm.arrayToAdd = [];
+
+                        }).
+                        error(function(data) {
+                            return data;
+                        });
+                    }
+
+                    vm.message = 'Select items to add to your list.';
                 }
 
                 function lastRoute() {

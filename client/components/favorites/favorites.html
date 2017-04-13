@@ -2,7 +2,7 @@
 
 <ul ng-hide="favoritesCtrl.empty" class="list-group">
     <li ng-repeat="favorite in favoritesCtrl.favorites" class="list-group-item">
-        <img ng-src="{{ favorite.image }}" class="recipe-image">
+        <a href="#!/detail"><img ng-src="{{ favorite.image }}" class="recipe-image"></a>
         <p ng-click="favoritesCtrl.goToRecipe(favorite)">{{ favorite.label }}</p>
         <p>{{ favorite.calories | number:0 }} calories</p>
         <p>{{ favorite.yield }} servings</p>

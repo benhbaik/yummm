@@ -29,7 +29,7 @@ exports.remove = function(req, res) {
                 res.json(update.favorites);
             }
         }
-    )
+    );
 };
 
 exports.list = function(req, res) {
