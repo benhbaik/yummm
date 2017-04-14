@@ -1,27 +1,46 @@
 <navbar></navbar>
 
-<ul ng-hide="favoritesCtrl.empty" class="list-group">
-    <li ng-repeat="favorite in favoritesCtrl.favorites" class="list-group-item">
-        <a href="#!/detail"><img ng-src="{{ favorite.image }}" class="recipe-image"></a>
-        <p ng-click="favoritesCtrl.goToRecipe(favorite)">{{ favorite.label }}</p>
-        <p>{{ favorite.calories | number:0 }} calories</p>
-        <p>{{ favorite.yield }} servings</p>
-        <button ng-click="favoritesCtrl.fetchRecipeToRemove(favorite)" class="btn btn-default" data-toggle="modal" data-target="#remove-alert" type="button">Remove</button>
-    </li>
-</ul>
+<div class="wrapper">
+    <ul ng-hide="favoritesCtrl.empty" class="list-group">
+        <li ng-repeat="favorite in favoritesCtrl.favorites" class="list-group-item list-items">
+            <div class="header">
+                <a href="#!/detail">
+                    <div class="header">
+                        <h3 ng-click="favoritesCtrl.goToRecipe(favorite)">{{ favorite.label }}</h3>
+                    </div>
+                </a>
+            </div>
+            <a href="#!/detail"><img ng-src="{{ favorite.image }}" class="recipe-image"></a>
+            <div class="recipe-right">
+                <p class="result-desc">{{ favorite.calories | number:0 }} calories</p>
+                <p class="result-desc">{{ favorite.yield }} servings</p>
+                <div class="c2a remove-btn">
+                    <button ng-click="favoritesCtrl.fetchRecipeToRemove(favorite)" class="btn btn-default c2a-btn recipe-button" data-toggle="modal" data-target="#remove-alert" type="button">
+                        Remove
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+            </div>
+        </li>
+    </ul>
 
-<div ng-show="favoritesCtrl.empty" class="empty">
-    <h3>Favorites is empty.</h3>
-    <p>Find recipes <a href="#!/search">here!</a></p>
-</div>
+    <div ng-show="favoritesCtrl.empty" class="empty">
+        <h3>Favorites is empty.</h3>
+        <p>Find recipes <a href="#!/search">here!</a></p>
+    </div>
 
-<div id="remove-alert" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>Are you sure you want to remove this recipe from your favorites?</p>
-                <button ng-click="favoritesCtrl.removeFromFavorites(favoritesCtrl.recipeToRemove)" type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+    <div id="remove-alert" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-wrapper">
+                        <p>Are you sure you want to remove this recipe from your favorites?</p>
+                        <div class="c2a">
+                            <button ng-click="favoritesCtrl.removeFromFavorites(favoritesCtrl.recipeToRemove)" type="button" class="btn btn-default c2a-btn confirm-btn" data-dismiss="modal">Yes</button>
+                            <button type="button" class="btn btn-default c2a-btn confirm-btn" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

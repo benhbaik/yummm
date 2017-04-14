@@ -1,13 +1,13 @@
-#signup-form {
-    width: 28rem;
-    margin: 0 auto;
+#signup-button {
+    margin-top: 1rem;
 }
 
-.entry-form > .input-group > input {
-    margin-bottom: 6px;
+.signup-input:nth-child(2) {
+    margin-top: 0;
 }
 
 .requirement {
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     margin-left: 12px;
 }
+

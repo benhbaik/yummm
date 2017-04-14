@@ -136,11 +136,11 @@ describe('search', function() {
             });
         });
 
-        describe('vm.saveRecipe', function() {
+        describe('vm.goToRecipe', function() {
             var result;
 
             it('save recipe to local storage', function() {
-                ctrl.saveRecipe({ label: 'recipe one' });
+                ctrl.goToRecipe({ label: 'recipe one' });
 
                 result = JSON.parse(window.localStorage.getItem('recipe'));
 
@@ -148,6 +148,4 @@ describe('search', function() {
             });
         });
     });
-
-// saveRecipe
 });

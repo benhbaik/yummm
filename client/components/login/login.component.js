@@ -9,7 +9,9 @@ angular.module('login', ['core.auth']).
                 var vm = this;
                 vm.errorMessage = '';
                 vm.success = true;
-                vm.login = function(credentials) {
+                vm.login = login;
+
+                function login(credentials) {
                     credentials.username.trim();
                     credentials.password.trim();
 
@@ -21,6 +23,8 @@ angular.module('login', ['core.auth']).
                             $location.path('search');
                         } else if (!vm.success) {
                             vm.errorMessage = data.message;
+                            vm.credentials.username = '';
+                            vm.credentials.password = '';
                         }
                     }).
                     error(function(data) {

@@ -1,26 +1,66 @@
 <navbar></navbar>
 
-<h1>Shopping List</h1>
-<ul class="list-group">
-    <li ng-repeat="item in shoppingListCtrl.items" class="list-group-item">
-        <p ng-dblclick="shoppingListCtrl.activateEdit(item.id)" dbltap="shoppingListCtrl.activateEdit(item.id)">{{ item.item }}</p>
-        <input ng-show="shoppingListCtrl.toggleView(item.id)" ng-blur="shoppingListCtrl.deactivateEdit()" change="shoppingListCtrl.editItem(newItem)" focus="shoppingListCtrl.toggleView(item.id)" ng-model="newItem" id="{{ item.id }}" type="text">
-        <button ng-click="shoppingListCtrl.fetchItemToRemove(item)" type="button" data-toggle="modal" data-target="#remove-alert" class="btn btn-default">Remove</button>
-    </li>
-</ul>
+<div class="wrapper" id="shopping-list-main">
 
-<div ng-show="shoppingListCtrl.empty" class="empty">
-    <h3>Shopping list is empty.</h3>
-    <p>Find recipes <a href="#!/search">here!</a></p>
-</div>
+    <div class="lg-screen-wrapper">
+        <!--<form role="form" class="overflow-fix">
+            <div class="input-group search-input">
+                <input ng-model="searchCtrl.query" class="form-control" placeholder="What do you want to eat?" aria-describedby="basic-addon1" type="text">
+            </div>
+            <div class="c2a search-btn margin-above">
+                <button ng-click="searchCtrl.search(searchCtrl.query)" class="btn btn-default c2a-btn" type="submit">
+                    Search
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+        </form>-->
 
-<div id="remove-alert" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>Are you sure you want to remove this item?</p>
-                <button ng-click="shoppingListCtrl.removeItem(shoppingListCtrl.itemToRemove)" type="button" class="btn btn-default" data-dismiss="modal">Yes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <ul class="list-group shopping-list">
+
+            <li ng-repeat="item in shoppingListCtrl.items" class="list-group-item shopping-item">
+
+                <div class="list-left">
+                    <p ng-dblclick="shoppingListCtrl.activateEdit(item.id)"
+                        ng-hide="shoppingListCtrl.toggleView(item.id)"
+                        dbltap="shoppingListCtrl.activateEdit(item.id)">{{ item.item }}</p>
+
+                    <input ng-show="shoppingListCtrl.toggleView(item.id)"
+                        class="edit-input"
+                        ng-blur="shoppingListCtrl.deactivateEdit()"
+                        change="shoppingListCtrl.editItem(newItem)"
+                        focus="shoppingListCtrl.toggleView(item.id)"
+                        ng-model="newItem" id="{{ item.id }}"
+                        type="text">
+                </div>
+
+                <div class="list-right">
+                    <button ng-click="shoppingListCtrl.fetchItemToRemove(item)" type="button" data-toggle="modal" data-target="#remove-alert" class="btn btn-default">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+
+            </li>
+
+        </ul>
+
+        <div ng-show="shoppingListCtrl.empty" class="empty">
+            <h3>Shopping list is empty.</h3>
+            <p>Find recipes <a href="#!/search">here!</a></p>
+        </div>
+    </div>
+
+    <div id="remove-alert" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-wrapper">
+                        <p>Are you sure you want to remove this item?</p>
+                        <div class="c2a">
+                            <button ng-click="shoppingListCtrl.removeItem(shoppingListCtrl.itemToRemove)" type="button" class="btn btn-default c2a-btn confirm-btn" data-dismiss="modal">Yes</button>
+                            <button type="button" class="btn btn-default c2a-btn confirm-btn" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

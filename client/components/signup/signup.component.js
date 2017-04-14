@@ -22,6 +22,8 @@ angular.module('signup', ['core.auth']).
                             $location.path('search');
                         } else if (!vm.success) {
                             vm.errorMessage = data.message;
+                            vm.credentials.username = '';
+                            vm.credentials.password = '';
                         }
                     }).
                     error(function(data) {

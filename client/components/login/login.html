@@ -1,20 +1,22 @@
 <navbar></navbar>
 
 <div class="wrapper">
-    <div class="header"><h1>Login</h1></div>
+    <div class="lg-screen-wrapper">
+        <form class="entry-form" role="form">
+            <div class="input-group">
+                <input ng-model="loginCtrl.credentials.username" class="form-control" placeholder="username" aria-describedby="basic-addon1" type="username">
+            </div>
+            <div class="input-group">
+                <input ng-model="loginCtrl.credentials.password" class="form-control" placeholder="password" aria-describedby="basic-addon1" type="password">
+            </div>
+            <div class="c2a margin-above">
+                <button ng-click="loginCtrl.login(loginCtrl.credentials)" class="btn btn-default c2a-btn" type="submit">Login</button>
+            </div>
+            <p class="alt">Don't have an account? Sign up <a href="#!/signup">here.</a></p>
+        </form>
 
-    <form class="entry-form" role="form">
-        <div class="input-group">
-            <input ng-model="loginCtrl.credentials.username" class="form-control" placeholder="username" aria-describedby="basic-addon1" type="username">
+        <div ng-hide="loginCtrl.success" class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign"></span> {{ loginCtrl.errorMessage }}
         </div>
-        <div class="input-group">
-            <input ng-model="loginCtrl.credentials.password" class="form-control" placeholder="password" aria-describedby="basic-addon1" type="password">
-        </div>
-         <p>Don't have an account? Sign up <a href="#!/signup">here.</a></p>
-        <div class="c2a">
-            <button ng-click="loginCtrl.login(loginCtrl.credentials)" class="login btn btn-default" type="submit">Login</button>
-        </div>
-    </form>
-
-    <div ng-hide="loginCtrl.success" class="alert alert-danger" role="alert">{{ loginCtrl.errorMessage }}</div>
+    </div>
 </div>

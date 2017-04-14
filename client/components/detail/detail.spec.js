@@ -156,7 +156,7 @@ describe('detail', function() {
 
                 result = ctrl.lastRouteLink();
 
-                expect(result).toBe('favorites');
+                expect(result).toBe('Favorites');
             });
         });
     });

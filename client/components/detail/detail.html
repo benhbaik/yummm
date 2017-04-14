@@ -1,49 +1,79 @@
 <navbar></navbar>
 
-<h1>detail</h1>
-<p ng-show="detailCtrl.lastRouteLink()">Back to <a ng-href="#!{{ detailCtrl.lastRoute() }}">{{ detailCtrl.lastRouteLink() }}</a></p>
+<div class="wrapper">
+<div class="overflow-fix">
+    <div class="back-btn">
+        <a ng-href="#!{{ detailCtrl.lastRoute() }}">
+            <button class="btn btn-default" ng-show="detailCtrl.lastRouteLink()">
+                <span class="glyphicon glyphicon-menu-left"></span>
+                {{ detailCtrl.lastRouteLink() }}
+            </button>
+        </a>
+    </div>
 
-<img ng-src="{{ detailCtrl.recipe.image }}" class="recipe-image">
-<h5>{{ detailCtrl.recipe.label }}</h5>
-<p>{{ detailCtrl.recipe.calories | number:0 }} calories</p>
-<p>{{ detailCtrl.recipe.yield }} servings</p>
-<a ng-href="{{ detailCtrl.recipe.url }}">Cooking Instructions</a>
-
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#ingredients" aria-expanded="false" aria-controls="ingredients">
-  Ingredients
-</button>
-
-<div class="collapse" id="ingredients">
-    <div class="well">
-        <ul class="list-group">
-            <li ng-repeat="item in detailCtrl.recipe.ingredientLines" class="list-group-item">
-                <label><input ng-click="detailCtrl.toggleSelection(item)" class="ingredient-checkbox" type="checkbox">{{ item }}</label>
-            </li>
-        </ul>
-        <button ng-click="detailCtrl.addItems(detailCtrl.arrayToAdd)" added class="btn btn-default" data-toggle="modal" data-target="#add-alert" type="button">Add</button>
+    <div class="header">
+        <h3 id="detail-header">{{ detailCtrl.recipe.label }}</h3>
+    </div>
+    <img ng-src="{{ detailCtrl.recipe.image }}" class="recipe-image">
+    <div class="recipe-right">
+        <p>{{ detailCtrl.recipe.calories | number:0 }} calories</p>
+        <p>{{ detailCtrl.recipe.yield }} servings</p>
+        <p id="instructions"><a ng-href="{{ detailCtrl.recipe.url }}">Cooking Instructions</a></p>
     </div>
 </div>
 
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#health-labels" aria-expanded="false" aria-controls="health-labels">
-    Health Labels
-</button>
-
-<div class="collapse" id="health-labels">
-    <div class="well">
-        <ul class="list-group">
-            <li ng-repeat="healthLabel in detailCtrl.recipe.healthLabels" class="list-group-item">
-                {{ healthLabel }}
-            </li>
-        </ul>
+    <div class="c2a margin-above">
+        <button class="btn btn-default c2a-btn detail-btn" ng-click="detailCtrl.expandIngredients()" type="button" data-toggle="collapse" data-target="#ingredients" aria-expanded="false" aria-controls="ingredients">
+            <span class="glyphicon glyphicon-menu-right expanded" ng-class="detailCtrl.ingredientsExpanded"></span>
+            Ingredients
+        </button>
     </div>
-</div>
 
-<div id="add-alert" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <p>{{ detailCtrl.message }}</p>
+    <div class="collapse" id="ingredients">
+        <div class="well">
+            <ul class="list-group">
+                <li ng-repeat="item in detailCtrl.recipe.ingredientLines" ng-click="detailCtrl.toggleSelection(item)" class="list-group-item">
+                    <p>
+                        <label><input class="ingredient-checkbox" type="checkbox">
+                            <span> </span>{{ item }}
+                        </label>                                                            
+                    </p>
+                </li>
+            </ul>
+            <button ng-click="detailCtrl.addItems(detailCtrl.arrayToAdd)" added class="btn btn-default" data-toggle="modal" data-target="#add-alert" type="button">
+                Add
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="c2a margin-above">
+        <button class="btn btn-default c2a-btn detail-btn" ng-click="detailCtrl.expandLabels()" type="button" data-toggle="collapse" data-target="#health-labels" aria-expanded="false" aria-controls="health-labels">
+            <span class="glyphicon glyphicon-menu-right expanded" ng-class="detailCtrl.labelsExpanded"></span>
+            Health Labels
+        </button>
+    </div>
+
+    <div class="collapse" id="health-labels">
+        <div class="well">
+            <ul class="list-group">
+                <li ng-repeat="healthLabel in detailCtrl.recipe.healthLabels" class="list-group-item">
+                    <p>{{ healthLabel }}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="add-alert" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="modal-wrapper">
+                        <p>{{ detailCtrl.message }}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>

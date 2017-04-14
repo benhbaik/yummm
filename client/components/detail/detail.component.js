@@ -11,10 +11,30 @@ angular.module('detail', ['core.shoppingList']).
                 vm.recipe = JSON.parse($window.localStorage.getItem('recipe'));
                 vm.arrayToAdd = [];
                 vm.message = '';
+                vm.ingredientsExpanded = '';
+                vm.labelsExpanded = '';
+                vm.expandIngredients = expandIngredients;
+                vm.expandLabels = expandLabels;
                 vm.toggleSelection = toggleSelection;
                 vm.addItems = addItems;
                 vm.lastRoute = lastRoute;
                 vm.lastRouteLink = lastRouteLink;
+
+                function expandIngredients() {
+                    if (vm.ingredientsExpanded === '') {
+                        vm.ingredientsExpanded = 'expanded-active';
+                    } else if (vm.ingredientsExpanded === 'expanded-active') {
+                        vm.ingredientsExpanded = '';
+                    }
+                }
+
+                function expandLabels() {
+                    if (vm.labelsExpanded === '') {
+                        vm.labelsExpanded = 'expanded-active';
+                    } else if (vm.labelsExpanded === 'expanded-active') {
+                        vm.labelsExpanded = '';
+                    }
+                }
 
                 function toggleSelection(item) {
                     var index = vm.arrayToAdd.indexOf(item);
@@ -58,6 +78,7 @@ angular.module('detail', ['core.shoppingList']).
 
                     if (lastRoute) {
                         lastRoute = lastRoute.slice(1, lastRoute.length);
+                        lastRoute = lastRoute.charAt(0).toUpperCase() + lastRoute.substr(1);
                         return lastRoute;
                     }
                     

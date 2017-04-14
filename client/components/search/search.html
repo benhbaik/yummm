@@ -1,36 +1,49 @@
 <navbar></navbar>
 
-<div class="wrapper">
-    <div class="header"><h1>Search</h1></div>
-    <form role="form">
-        <div class="input-group">
+<div class="wrapper" id="search-main">
+    <form role="form" class="overflow-fix recipe-form">
+        <div class="input-group search-input">
             <input ng-model="searchCtrl.query" class="form-control" placeholder="What do you want to eat?" aria-describedby="basic-addon1" type="text">
         </div>
-        <div class="c2a">
-            <button ng-click="searchCtrl.search(searchCtrl.query)" class="btn btn-default" type="submit">Search</button>
+        <div class="c2a search-btn margin-above">
+            <button ng-click="searchCtrl.search(searchCtrl.query)" class="btn btn-default c2a-btn" type="submit">
+                Search
+                <span class="glyphicon glyphicon-search"></span>
+            </button>
         </div>
     </form>
 
-    <div ng-show="searchCtrl.loading" class="loader">
-        <img src="./css/images/ring.gif">
+    <div ng-show="searchCtrl.loading" class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
     </div>
 
     <ul class="list-group">
-        <li ng-repeat="result in searchCtrl.results" class="list-group-item">
+        <li ng-repeat="result in searchCtrl.results" class="list-items list-group-item">
+            <div class="header">
+                <h3 ng-click="searchCtrl.goToRecipe(result.recipe)">{{ result.recipe.label }}</h3>
+            </div>
             <img ng-src="{{ result.recipe.image }}" class="recipe-image">
-            <a ng-click="searchCtrl.saveRecipe(result.recipe)" href="#!/detail"><h5>{{ result.recipe.label }}</h5></a>
-            <p>{{ result.recipe.calories | number:0 }} calories</p>
-            <p>{{ result.recipe.yield }} servings</p>
-            <button ng-click="searchCtrl.addToFavorites(result.recipe)" class="btn btn-default" data-toggle="modal" data-target="#fav-alert" type="button">
-                <span class="glyphicon glyphicon-heart"></span>
-            </button>
+            <div class="recipe-right">
+                <p class="result-desc">{{ result.recipe.calories | number:0 }} calories</p>
+                <p class="result-desc">{{ result.recipe.yield }} servings</p>
+                <div class="c2a favorite-btn">
+                    <button ng-click="searchCtrl.addToFavorites(result.recipe)" class="btn btn-default c2a-btn recipe-button" data-toggle="modal" data-target="#fav-alert" type="button">
+                        Favorite
+                        <span class="glyphicon glyphicon-heart"></span>
+                    </button>
+                </div>
+            </div>
     </ul>
 
     <div id="fav-alert" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body">
-                    <p>{{ searchCtrl.message }}</p>
+                    <div class="modal-wrapper">
+                        <p>{{ searchCtrl.message }}</p>
+                    </div>
                 </div>
             </div>
         </div>

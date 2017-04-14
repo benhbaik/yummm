@@ -1,0 +1,22 @@
+
+
+.back-btn {
+    margin-bottom: 2rem;
+    float: right;
+}
+
+.detail-btn {
+    margin-top: 1rem;
+}
+
+#detail-header {
+    clear: right;
+}
+
+#instructions {
+    margin-bottom: 1rem;
+}
+
+#instructions:hover {
+    color: #ff9800;
+}

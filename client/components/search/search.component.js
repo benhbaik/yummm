@@ -4,8 +4,8 @@ angular.module('search', ['core.recipe']).
     component('search', {
         templateUrl: 'components/search/search.html',
         controllerAs: 'searchCtrl',
-        controller: ['Recipe', '$window',
-            function searchController(Recipe, $window) {
+        controller: ['Recipe', '$window', '$location',
+            function searchController(Recipe, $window, $location) {
                 var vm = this;
                 vm.query = '';
                 vm.results = [];
@@ -15,7 +15,7 @@ angular.module('search', ['core.recipe']).
                 vm.search = search;
                 vm.checkFavorites = checkFavorites;
                 vm.addToFavorites = addToFavorites;
-                vm.saveRecipe = saveRecipe;
+                vm.goToRecipe = goToRecipe;
 
                 Recipe.getFavorites().
                 success(function(data) {
@@ -66,8 +66,9 @@ angular.module('search', ['core.recipe']).
                     }
                 }
 
-                function saveRecipe(recipe) {
+                function goToRecipe(recipe) {
                     $window.localStorage.setItem('recipe', angular.toJson(recipe));
+                    $location.path('/detail');
                 }
             }
         ]
