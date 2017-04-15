@@ -1,0 +1,126 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+    color: grey;
+    font-size: 2.8rem;
+}
+
+h3 {
+    font-family: 'Open Sans', sans-serif;
+}
+
+p {
+    color: grey;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1.8rem;
+    line-height: 1.618;
+    margin: 0;
+}
+
+a {
+    font-weight: 600;
+    color: #7A7A7A;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #ff9800;
+    cursor: pointer;
+}
+
+/*  fix content shifting left when open modal issue  */
+
+body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
+    padding-right: 0px !important;
+    overflow-y: auto;
+}
+
+/*  bootstrap default overwrites  */
+
+.navbar {
+    width: 28rem;
+    margin: 0 auto 4rem auto;
+}
+
+.navbar-toggle {
+    margin-right: 0;
+}
+
+.navbar-default {
+    background-color: white;
+    border-color: white;
+}
+.navbar-default .navbar-toggle {
+    border-color: #ff9800;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #ff9800;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: white;
+}
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+    border-color: white;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #ff9800;
+    font-size: 2rem;
+    padding: 2rem;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+
+.navbar-collapse {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.well {
+    background-color: white;
+    border: none;
+}
+
+.list-group-item {
+    border: none;
+    padding: 0;
+    margin-bottom: 2rem;
+}
+
+.btn-default {
+    color: #ff9800;
+    border-color: #ff9800;
+    font-size: 1.8rem;
+}
+
+.btn-default:hover {
+    background-color: #ff9800;
+    border-color: #ff9800;
+    color: white;
+}
+
+.form-control {
+    border: none;
+    border-bottom: 1px solid #cccccc;
+    box-shadow: none;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 2.2rem;
+}
+
+.input-group {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.modal-body {
+    padding: 1rem;
+}

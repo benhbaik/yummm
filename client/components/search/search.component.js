@@ -46,8 +46,8 @@ angular.module('search', ['core.recipe']).
                         if (vm.favorites[i].label === recipe.label) {
                             return true;
                         }
-                        return false;
                     }
+                    return false;
                 }
 
                 function addToFavorites(recipe) {

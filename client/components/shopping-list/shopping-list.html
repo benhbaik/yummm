@@ -1,20 +1,8 @@
 <navbar></navbar>
 
-<div class="wrapper" id="shopping-list-main">
+<div class="wrapper">
 
     <div class="lg-screen-wrapper">
-        <!--<form role="form" class="overflow-fix">
-            <div class="input-group search-input">
-                <input ng-model="searchCtrl.query" class="form-control" placeholder="What do you want to eat?" aria-describedby="basic-addon1" type="text">
-            </div>
-            <div class="c2a search-btn margin-above">
-                <button ng-click="searchCtrl.search(searchCtrl.query)" class="btn btn-default c2a-btn" type="submit">
-                    Search
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </div>
-        </form>-->
-
         <ul class="list-group shopping-list">
 
             <li ng-repeat="item in shoppingListCtrl.items" class="list-group-item shopping-item">
@@ -22,7 +10,9 @@
                 <div class="list-left">
                     <p ng-dblclick="shoppingListCtrl.activateEdit(item.id)"
                         ng-hide="shoppingListCtrl.toggleView(item.id)"
-                        dbltap="shoppingListCtrl.activateEdit(item.id)">{{ item.item }}</p>
+                        dbltap="shoppingListCtrl.activateEdit(item.id)">
+                        {{ item.item }}
+                    </p>
 
                     <input ng-show="shoppingListCtrl.toggleView(item.id)"
                         class="edit-input"

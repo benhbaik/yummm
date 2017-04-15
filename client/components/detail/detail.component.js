@@ -38,7 +38,6 @@ angular.module('detail', ['core.shoppingList']).
 
                 function toggleSelection(item) {
                     var index = vm.arrayToAdd.indexOf(item);
-
                     if (index === -1) {
                         vm.arrayToAdd.push(item);
                     } else if (index >= 0) {
@@ -47,12 +46,12 @@ angular.module('detail', ['core.shoppingList']).
                 }
 
                 function addItems(array) {
+                    console.log(vm.arrayToAdd);
                     if (array.length > 0) {
                         ShoppingList.saveItems(array).
                         success(function(data) {
                             vm.message = 'Items added to list!.';
                             vm.arrayToAdd = [];
-
                         }).
                         error(function(data) {
                             return data;

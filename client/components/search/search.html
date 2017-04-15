@@ -1,6 +1,6 @@
 <navbar></navbar>
 
-<div class="wrapper" id="search-main">
+<div class="wrapper">
     <form role="form" class="overflow-fix recipe-form">
         <div class="input-group search-input">
             <input ng-model="searchCtrl.query" class="form-control" placeholder="What do you want to eat?" aria-describedby="basic-addon1" type="text">
@@ -19,15 +19,15 @@
         <div class="bounce3"></div>
     </div>
 
-    <ul class="list-group">
+    <ul class="list-group recipe-list-group">
         <li ng-repeat="result in searchCtrl.results" class="list-items list-group-item">
             <div class="header">
                 <h3 ng-click="searchCtrl.goToRecipe(result.recipe)">{{ result.recipe.label }}</h3>
             </div>
             <img ng-src="{{ result.recipe.image }}" class="recipe-image">
             <div class="recipe-right">
-                <p class="result-desc">{{ result.recipe.calories | number:0 }} calories</p>
-                <p class="result-desc">{{ result.recipe.yield }} servings</p>
+                <p>{{ result.recipe.calories | number:0 }} calories</p>
+                <p>{{ result.recipe.yield }} servings</p>
                 <div class="c2a favorite-btn">
                     <button ng-click="searchCtrl.addToFavorites(result.recipe)" class="btn btn-default c2a-btn recipe-button" data-toggle="modal" data-target="#fav-alert" type="button">
                         Favorite
