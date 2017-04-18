@@ -3,35 +3,67 @@
 <div class="wrapper">
 
     <div class="lg-screen-wrapper">
-        <ul class="list-group shopping-list">
+    
+        <form class="entry-form" role="form">
+
+            <div class="input-group">
+                <input ng-model="shoppingListCtrl.newItem"
+                    class="form-control"
+                    placeholder="Add an item"
+                    type="text">
+            </div>
+
+            <div class="c2a margin-above">
+                <button ng-click="shoppingListCtrl.addItem(shoppingListCtrl.newItem)"
+                    class="btn btn-default c2a-btn"
+                    type="submit">
+                    Add
+                </button>
+            </div>
+                
+        </form>
+
+        <p class="margin-above">Double-click to edit.</p>
+
+        <ul class="list-group shopping-list margin-above">
 
             <li ng-repeat="item in shoppingListCtrl.items" class="list-group-item shopping-item">
 
                 <div class="list-left">
+                    <input ng-click="shoppingListCtrl.removeFromPool(item)"
+                        type="checkbox">
+                </div>
+
+                <div class="list-right">
                     <p ng-dblclick="shoppingListCtrl.activateEdit(item.id)"
                         ng-hide="shoppingListCtrl.toggleView(item.id)"
-                        dbltap="shoppingListCtrl.activateEdit(item.id)">
+                        dbltap="shoppingListCtrl.activateEdit(item.id)"
+                        ng-class="shoppingListCtrl.checkIfRemoved(item)">
                         {{ item.item }}
                     </p>
 
                     <input ng-show="shoppingListCtrl.toggleView(item.id)"
                         class="edit-input"
                         ng-blur="shoppingListCtrl.deactivateEdit()"
-                        change="shoppingListCtrl.editItem(newItem)"
+                        change="shoppingListCtrl.editItem(updatedItem)"
                         focus="shoppingListCtrl.toggleView(item.id)"
-                        ng-model="newItem" id="{{ item.id }}"
+                        ng-model="updatedItem" id="{{ item.id }}"
                         type="text">
-                </div>
-
-                <div class="list-right">
-                    <button ng-click="shoppingListCtrl.fetchItemToRemove(item)" type="button" data-toggle="modal" data-target="#remove-alert" class="btn btn-default">
-                        <span class="glyphicon glyphicon-remove"></span>
-                    </button>
                 </div>
 
             </li>
 
         </ul>
+
+        <div class="c2a">
+            <button type="button"
+                data-toggle="modal"
+                data-target="#remove-alert"
+                class="btn btn-default c2a-btn">
+                Remove items
+                <span class="glyphicon glyphicon-remove"></span>
+            </button>
+        </div>
 
         <div ng-show="shoppingListCtrl.empty" class="empty">
             <h3>Shopping list is empty.</h3>
@@ -44,10 +76,24 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-wrapper">
-                        <p>Are you sure you want to remove this item?</p>
-                        <div class="c2a">
-                            <button ng-click="shoppingListCtrl.removeItem(shoppingListCtrl.itemToRemove)" type="button" class="btn btn-default c2a-btn confirm-btn" data-dismiss="modal">Yes</button>
-                            <button type="button" class="btn btn-default c2a-btn confirm-btn" data-dismiss="modal">No</button>
+                        <div ng-hide="shoppingListCtrl.removeCount">
+                            <p>There are no items to remove.</p>
+                        </div>
+                        <div ng-show="shoppingListCtrl.removeCount">
+                            <p>Are you sure you want to remove these item?</p>
+                            <div class="c2a">
+                                <button ng-click="shoppingListCtrl.removeItems(shoppingListCtrl.itemsPool)"
+                                    type="button"
+                                    class="btn btn-default c2a-btn confirm-btn"
+                                    data-dismiss="modal">
+                                    Yes
+                                </button>
+                                <button type="button"
+                                    class="btn btn-default c2a-btn confirm-btn"
+                                    data-dismiss="modal">
+                                    No
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,3 +101,4 @@
         </div>
     </div>
 </div>
+

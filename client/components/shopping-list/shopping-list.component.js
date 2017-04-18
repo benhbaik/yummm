@@ -8,19 +8,24 @@ angular.module('shoppingList', ['core.shoppingList']).
             function shoppingListController(ShoppingList, $window) {
                 var vm = this;
                 vm.items = [];
+                vm.itemsPool = [];
+                vm.removeCount = 0;
                 vm.empty = false;
                 vm.currentInput = '';
-                vm.itemToRemove = {};
+                vm.newItem = '';
                 vm.activateEdit = activateEdit;
                 vm.deactivateEdit = deactivateEdit;
                 vm.toggleView = toggleView;
                 vm.editItem = editItem;
-                vm.fetchItemToRemove = fetchItemToRemove;
-                vm.removeItem = removeItem;
+                vm.addItem = addItem;
+                vm.checkIfRemoved = checkIfRemoved;
+                vm.removeFromPool = removeFromPool;
+                vm.removeItems = removeItems;
 
                 ShoppingList.getItems().
                 success(function(data) {
                     vm.items = data;
+                    vm.itemsPool = JSON.parse(angular.toJson(data));
                     if (vm.items.length === 0) {
                         vm.empty = true;
                     }
@@ -38,7 +43,7 @@ angular.module('shoppingList', ['core.shoppingList']).
                 }
 
                 function toggleView(id) {
-                    // prevent other li's from showing
+                    // prevent other li's from showing edit
                     if (vm.currentInput === id) {
                         return true;
                     }
@@ -56,22 +61,69 @@ angular.module('shoppingList', ['core.shoppingList']).
                     });
                 }
 
-                function fetchItemToRemove(item) {
-                    vm.itemToRemove = item;
-                }
+                function addItem(item) {
+                    if (item === '') {
+                        return;
+                    }
 
-                function removeItem(item) {
-                    ShoppingList.removeItem(item).
+                    item = Array(item);
+
+                    ShoppingList.saveItems(item).
                     success(function(data) {
                         vm.items = data;
+                        vm.itemsPool = JSON.parse(angular.toJson(data));
+                        vm.newItem = '';
+                    }).
+                    error(function(data) {
+                        return data;
+                    });
+                }
+
+                function checkIfRemoved(item) {
+                    var index = findIndex(vm.itemsPool, item);
+
+                    if (index === -1) {
+                        return 'deleted';
+                    } else {
+                        return '';
+                    }
+                }
+
+                function removeFromPool(item) {
+                    var index = findIndex(vm.itemsPool, item);
+
+                    if (index >= 0) {
+                        vm.itemsPool.splice(index, 1);
+                        vm.removeCount++;
+                    } else if (index === -1) {
+                        vm.itemsPool.push(item);
+                        vm.removeCount--;
+                    }
+                }
+
+                function removeItems(items) {
+                    ShoppingList.removeItem(items).
+                    success(function(data) {
+                        vm.items = data;
+                        vm.removeCount = 0;
                         if (vm.items.length === 0) {
                             vm.empty = true;
-                            vm.itemToRemove = '';
                         }
                     }).
                     error(function(data) {
                         return data;
                     });
+                }
+
+                // helper
+
+                function findIndex(array, item) {
+                    for (var i = 0; i < array.length; i++) {
+                        if (array[i].id === item.id) {
+                            return i;
+                        }
+                    }
+                    return -1;
                 }
             }
         ]

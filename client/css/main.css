@@ -83,14 +83,18 @@
     height: auto;
 }
 
+.deleted {
+    text-decoration: line-through;
+}
+
 .list-left {
-    width: 83.5%;
+    width: 4.6rem;
     float: left;
     padding-right: 1rem;
 }
 
 .list-right {
-    width: 4.6rem;
+    width: 83.5%;
     float: right;
 }
 

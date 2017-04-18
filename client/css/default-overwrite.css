@@ -124,3 +124,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
 .modal-body {
     padding: 1rem;
 }
+
+.fa-circle-o-notch {
+    font-size: 18px;
+}

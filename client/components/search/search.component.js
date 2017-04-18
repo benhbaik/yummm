@@ -4,15 +4,19 @@ angular.module('search', ['core.recipe']).
     component('search', {
         templateUrl: 'components/search/search.html',
         controllerAs: 'searchCtrl',
-        controller: ['Recipe', '$window', '$location',
-            function searchController(Recipe, $window, $location) {
+        controller: ['Recipe', '$window', '$location', '$anchorScroll',
+            function searchController(Recipe, $window, $location, $anchorScroll) {
                 var vm = this;
-                vm.query = '';
+                vm.queryCache = '';
                 vm.results = [];
                 vm.loading = false;
+                vm.loadingMore = false;
                 vm.message = '';
                 vm.favorites = [];
                 vm.search = search;
+                vm.loadMore = loadMore;
+                vm.populated = populated;
+                vm.goToTop = goToTop;
                 vm.checkFavorites = checkFavorites;
                 vm.addToFavorites = addToFavorites;
                 vm.goToRecipe = goToRecipe;
@@ -26,11 +30,11 @@ angular.module('search', ['core.recipe']).
                 });
 
                 function search(query) {
-                    vm.loading = true;
+                    vm.results = [];
+                    vm.loading = true;    
+                    vm.queryCache = query.trim();
 
-                    query.trim();
-
-                    Recipe.search(query).
+                    Recipe.search(vm.queryCache).
                     success(function(data) {
                         vm.results = data.hits;
                         vm.query = '';
@@ -39,6 +43,29 @@ angular.module('search', ['core.recipe']).
                     error(function(data) {
                         return data;
                     });
+                }
+
+                function loadMore(query) {
+                    vm.loadingMore = true;
+                    Recipe.loadMore(query, vm.results.length).
+                    success(function(data) {
+                        vm.loadingMore = false;
+                        vm.results = vm.results.concat(data.hits);
+                    }).
+                    error(function(data) {
+                        return data;
+                    });
+                }
+
+                function populated() {
+                    if (vm.results.length === 0) {
+                        return false;
+                    }
+                    return true;
+                }
+
+                function goToTop() {
+                    $anchorScroll('top');
                 }
 
                 function checkFavorites(recipe) {

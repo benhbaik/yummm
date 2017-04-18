@@ -1,17 +1,54 @@
+<a id="top"></a>
 <navbar></navbar>
 
 <div class="wrapper">
+
     <form role="form" class="overflow-fix recipe-form">
+
         <div class="input-group search-input">
-            <input ng-model="searchCtrl.query" class="form-control" placeholder="What do you want to eat?" aria-describedby="basic-addon1" type="text">
+            <input ng-model="searchCtrl.query"
+                class="form-control"
+                placeholder="What do you want to eat?" 
+                type="text">
         </div>
+
         <div class="c2a search-btn margin-above">
-            <button ng-click="searchCtrl.search(searchCtrl.query)" class="btn btn-default c2a-btn" type="submit">
+            <button ng-click="searchCtrl.search(searchCtrl.query)"
+                class="btn btn-default c2a-btn"
+                type="submit">
                 Search
                 <span class="glyphicon glyphicon-search"></span>
             </button>
         </div>
+
     </form>
+
+    <ul ng-show="!searchCtrl.loading" class="list-group recipe-list-group">
+
+        <li ng-repeat="result in searchCtrl.results" class="list-items list-group-item">
+            <div class="header">
+                <h3 ng-click="searchCtrl.goToRecipe(result.recipe)">{{ result.recipe.label }}</h3>
+            </div>
+
+            <img ng-src="{{ result.recipe.image }}" class="recipe-image">
+
+            <div class="recipe-right">
+                <p>{{ result.recipe.calories | number:0 }} calories</p>
+                <p>{{ result.recipe.yield }} servings</p>
+                <div class="c2a favorite-btn">
+                    <button ng-click="searchCtrl.addToFavorites(result.recipe)"
+                        class="btn btn-default c2a-btn recipe-button"
+                        data-toggle="modal"
+                        data-target="#fav-alert"
+                        type="button">
+                        Favorite
+                        <span class="glyphicon glyphicon-heart"></span>
+                    </button>
+                </div>
+            </div>
+        </li>
+
+    </ul>
 
     <div ng-show="searchCtrl.loading" class="spinner">
         <div class="bounce1"></div>
@@ -19,23 +56,17 @@
         <div class="bounce3"></div>
     </div>
 
-    <ul class="list-group recipe-list-group">
-        <li ng-repeat="result in searchCtrl.results" class="list-items list-group-item">
-            <div class="header">
-                <h3 ng-click="searchCtrl.goToRecipe(result.recipe)">{{ result.recipe.label }}</h3>
-            </div>
-            <img ng-src="{{ result.recipe.image }}" class="recipe-image">
-            <div class="recipe-right">
-                <p>{{ result.recipe.calories | number:0 }} calories</p>
-                <p>{{ result.recipe.yield }} servings</p>
-                <div class="c2a favorite-btn">
-                    <button ng-click="searchCtrl.addToFavorites(result.recipe)" class="btn btn-default c2a-btn recipe-button" data-toggle="modal" data-target="#fav-alert" type="button">
-                        Favorite
-                        <span class="glyphicon glyphicon-heart"></span>
-                    </button>
-                </div>
-            </div>
-    </ul>
+    <div class="c2a margin-above">
+        <button ng-click="searchCtrl.goToTop()"
+            ng-show="searchCtrl.populated()"
+            class="btn btn-default c2a-btn margin-above">
+            Back to Top
+        </button>
+        <button ng-click="searchCtrl.loadMore(searchCtrl.queryCache)" ng-show="searchCtrl.populated()" class="btn btn-default c2a-btn margin-above">
+            Load More
+            <span ng-show="searchCtrl.loadingMore" class="fa fa-circle-o-notch fa-spin"></span>
+        </button>
+    </div>
 
     <div id="fav-alert" class="modal fade" role="dialog">
         <div class="modal-dialog">

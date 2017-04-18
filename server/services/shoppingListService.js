@@ -46,7 +46,8 @@ exports.update = function(req, res) {
 exports.remove = function(req, res) {
     Table.findOneAndUpdate(
         { userId: req.params.id },
-        { $pull: { shoppingList: req.body.item } },
+        // { $pull: { shoppingList: req.body.item } },
+        { shoppingList: req.body.items },
         { new: true },
         function(err, update) {
             if (err) {

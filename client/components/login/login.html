@@ -2,21 +2,35 @@
 
 <div class="wrapper">
     <div class="lg-screen-wrapper">
+
         <form class="entry-form" role="form">
             <div class="input-group">
-                <input ng-model="loginCtrl.credentials.username" class="form-control" placeholder="username" aria-describedby="basic-addon1" type="username">
+                <input ng-model="loginCtrl.credentials.username"
+                    class="form-control"
+                    placeholder="Enter username"
+                    type="username">
             </div>
             <div class="input-group">
-                <input ng-model="loginCtrl.credentials.password" class="form-control" placeholder="password" aria-describedby="basic-addon1" type="password">
+                <input ng-model="loginCtrl.credentials.password"
+                    class="form-control"
+                    placeholder="Enter password"
+                    type="password">
             </div>
+
             <div class="c2a margin-above">
-                <button ng-click="loginCtrl.login(loginCtrl.credentials)" class="btn btn-default c2a-btn" type="submit">Login</button>
+                <button ng-click="loginCtrl.login(loginCtrl.credentials)"
+                    class="btn btn-default c2a-btn"
+                    type="submit">
+                    Login
+                </button>
             </div>
+
             <p class="alternative">Don't have an account? Sign up <a href="#!/signup">here.</a></p>
         </form>
 
-        <div ng-hide="loginCtrl.success" class="alert alert-danger" role="alert">
+        <div ng-hide="loginCtrl.success" class="alert alert-danger margin-above" role="alert">
             <span class="glyphicon glyphicon-exclamation-sign"></span> {{ loginCtrl.errorMessage }}
         </div>
+
     </div>
 </div>

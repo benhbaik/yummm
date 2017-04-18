@@ -12,12 +12,12 @@ angular.module('core.shoppingList', ['core.auth']).
                 removeItem: removeItem
             };
 
-            function getItems(vm) {
+            function getItems() {
                 return $http.get('/secure/shopping-list/' + user._id);
             }
 
             function saveItems(items) {
-                // add unique id's to items for edit feature
+                // add unique id's to items
                 for (var i = 0; i < items.length; i++) {
                     items[i] = {
                         id: uuid(),
@@ -36,8 +36,8 @@ angular.module('core.shoppingList', ['core.auth']).
                 return $http.put('/secure/shopping-list/' + user._id, { item: item });
             }
 
-            function removeItem(item, vm) {
-                return $http.put('/secure/shopping-list/delete/' + user._id, { item: item });
+            function removeItem(items) {
+                return $http.put('/secure/shopping-list/delete/' + user._id, { items: items });
             }
 
             // created id's for items

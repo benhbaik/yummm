@@ -4,23 +4,28 @@ angular.module('core.recipe', ['core.auth']).
     factory('Recipe', ['$http', 'Auth',
         function($http, Auth) {
             var user = Auth.getUserData();
+            var url = {
+                path: 'https://api.edamam.com/search?',
+                query: 'q=',
+                from: 'from=',
+                appId: 'app_id=0c0154a7',
+                appKey: 'app_key=1d068946dcf6f0d21684c8fcf727618d'
+            };
 
             return {
                 search: search,
+                loadMore: loadMore,
                 addToFavorites: addToFavorites,
                 removeFromFavorites: removeFromFavorites,
                 getFavorites: getFavorites
             };
 
             function search(query) {
-                var url = {
-                    path: 'https://api.edamam.com/search?',
-                    query: 'q=' + query,
-                    appId: 'app_id=0c0154a7',
-                    appKey: 'app_key=1d068946dcf6f0d21684c8fcf727618d'
-                };
+                return $http.get(url.path + url.query + query + '&' + url.appId + '&' + url.appKey);
+            }
 
-                return $http.get(url.path + url.query + '&' + url.appId + '&' + url.appKey);
+            function loadMore(query, length) {
+                return $http.get(url.path + url.query + query + '&' + url.from + length + '&' + url.appId + '&' + url.appKey);
             }
 
             function addToFavorites(recipe) {
