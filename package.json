@@ -26,7 +26,8 @@
     "start": "nodemon",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run",
-    "protractor": "protractor e2e-tests/protractor.conf.js"
+    "protractor": "protractor e2e-tests/protractor.conf.js",
+    "bundle": "webpack"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
