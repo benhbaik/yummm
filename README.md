@@ -6,6 +6,10 @@ Uses Edamam Recipe Search API to find recipes and ingredients.
 
 Saves favorite recipes and shopping list items to yummm's own database.
 
+Front End was bootstrapped with angular-seed.
+
+Deployed on Heroku.
+
 ## Tools/Libraries
 
 - MongoDB
@@ -21,5 +25,3 @@ Saves favorite recipes and shopping list items to yummm's own database.
 - Jasmine
 - Karma
 - Protractor
-
-Front End was bootstrapped with angular-seed.
