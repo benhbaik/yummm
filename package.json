@@ -1,13 +1,13 @@
 {
   "name": "yummm",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "node": "6.7.0"
   },
-  "description": "A starter project for AngularJS",
+  "description": "App that helps you find recipes.",
   "main": "server.js",
-  "repository": "https://github.com/angular/angular-seed",
+  "repository": "https://github.com/benhbaik/yummm",
   "license": "MIT",
   "devDependencies": {
     "html-loader": "~0.4.5",
@@ -23,9 +23,9 @@
     "webpack": "~2.4.1"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "npm install",
     "update-deps": "npm update",
-    "postupdate-deps": "bower update",
+    "postupdate-deps": "npm update",
     "start": "nodemon",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run",
