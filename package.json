@@ -23,9 +23,7 @@
     "webpack": "~2.4.1"
   },
   "scripts": {
-    "postinstall": "npm install",
     "update-deps": "npm update",
-    "postupdate-deps": "npm update",
     "start": "nodemon",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js --single-run",
