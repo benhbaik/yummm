@@ -65,6 +65,7 @@ angular.module('shoppingList', ['core.shoppingList']).
 
                     ShoppingList.saveItems(item).
                     then(function(res) {
+                        vm.empty = false;
                         vm.items = res.data;
                         vm.itemsPool = JSON.parse(angular.toJson(res.data));
                         vm.newItem = '';
