@@ -23,7 +23,7 @@
                 
         </form>
 
-        <p class="margin-above">Double-click to edit.</p>
+        <p ng-hide="shoppingListCtrl.empty" class="margin-above">Double-click to edit.</p>
 
         <ul class="list-group shopping-list margin-above">
 
@@ -54,7 +54,7 @@
             </li>
 
         </ul>
-        
+
         <div ng-show="shoppingListCtrl.empty" class="empty">
             <h3>Shopping list is empty.</h3>
             <p>Find recipes <a href="#!/search">here!</a></p>
