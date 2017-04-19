@@ -54,6 +54,11 @@
             </li>
 
         </ul>
+        
+        <div ng-show="shoppingListCtrl.empty" class="empty">
+            <h3>Shopping list is empty.</h3>
+            <p>Find recipes <a href="#!/search">here!</a></p>
+        </div>
 
         <div ng-hide="shoppingListCtrl.empty" class="c2a">
             <button type="button"
@@ -63,11 +68,6 @@
                 Remove items
                 <span class="glyphicon glyphicon-remove"></span>
             </button>
-        </div>
-
-        <div ng-show="shoppingListCtrl.empty" class="empty">
-            <h3>Shopping list is empty.</h3>
-            <p>Find recipes <a href="#!/search">here!</a></p>
         </div>
     </div>
 
