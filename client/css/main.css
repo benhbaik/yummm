@@ -67,6 +67,11 @@
     margin: 0 auto;
 }
 
+.no-result {
+    margin-top: 6rem;
+    text-align: center;
+}
+
 .recipe-image {
     width: 100%;
 }

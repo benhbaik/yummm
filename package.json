@@ -1,23 +1,26 @@
 {
   "name": "yummm",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "engines": {
+    "node": "6.7.0"
+  },
   "description": "A starter project for AngularJS",
   "main": "server.js",
   "repository": "https://github.com/angular/angular-seed",
   "license": "MIT",
   "devDependencies": {
-    "bower": "^1.7.7",
-    "http-server": "^0.9.0",
-    "jasmine-core": "^2.4.1",
-    "jshint": "^2.9.4",
-    "karma": "^0.13.22",
-    "karma-chrome-launcher": "^0.2.3",
-    "karma-firefox-launcher": "^0.1.7",
-    "karma-jasmine": "^0.3.8",
-    "karma-junit-reporter": "^0.4.1",
-    "protractor": "^4.0.9",
-    "webpack": "^2.4.1"
+    "html-loader": "~0.4.5",
+    "http-server": "~0.9.0",
+    "jasmine-core": "~2.4.1",
+    "jshint": "~2.9.4",
+    "karma": "~0.13.22",
+    "karma-chrome-launcher": "~0.2.3",
+    "karma-firefox-launcher": "~0.1.7",
+    "karma-jasmine": "~0.3.8",
+    "karma-junit-reporter": "~0.4.1",
+    "protractor": "~4.0.9",
+    "webpack": "~2.4.1"
   },
   "scripts": {
     "postinstall": "bower install",
@@ -30,10 +33,14 @@
     "bundle": "webpack"
   },
   "dependencies": {
+    "angular": "~1.6.4",
+    "angular-route": "~1.6.4",
     "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2",
-    "jsonwebtoken": "^7.3.0",
-    "mongoose": "^4.9.2"
+    "body-parser": "~1.17.1",
+    "bootstrap": "~3.3.7",
+    "express": "~4.15.2",
+    "jquery": "~3.2.1",
+    "jsonwebtoken": "~7.3.0",
+    "mongoose": "~4.9.2"
   }
 }

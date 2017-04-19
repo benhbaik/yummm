@@ -2,7 +2,8 @@
 
 angular.module('login', ['core.auth']).
     component('login', {
-        templateUrl: 'components/login/login.html',
+        template: require('./login.html'),
+        // templateUrl: 'components/login/login.html',
         controllerAs: 'loginCtrl',
         controller: ['$location', '$window', 'Auth',
             function loginController($location, $window, Auth) {
@@ -16,22 +17,18 @@ angular.module('login', ['core.auth']).
                     credentials.password.trim();
 
                     Auth.login(credentials).
-                    success(function(data) {
-                        vm.success = data.success;
+                    then(function(res) {
+                        vm.success = res.data.success;
                         if (vm.success) {
-                            $window.localStorage.setItem('token', data.token);
+                            $window.localStorage.setItem('token', res.data.token);
                             $location.path('search');
                         } else if (!vm.success) {
-                            vm.errorMessage = data.message;
+                            vm.errorMessage = res.data.message;
                             vm.credentials.username = '';
                             vm.credentials.password = '';
                         }
-                    }).
-                    error(function(data) {
-                        vm.success = false;
-                        vm.errorMessage = data.message;
                     });
-                };
+                }
             }
         ]
     });

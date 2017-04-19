@@ -24,7 +24,7 @@
     </form>
 
     <ul ng-show="!searchCtrl.loading" class="list-group recipe-list-group">
-
+        <p ng-show="searchCtrl.noResults" class="no-result">Could not find any results.</p>
         <li ng-repeat="result in searchCtrl.results" class="list-items list-group-item">
             <div class="header">
                 <h3 ng-click="searchCtrl.goToRecipe(result.recipe)">{{ result.recipe.label }}</h3>

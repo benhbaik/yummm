@@ -2,7 +2,8 @@
 
 angular.module('favorites', ['core.recipe']).
     component('favorites', {
-        templateUrl: 'components/favorites/favorites.html',
+        template: require('./favorites.html'),
+        // templateUrl: 'components/favorites/favorites.html',
         controllerAs: 'favoritesCtrl',
         controller: ['Recipe', '$window', '$location',
             function favoritesController(Recipe, $window, $location) {
@@ -15,14 +16,11 @@ angular.module('favorites', ['core.recipe']).
                 vm.goToRecipe = goToRecipe;
 
                 Recipe.getFavorites().
-                success(function(data) {
-                    vm.favorites = data;
+                then(function(res) {
+                    vm.favorites = res.data;
                     if (vm.favorites.length === 0) {
                         vm.empty = true;
                     }
-                }).
-                error(function(data) {
-                    return data;
                 });
 
                 // carry recipe from li to modal
@@ -32,15 +30,12 @@ angular.module('favorites', ['core.recipe']).
 
                 function removeFromFavorites(recipe) {
                     Recipe.removeFromFavorites({ recipe: recipe }).
-                    success(function(data) {
-                        vm.favorites = data;
+                    then(function(res) {
+                        vm.favorites = res.data;
                         vm.recipeToRemove = null;
                         if (vm.favorites.length === 0) {
                             vm.empty = true;
                         }
-                    }).
-                    error(function(data) {
-                        return data;
                     });
                 }
 

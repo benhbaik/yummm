@@ -2,7 +2,8 @@
 
 angular.module('search', ['core.recipe']).
     component('search', {
-        templateUrl: 'components/search/search.html',
+        template: require('./search.html'),
+        // templateUrl: 'components/search/search.html',
         controllerAs: 'searchCtrl',
         controller: ['Recipe', '$window', '$location', '$anchorScroll',
             function searchController(Recipe, $window, $location, $anchorScroll) {
@@ -11,6 +12,7 @@ angular.module('search', ['core.recipe']).
                 vm.results = [];
                 vm.loading = false;
                 vm.loadingMore = false;
+                vm.noResults = false;
                 vm.message = '';
                 vm.favorites = [];
                 vm.search = search;
@@ -22,38 +24,35 @@ angular.module('search', ['core.recipe']).
                 vm.goToRecipe = goToRecipe;
 
                 Recipe.getFavorites().
-                success(function(data) {
-                    vm.favorites = data;
-                }).
-                error(function(data){
-                    return data;
+                then(function(res) {
+                    vm.favorites = res.data;
                 });
 
                 function search(query) {
                     vm.results = [];
+                    vm.noResults = false;
                     vm.loading = true;    
                     vm.queryCache = query.trim();
 
                     Recipe.search(vm.queryCache).
-                    success(function(data) {
-                        vm.results = data.hits;
+                    then(function(res) {
                         vm.query = '';
                         vm.loading = false;
-                    }).
-                    error(function(data) {
-                        return data;
+
+                        if (res.data.hits.length === 0) {
+                            vm.noResults = true;
+                        } else {
+                            vm.results = res.data.hits;
+                        }  
                     });
                 }
 
                 function loadMore(query) {
                     vm.loadingMore = true;
                     Recipe.loadMore(query, vm.results.length).
-                    success(function(data) {
+                    then(function(res) {
                         vm.loadingMore = false;
-                        vm.results = vm.results.concat(data.hits);
-                    }).
-                    error(function(data) {
-                        return data;
+                        vm.results = vm.results.concat(res.data.hits);
                     });
                 }
 
@@ -84,11 +83,8 @@ angular.module('search', ['core.recipe']).
                         vm.favorites.push(recipe);
 
                         Recipe.addToFavorites({ recipe: recipe }).
-                        success(function(data) {
-                            vm.message = data;
-                        }).
-                        error(function(data) {
-                            return data;
+                        then(function(res) {
+                            vm.message = res.data;
                         });
                     }
                 }

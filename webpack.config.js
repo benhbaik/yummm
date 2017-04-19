@@ -6,17 +6,30 @@ module.exports = {
     context: __dirname + '/client',
     entry: {
         app: './app.js',
-        vendor: ['./client/bower_components/jquery/dist/jquery.js',
-                 './client/bower_components/angular/angular.js',
-                 './client/bower_components/angular-route/angular-route.js',
-                 './client/bower_components/bootstrap/dist/js/bootstrap.js'
-                 ]
+        vendor: [
+            'jquery',
+            'angular',
+            'angular-route',
+            'bootstrap'
+        ]
     },
     output: {
-        path: __dirname + '/dist/js',
+        path: __dirname + '/client/dist',
         filename: 'app.bundle.js'
     },
+    module: {
+        rules: [{
+            test: /\.html$/,
+            use: ['html-loader']
+        }]
+    },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'})
+        new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.bundle.js'}),
+        new webpack.optimize.UglifyJsPlugin({mangle: false}),
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery'
+        })
     ]
 };

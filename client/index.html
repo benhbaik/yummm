@@ -11,8 +11,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>yummm</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400|Source+Sans+Pro:300,600" rel="stylesheet">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./css/default-overwrite.css">
     <link rel="stylesheet" href="./css/main.css">
@@ -25,33 +27,8 @@
   <![endif]-->
     <div ng-view></div>
 
-    <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-
-    <script src="app.js"></script>
-    <script src="app.routes.js"></script>
-
-    <script src="directives/directives.js"></script>
-
-    <script src="core/core.module.js"></script>
-    <script src="core/navbar/navbar.component.js"></script>
-    <script src="core/user/user.service.js"></script>
-    <script src="core/auth/auth.service.js"></script>
-    <script src="core/recipe/recipe.service.js"></script>
-    <script src="core/shopping-list/shoppingList.service.js"></script>
-
-    <script src="components/home/home.component.js"></script>
-    <script src="components/signup/signup.component.js"></script>
-    <script src="components/login/login.component.js"></script>
-    <script src="components/search/search.component.js"></script>
-    <script src="components/favorites/favorites.component.js"></script>
-    <script src="components/detail/detail.component.js"></script>
-    <script src="components/shopping-list/shopping-list.component.js"></script>
+    <script src="./dist/vendor.bundle.js"></script>
+    <script src="./dist/app.bundle.js"></script>
 </body>
 
 </html>

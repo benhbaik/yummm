@@ -2,7 +2,8 @@
 
 angular.module('shoppingList', ['core.shoppingList']).
     component('shoppingList', {
-        templateUrl: 'components/shopping-list/shopping-list.html',
+        template: require('./shopping-list.html'),
+        // templateUrl: 'components/shopping-list/shopping-list.html',
         controllerAs: 'shoppingListCtrl',
         controller: ['ShoppingList', '$window',
             function shoppingListController(ShoppingList, $window) {
@@ -23,15 +24,12 @@ angular.module('shoppingList', ['core.shoppingList']).
                 vm.removeItems = removeItems;
 
                 ShoppingList.getItems().
-                success(function(data) {
-                    vm.items = data;
-                    vm.itemsPool = JSON.parse(angular.toJson(data));
+                then(function(res) {
+                    vm.items = res.data;
+                    vm.itemsPool = JSON.parse(angular.toJson(res.data));
                     if (vm.items.length === 0) {
                         vm.empty = true;
                     }
-                }).
-                error(function(data) {
-                    return data;
                 });
 
                 function activateEdit(id) {
@@ -52,12 +50,9 @@ angular.module('shoppingList', ['core.shoppingList']).
 
                 function editItem(item) {
                     ShoppingList.editItem({ item: item, id: vm.currentInput }).
-                    success(function(data) {
-                        vm.items = data;
+                    then(function(res) {
+                        vm.items = res.data;
                         vm.currentInput = '';
-                    }).
-                    error(function(data) {
-                        return data;
                     });
                 }
 
@@ -69,13 +64,10 @@ angular.module('shoppingList', ['core.shoppingList']).
                     item = Array(item);
 
                     ShoppingList.saveItems(item).
-                    success(function(data) {
-                        vm.items = data;
-                        vm.itemsPool = JSON.parse(angular.toJson(data));
+                    then(function(res) {
+                        vm.items = res.data;
+                        vm.itemsPool = JSON.parse(angular.toJson(res.data));
                         vm.newItem = '';
-                    }).
-                    error(function(data) {
-                        return data;
                     });
                 }
 
@@ -103,15 +95,12 @@ angular.module('shoppingList', ['core.shoppingList']).
 
                 function removeItems(items) {
                     ShoppingList.removeItem(items).
-                    success(function(data) {
-                        vm.items = data;
+                    then(function(res) {
+                        vm.items = res.data;
                         vm.removeCount = 0;
                         if (vm.items.length === 0) {
                             vm.empty = true;
                         }
-                    }).
-                    error(function(data) {
-                        return data;
                     });
                 }
 

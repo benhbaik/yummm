@@ -2,7 +2,8 @@
 
 angular.module('detail', ['core.shoppingList']).
     component('detail', {
-        templateUrl: 'components/detail/detail.html',
+        template: require('./detail.html'),
+        // templateUrl: 'components/detail/detail.html',
         controllerAs: 'detailCtrl',
         controller: ['ShoppingList', '$window', '$rootScope',
             function(ShoppingList, $window, $scope) {
@@ -46,15 +47,11 @@ angular.module('detail', ['core.shoppingList']).
                 }
 
                 function addItems(array) {
-                    console.log(vm.arrayToAdd);
                     if (array.length > 0) {
                         ShoppingList.saveItems(array).
-                        success(function(data) {
+                        then(function(res) {
                             vm.message = 'Items added to list!.';
                             vm.arrayToAdd = [];
-                        }).
-                        error(function(data) {
-                            return data;
                         });
                     }
 

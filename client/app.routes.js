@@ -8,7 +8,7 @@ angular.module('myApp').
 
             $routeProvider.
                 when('/', {
-                    template: '<home></home>'
+                    templateUrl: 'components/home/home.html'
                 }).
                 when('/signup', {
                     template: '<signup></signup>'
