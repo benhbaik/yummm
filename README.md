@@ -25,3 +25,10 @@ Deployed on Heroku.
 - Jasmine
 - Karma
 - Protractor
+
+## Things to add
+
+- Travis CI
+- more animations
+- username and password filtering(special chars)
+- meal calendar
