@@ -3,7 +3,6 @@
 angular.module('favorites', ['core.recipe']).
     component('favorites', {
         template: require('./favorites.html'),
-        // templateUrl: 'components/favorites/favorites.html',
         controllerAs: 'favoritesCtrl',
         controller: ['Recipe', '$window', '$location',
             function favoritesController(Recipe, $window, $location) {

@@ -3,7 +3,6 @@
 angular.module('shoppingList', ['core.shoppingList']).
     component('shoppingList', {
         template: require('./shopping-list.html'),
-        // templateUrl: 'components/shopping-list/shopping-list.html',
         controllerAs: 'shoppingListCtrl',
         controller: ['ShoppingList', '$window',
             function shoppingListController(ShoppingList, $window) {

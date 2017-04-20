@@ -3,7 +3,6 @@
 angular.module('detail', ['core.shoppingList']).
     component('detail', {
         template: require('./detail.html'),
-        // templateUrl: 'components/detail/detail.html',
         controllerAs: 'detailCtrl',
         controller: ['ShoppingList', '$window', '$rootScope',
             function(ShoppingList, $window, $scope) {

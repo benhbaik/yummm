@@ -3,7 +3,6 @@
 angular.module('search', ['core.recipe']).
     component('search', {
         template: require('./search.html'),
-        // templateUrl: 'components/search/search.html',
         controllerAs: 'searchCtrl',
         controller: ['Recipe', '$window', '$location', '$anchorScroll',
             function searchController(Recipe, $window, $location, $anchorScroll) {

@@ -21,9 +21,15 @@
 
                 <p class="requirement">Must be 8 - 16 characters</p>
             </div>
+            <div class="input-group">
+                <input ng-model="signupCtrl.confirmPassword"
+                    class="form-control"
+                    placeholder="Confirm password"
+                    type="password">
+            </div>
 
             <div class="c2a margin-above">
-                <button ng-click="signupCtrl.signup(signupCtrl.credentials)"
+                <button ng-click="signupCtrl.signup(signupCtrl.credentials, signupCtrl.confirmPassword)"
                     class="btn btn-default c2a-btn"
                     type="submit">
                     Sign Up
