@@ -30,7 +30,7 @@
                 <h3 ng-click="searchCtrl.goToRecipe(result.recipe)">{{ result.recipe.label }}</h3>
             </div>
 
-            <img ng-src="{{ result.recipe.image }}" class="recipe-image">
+            <img ng-click="searchCtrl.goToRecipe(result.recipe)" ng-src="{{ result.recipe.image }}" class="recipe-image">
 
             <div class="recipe-right">
                 <p>{{ result.recipe.calories | number:0 }} calories</p>
