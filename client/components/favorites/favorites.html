@@ -10,7 +10,7 @@
                     </div>
                 </a>
             </div>
-            <a href="#!/detail"><img ng-src="{{ favorite.image }}" class="recipe-image"></a>
+            <img ng-src="{{ favorite.image }}" ng-click="favoritesCtrl.goToRecipe(favorite)" class="recipe-image">
             <div class="recipe-right">
                 <p class="result-desc">{{ favorite.calories | number:0 }} calories</p>
                 <p class="result-desc">{{ favorite.yield }} servings</p>
