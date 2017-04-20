@@ -40,6 +40,7 @@ angular.module('favorites', ['core.recipe']).
                 }
 
                 function goToRecipe(recipe) {
+                    debugger;
                     $window.localStorage.setItem('recipe', angular.toJson(recipe));
                     $location.path('/detail');
                 }

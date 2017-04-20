@@ -20,7 +20,7 @@ app.use(function(req, res, next) {
 });
 
 mongoose.Promise = global.Promise;
-mongoose.connect(uri);
+mongoose.connect('mongodb://localhost:27017/dev');
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('Connected to DB');
