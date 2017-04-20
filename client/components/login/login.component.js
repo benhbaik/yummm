@@ -12,7 +12,7 @@ angular.module('login', ['core.auth']).
                 vm.login = login;
 
                 function login(credentials) {
-                    if (!credentials.username || !credentials.password) {
+                    if (!credentials || !credentials.username || !credentials.password) {
                         vm.errorMessage = 'Please fill out form.';
                         vm.success = false;
                         vm.credentials.password = '';
