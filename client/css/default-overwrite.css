@@ -49,6 +49,10 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     margin: 0 auto 4rem auto;
 }
 
+.navbar-nav {
+    margin: 0;
+}
+
 .navbar-toggle {
     margin-right: 0;
 }
