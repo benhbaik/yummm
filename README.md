@@ -10,6 +10,22 @@ Front End was bootstrapped with angular-seed.
 
 Deployed on Heroku.
 
+## Features
+
+- Log in/log out functionality.
+
+- Authorization is handle using JsonWebTokens.
+
+- Passwords are encrypted then saved to database.
+
+- Users can save there favorite recipes and remove recipes from favorites.
+
+- Add ingredients from recipes to shopping list or add your own ingredients.
+
+- Edit and remove items in shopping list.
+
+- Favorites and shopping list are persisted in database.
+
 ## Tools/Libraries
 
 - MongoDB
